@@ -7,5 +7,5 @@ class instrucciones(ABC):
         super().__init__()
     
     @abstractmethod
-    def ejecutar():
+    def ejecutar(ambito):
         pass

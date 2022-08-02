@@ -9,8 +9,8 @@ class Print(instrucciones):
         self.valor = valor
         
     
-    def ejecutar(self):
+    def ejecutar(self,ambito):
         global consola
-        aux = self.valor.ejecutar()
+        aux = self.valor.ejecutar(ambito)
         consola += str(aux["valor"])+"\n"
-        print(consola)
+        #print(consola)

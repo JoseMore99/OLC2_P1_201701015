@@ -7,5 +7,5 @@ class expresion(ABC):
         super().__init__()
     
     @abstractmethod
-    def ejecutar():
+    def ejecutar(ambito):
         pass

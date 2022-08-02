@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from gramatica import parser
 import instrucciones.Print as Imprimir
+from simbolo.ambito import ambito
 
 
 ventana = Tk()
@@ -12,13 +13,17 @@ ventana.title("Proyecto1 Compiladores 2 201701015")
 
 #FUNCIONES
 def ejecutar():
-
+    Imprimir.consola=""
     print(txtFuente.get("1.0", "end"))
     Respuesta= parser.parse(str(txtFuente.get("1.0", "end")))
-    consola=""
-    Respuesta.ejecutar()
-    print("------------------------------------")
-    print(Imprimir.consola)
+    global_a = ambito()
+    if(Respuesta!=None):
+        for i in Respuesta:
+            if i != None:
+                i.ejecutar(global_a)
+    
+    #print("------------------------------------")
+    #print(Imprimir.consola)
     txtConsola.insert("end",Imprimir.consola)
 
 def Info():

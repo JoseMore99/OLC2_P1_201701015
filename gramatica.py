@@ -117,15 +117,28 @@ from instrucciones.Print import Print
 
 precedence = (
     ('left','mas','menos'),
-    ('left','por','divid'),
+    ('left','por','divid','modulo'),
     ('right','Umenos'),
     )
 
-def p_instrucciones_lista(t):
-    '''INSTRUCCIONES    : INSTRUCCION INSTRUCCIONES
-                        | INSTRUCCION '''
+def p_inicial(t):
+    '''INIT   :  INSTRUCCIONES '''
     t[0]=t[1]
 
+def p_instrucciones_lista_conjunto(t):
+    '''INSTRUCCIONES    :  INSTRUCCIONES INSTRUCCION'''
+    if t[2] != "":
+       t[1].append(t[2])
+    t[0] = t[1]
+
+
+def p_instrucciones_lista_unica(t):
+    '''INSTRUCCIONES    : INSTRUCCION '''
+    if t[1] != "":
+       t[0]=[t[1]]
+    else:
+        t[0]=[]
+        
 def p_instrucciones_evaluar(t):
     '''INSTRUCCION :  PRINT  puntycom'''
     t[0]=t[1]

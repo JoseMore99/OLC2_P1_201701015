@@ -10,7 +10,7 @@ class nativo(expresion):
         self.tipo = tipo
         self.valor = valor
 
-    def ejecutar(self):
+    def ejecutar(self,ambito):
        
         if(self.tipo==Tipo.ENTERO):
             return {"valor": int(self.valor), "tipo": self.tipo}

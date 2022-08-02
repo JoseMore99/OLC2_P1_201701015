@@ -9,9 +9,9 @@ class aritmetica(expresion):
         self.derecha=derecha
         self.tipoArit = tipoArit
 
-    def ejecutar(self):
-        valIz = self.izquierda.ejecutar()
-        valDer = self.derecha.ejecutar()
+    def ejecutar(self,ambito):
+        valIz = self.izquierda.ejecutar(ambito)
+        valDer = self.derecha.ejecutar(ambito)
         if(valIz["tipo"]==valDer["tipo"]):
             if self.tipoArit == "+"  : 
                 return {"valor": valIz["valor"]+valDer["valor"], "tipo": valIz["tipo"]}
