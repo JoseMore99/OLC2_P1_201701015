@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftmasmenosleftpordividrightUmenosdecimal divid entero mas menos parder pariz por puntycomINSTRUCCIONES    : INSTRUCCION INSTRUCCIONES\n                        | INSTRUCCION INSTRUCCION :  EXPRESION  puntycomEXPRESION : EXPRESION mas EXPRESION\n                  | EXPRESION menos EXPRESION\n                  | EXPRESION por EXPRESION\n                  | EXPRESION divid EXPRESIONEXPRESION : menos EXPRESION %prec UmenosEXPRESION : pariz EXPRESION parderEXPRESION    : entero\n                    | decimal'
+_lr_signature = 'leftmasmenosleftpordividrightUmenoscadena caracter decimal divid entero mas menos modulo not parder pariz por puntycom resStr resString resbool reschar resf64 resfalse resi64 reslet resmut resprint resstruct restrueINSTRUCCIONES    : INSTRUCCION INSTRUCCIONES\n                        | INSTRUCCION INSTRUCCION :  PRINT  puntycomPRINT :  resprint not  pariz EXPRESION parderEXPRESION : EXPRESION mas EXPRESION\n                  | EXPRESION menos EXPRESION\n                  | EXPRESION por EXPRESION\n                  | EXPRESION modulo EXPRESION\n                  | EXPRESION divid EXPRESIONEXPRESION : menos EXPRESION %prec UmenosEXPRESION : pariz EXPRESION parderEXPRESION    : enteroEXPRESION    : decimalEXPRESION    : cadenaEXPRESION    : caracterEXPRESION    : restrue\n                    | resfalse '
     
-_lr_action_items = {'menos':([0,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,],[4,4,11,4,4,-10,-11,-3,4,4,4,4,-8,11,-4,-5,-6,-7,-9,]),'pariz':([0,2,4,5,9,10,11,12,13,],[5,5,5,5,-3,5,5,5,5,]),'entero':([0,2,4,5,9,10,11,12,13,],[6,6,6,6,-3,6,6,6,6,]),'decimal':([0,2,4,5,9,10,11,12,13,],[7,7,7,7,-3,7,7,7,7,]),'$end':([1,2,8,9,],[0,-2,-1,-3,]),'puntycom':([3,6,7,14,16,17,18,19,20,],[9,-10,-11,-8,-4,-5,-6,-7,-9,]),'mas':([3,6,7,14,15,16,17,18,19,20,],[10,-10,-11,-8,10,-4,-5,-6,-7,-9,]),'por':([3,6,7,14,15,16,17,18,19,20,],[12,-10,-11,-8,12,12,12,-6,-7,-9,]),'divid':([3,6,7,14,15,16,17,18,19,20,],[13,-10,-11,-8,13,13,13,-6,-7,-9,]),'parder':([6,7,14,15,16,17,18,19,20,],[-10,-11,-8,20,-4,-5,-6,-7,-9,]),}
+_lr_action_items = {'resprint':([0,2,6,],[4,4,-3,]),'$end':([1,2,5,6,],[0,-2,-1,-3,]),'puntycom':([3,19,],[6,-4,]),'not':([4,],[7,]),'pariz':([7,8,9,11,20,21,22,23,24,],[8,9,9,9,9,9,9,9,9,]),'menos':([8,9,10,11,12,13,14,15,16,17,18,20,21,22,23,24,25,26,27,28,29,30,31,],[11,11,21,11,-12,-13,-14,-15,-16,-17,21,11,11,11,11,11,-10,-11,-5,-6,-7,21,-9,]),'entero':([8,9,11,20,21,22,23,24,],[12,12,12,12,12,12,12,12,]),'decimal':([8,9,11,20,21,22,23,24,],[13,13,13,13,13,13,13,13,]),'cadena':([8,9,11,20,21,22,23,24,],[14,14,14,14,14,14,14,14,]),'caracter':([8,9,11,20,21,22,23,24,],[15,15,15,15,15,15,15,15,]),'restrue':([8,9,11,20,21,22,23,24,],[16,16,16,16,16,16,16,16,]),'resfalse':([8,9,11,20,21,22,23,24,],[17,17,17,17,17,17,17,17,]),'parder':([10,12,13,14,15,16,17,18,25,26,27,28,29,30,31,],[19,-12,-13,-14,-15,-16,-17,26,-10,-11,-5,-6,-7,-8,-9,]),'mas':([10,12,13,14,15,16,17,18,25,26,27,28,29,30,31,],[20,-12,-13,-14,-15,-16,-17,20,-10,-11,-5,-6,-7,20,-9,]),'por':([10,12,13,14,15,16,17,18,25,26,27,28,29,30,31,],[22,-12,-13,-14,-15,-16,-17,22,-10,-11,22,22,-7,22,-9,]),'modulo':([10,12,13,14,15,16,17,18,25,26,27,28,29,30,31,],[23,-12,-13,-14,-15,-16,-17,23,-10,-11,-5,-6,-7,23,-9,]),'divid':([10,12,13,14,15,16,17,18,25,26,27,28,29,30,31,],[24,-12,-13,-14,-15,-16,-17,24,-10,-11,24,24,-7,24,-9,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'INSTRUCCIONES':([0,2,],[1,8,]),'INSTRUCCION':([0,2,],[2,2,]),'EXPRESION':([0,2,4,5,10,11,12,13,],[3,3,14,15,16,17,18,19,]),}
+_lr_goto_items = {'INSTRUCCIONES':([0,2,],[1,5,]),'INSTRUCCION':([0,2,],[2,2,]),'PRINT':([0,2,],[3,3,]),'EXPRESION':([8,9,11,20,21,22,23,24,],[10,18,25,27,28,29,30,31,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,15 +27,21 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> INSTRUCCIONES","S'",1,None,None,None),
-  ('INSTRUCCIONES -> INSTRUCCION INSTRUCCIONES','INSTRUCCIONES',2,'p_instrucciones_lista','gramatica.py',69),
-  ('INSTRUCCIONES -> INSTRUCCION','INSTRUCCIONES',1,'p_instrucciones_lista','gramatica.py',70),
-  ('INSTRUCCION -> EXPRESION puntycom','INSTRUCCION',2,'p_instrucciones_evaluar','gramatica.py',73),
-  ('EXPRESION -> EXPRESION mas EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',77),
-  ('EXPRESION -> EXPRESION menos EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',78),
-  ('EXPRESION -> EXPRESION por EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',79),
-  ('EXPRESION -> EXPRESION divid EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',80),
-  ('EXPRESION -> menos EXPRESION','EXPRESION',2,'p_expresion_unaria','gramatica.py',87),
-  ('EXPRESION -> pariz EXPRESION parder','EXPRESION',3,'p_expresion_agrupacion','gramatica.py',91),
-  ('EXPRESION -> entero','EXPRESION',1,'p_expresion_number','gramatica.py',95),
-  ('EXPRESION -> decimal','EXPRESION',1,'p_expresion_number','gramatica.py',96),
+  ('INSTRUCCIONES -> INSTRUCCION INSTRUCCIONES','INSTRUCCIONES',2,'p_instrucciones_lista','gramatica.py',125),
+  ('INSTRUCCIONES -> INSTRUCCION','INSTRUCCIONES',1,'p_instrucciones_lista','gramatica.py',126),
+  ('INSTRUCCION -> PRINT puntycom','INSTRUCCION',2,'p_instrucciones_evaluar','gramatica.py',130),
+  ('PRINT -> resprint not pariz EXPRESION parder','PRINT',5,'p_impresion','gramatica.py',134),
+  ('EXPRESION -> EXPRESION mas EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',138),
+  ('EXPRESION -> EXPRESION menos EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',139),
+  ('EXPRESION -> EXPRESION por EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',140),
+  ('EXPRESION -> EXPRESION modulo EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',141),
+  ('EXPRESION -> EXPRESION divid EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',142),
+  ('EXPRESION -> menos EXPRESION','EXPRESION',2,'p_expresion_unaria','gramatica.py',146),
+  ('EXPRESION -> pariz EXPRESION parder','EXPRESION',3,'p_expresion_agrupacion','gramatica.py',150),
+  ('EXPRESION -> entero','EXPRESION',1,'p_expresion_entero','gramatica.py',154),
+  ('EXPRESION -> decimal','EXPRESION',1,'p_expresion_decimal','gramatica.py',158),
+  ('EXPRESION -> cadena','EXPRESION',1,'p_expresion_cadena','gramatica.py',162),
+  ('EXPRESION -> caracter','EXPRESION',1,'p_expresion_caracter','gramatica.py',166),
+  ('EXPRESION -> restrue','EXPRESION',1,'p_expresion_boolean','gramatica.py',170),
+  ('EXPRESION -> resfalse','EXPRESION',1,'p_expresion_boolean','gramatica.py',171),
 ]

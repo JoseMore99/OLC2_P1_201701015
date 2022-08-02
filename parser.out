@@ -1,38 +1,73 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    resStr
+    resString
+    resbool
+    reschar
+    resf64
+    resi64
+    reslet
+    resmut
+    resstruct
+
 Grammar
 
 Rule 0     S' -> INSTRUCCIONES
 Rule 1     INSTRUCCIONES -> INSTRUCCION INSTRUCCIONES
 Rule 2     INSTRUCCIONES -> INSTRUCCION
-Rule 3     INSTRUCCION -> EXPRESION puntycom
-Rule 4     EXPRESION -> EXPRESION mas EXPRESION
-Rule 5     EXPRESION -> EXPRESION menos EXPRESION
-Rule 6     EXPRESION -> EXPRESION por EXPRESION
-Rule 7     EXPRESION -> EXPRESION divid EXPRESION
-Rule 8     EXPRESION -> menos EXPRESION
-Rule 9     EXPRESION -> pariz EXPRESION parder
-Rule 10    EXPRESION -> entero
-Rule 11    EXPRESION -> decimal
+Rule 3     INSTRUCCION -> PRINT puntycom
+Rule 4     PRINT -> resprint not pariz EXPRESION parder
+Rule 5     EXPRESION -> EXPRESION mas EXPRESION
+Rule 6     EXPRESION -> EXPRESION menos EXPRESION
+Rule 7     EXPRESION -> EXPRESION por EXPRESION
+Rule 8     EXPRESION -> EXPRESION modulo EXPRESION
+Rule 9     EXPRESION -> EXPRESION divid EXPRESION
+Rule 10    EXPRESION -> menos EXPRESION
+Rule 11    EXPRESION -> pariz EXPRESION parder
+Rule 12    EXPRESION -> entero
+Rule 13    EXPRESION -> decimal
+Rule 14    EXPRESION -> cadena
+Rule 15    EXPRESION -> caracter
+Rule 16    EXPRESION -> restrue
+Rule 17    EXPRESION -> resfalse
 
 Terminals, with rules where they appear
 
-decimal              : 11
-divid                : 7
-entero               : 10
+cadena               : 14
+caracter             : 15
+decimal              : 13
+divid                : 9
+entero               : 12
 error                : 
-mas                  : 4
-menos                : 5 8
-parder               : 9
-pariz                : 9
-por                  : 6
+mas                  : 5
+menos                : 6 10
+modulo               : 8
+not                  : 4
+parder               : 4 11
+pariz                : 4 11
+por                  : 7
 puntycom             : 3
+resStr               : 
+resString            : 
+resbool              : 
+reschar              : 
+resf64               : 
+resfalse             : 17
+resi64               : 
+reslet               : 
+resmut               : 
+resprint             : 4
+resstruct            : 
+restrue              : 16
 
 Nonterminals, with rules where they appear
 
-EXPRESION            : 3 4 4 5 5 6 6 7 7 8 9
+EXPRESION            : 4 5 5 6 6 7 7 8 8 9 9 10 11
 INSTRUCCION          : 1 2
 INSTRUCCIONES        : 1 0
+PRINT                : 3
 
 Parsing method: LALR
 
@@ -41,24 +76,14 @@ state 0
     (0) S' -> . INSTRUCCIONES
     (1) INSTRUCCIONES -> . INSTRUCCION INSTRUCCIONES
     (2) INSTRUCCIONES -> . INSTRUCCION
-    (3) INSTRUCCION -> . EXPRESION puntycom
-    (4) EXPRESION -> . EXPRESION mas EXPRESION
-    (5) EXPRESION -> . EXPRESION menos EXPRESION
-    (6) EXPRESION -> . EXPRESION por EXPRESION
-    (7) EXPRESION -> . EXPRESION divid EXPRESION
-    (8) EXPRESION -> . menos EXPRESION
-    (9) EXPRESION -> . pariz EXPRESION parder
-    (10) EXPRESION -> . entero
-    (11) EXPRESION -> . decimal
+    (3) INSTRUCCION -> . PRINT puntycom
+    (4) PRINT -> . resprint not pariz EXPRESION parder
 
-    menos           shift and go to state 4
-    pariz           shift and go to state 5
-    entero          shift and go to state 6
-    decimal         shift and go to state 7
+    resprint        shift and go to state 4
 
     INSTRUCCIONES                  shift and go to state 1
     INSTRUCCION                    shift and go to state 2
-    EXPRESION                      shift and go to state 3
+    PRINT                          shift and go to state 3
 
 state 1
 
@@ -72,325 +97,548 @@ state 2
     (2) INSTRUCCIONES -> INSTRUCCION .
     (1) INSTRUCCIONES -> . INSTRUCCION INSTRUCCIONES
     (2) INSTRUCCIONES -> . INSTRUCCION
-    (3) INSTRUCCION -> . EXPRESION puntycom
-    (4) EXPRESION -> . EXPRESION mas EXPRESION
-    (5) EXPRESION -> . EXPRESION menos EXPRESION
-    (6) EXPRESION -> . EXPRESION por EXPRESION
-    (7) EXPRESION -> . EXPRESION divid EXPRESION
-    (8) EXPRESION -> . menos EXPRESION
-    (9) EXPRESION -> . pariz EXPRESION parder
-    (10) EXPRESION -> . entero
-    (11) EXPRESION -> . decimal
+    (3) INSTRUCCION -> . PRINT puntycom
+    (4) PRINT -> . resprint not pariz EXPRESION parder
 
     $end            reduce using rule 2 (INSTRUCCIONES -> INSTRUCCION .)
-    menos           shift and go to state 4
-    pariz           shift and go to state 5
-    entero          shift and go to state 6
-    decimal         shift and go to state 7
+    resprint        shift and go to state 4
 
     INSTRUCCION                    shift and go to state 2
-    INSTRUCCIONES                  shift and go to state 8
-    EXPRESION                      shift and go to state 3
+    INSTRUCCIONES                  shift and go to state 5
+    PRINT                          shift and go to state 3
 
 state 3
 
-    (3) INSTRUCCION -> EXPRESION . puntycom
-    (4) EXPRESION -> EXPRESION . mas EXPRESION
-    (5) EXPRESION -> EXPRESION . menos EXPRESION
-    (6) EXPRESION -> EXPRESION . por EXPRESION
-    (7) EXPRESION -> EXPRESION . divid EXPRESION
+    (3) INSTRUCCION -> PRINT . puntycom
 
-    puntycom        shift and go to state 9
-    mas             shift and go to state 10
-    menos           shift and go to state 11
-    por             shift and go to state 12
-    divid           shift and go to state 13
+    puntycom        shift and go to state 6
 
 
 state 4
 
-    (8) EXPRESION -> menos . EXPRESION
-    (4) EXPRESION -> . EXPRESION mas EXPRESION
-    (5) EXPRESION -> . EXPRESION menos EXPRESION
-    (6) EXPRESION -> . EXPRESION por EXPRESION
-    (7) EXPRESION -> . EXPRESION divid EXPRESION
-    (8) EXPRESION -> . menos EXPRESION
-    (9) EXPRESION -> . pariz EXPRESION parder
-    (10) EXPRESION -> . entero
-    (11) EXPRESION -> . decimal
+    (4) PRINT -> resprint . not pariz EXPRESION parder
 
-    menos           shift and go to state 4
-    pariz           shift and go to state 5
-    entero          shift and go to state 6
-    decimal         shift and go to state 7
+    not             shift and go to state 7
 
-    EXPRESION                      shift and go to state 14
 
 state 5
-
-    (9) EXPRESION -> pariz . EXPRESION parder
-    (4) EXPRESION -> . EXPRESION mas EXPRESION
-    (5) EXPRESION -> . EXPRESION menos EXPRESION
-    (6) EXPRESION -> . EXPRESION por EXPRESION
-    (7) EXPRESION -> . EXPRESION divid EXPRESION
-    (8) EXPRESION -> . menos EXPRESION
-    (9) EXPRESION -> . pariz EXPRESION parder
-    (10) EXPRESION -> . entero
-    (11) EXPRESION -> . decimal
-
-    menos           shift and go to state 4
-    pariz           shift and go to state 5
-    entero          shift and go to state 6
-    decimal         shift and go to state 7
-
-    EXPRESION                      shift and go to state 15
-
-state 6
-
-    (10) EXPRESION -> entero .
-
-    puntycom        reduce using rule 10 (EXPRESION -> entero .)
-    mas             reduce using rule 10 (EXPRESION -> entero .)
-    menos           reduce using rule 10 (EXPRESION -> entero .)
-    por             reduce using rule 10 (EXPRESION -> entero .)
-    divid           reduce using rule 10 (EXPRESION -> entero .)
-    parder          reduce using rule 10 (EXPRESION -> entero .)
-
-
-state 7
-
-    (11) EXPRESION -> decimal .
-
-    puntycom        reduce using rule 11 (EXPRESION -> decimal .)
-    mas             reduce using rule 11 (EXPRESION -> decimal .)
-    menos           reduce using rule 11 (EXPRESION -> decimal .)
-    por             reduce using rule 11 (EXPRESION -> decimal .)
-    divid           reduce using rule 11 (EXPRESION -> decimal .)
-    parder          reduce using rule 11 (EXPRESION -> decimal .)
-
-
-state 8
 
     (1) INSTRUCCIONES -> INSTRUCCION INSTRUCCIONES .
 
     $end            reduce using rule 1 (INSTRUCCIONES -> INSTRUCCION INSTRUCCIONES .)
 
 
+state 6
+
+    (3) INSTRUCCION -> PRINT puntycom .
+
+    resprint        reduce using rule 3 (INSTRUCCION -> PRINT puntycom .)
+    $end            reduce using rule 3 (INSTRUCCION -> PRINT puntycom .)
+
+
+state 7
+
+    (4) PRINT -> resprint not . pariz EXPRESION parder
+
+    pariz           shift and go to state 8
+
+
+state 8
+
+    (4) PRINT -> resprint not pariz . EXPRESION parder
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION por EXPRESION
+    (8) EXPRESION -> . EXPRESION modulo EXPRESION
+    (9) EXPRESION -> . EXPRESION divid EXPRESION
+    (10) EXPRESION -> . menos EXPRESION
+    (11) EXPRESION -> . pariz EXPRESION parder
+    (12) EXPRESION -> . entero
+    (13) EXPRESION -> . decimal
+    (14) EXPRESION -> . cadena
+    (15) EXPRESION -> . caracter
+    (16) EXPRESION -> . restrue
+    (17) EXPRESION -> . resfalse
+
+    menos           shift and go to state 11
+    pariz           shift and go to state 9
+    entero          shift and go to state 12
+    decimal         shift and go to state 13
+    cadena          shift and go to state 14
+    caracter        shift and go to state 15
+    restrue         shift and go to state 16
+    resfalse        shift and go to state 17
+
+    EXPRESION                      shift and go to state 10
+
 state 9
 
-    (3) INSTRUCCION -> EXPRESION puntycom .
+    (11) EXPRESION -> pariz . EXPRESION parder
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION por EXPRESION
+    (8) EXPRESION -> . EXPRESION modulo EXPRESION
+    (9) EXPRESION -> . EXPRESION divid EXPRESION
+    (10) EXPRESION -> . menos EXPRESION
+    (11) EXPRESION -> . pariz EXPRESION parder
+    (12) EXPRESION -> . entero
+    (13) EXPRESION -> . decimal
+    (14) EXPRESION -> . cadena
+    (15) EXPRESION -> . caracter
+    (16) EXPRESION -> . restrue
+    (17) EXPRESION -> . resfalse
 
-    menos           reduce using rule 3 (INSTRUCCION -> EXPRESION puntycom .)
-    pariz           reduce using rule 3 (INSTRUCCION -> EXPRESION puntycom .)
-    entero          reduce using rule 3 (INSTRUCCION -> EXPRESION puntycom .)
-    decimal         reduce using rule 3 (INSTRUCCION -> EXPRESION puntycom .)
-    $end            reduce using rule 3 (INSTRUCCION -> EXPRESION puntycom .)
-
-
-state 10
-
-    (4) EXPRESION -> EXPRESION mas . EXPRESION
-    (4) EXPRESION -> . EXPRESION mas EXPRESION
-    (5) EXPRESION -> . EXPRESION menos EXPRESION
-    (6) EXPRESION -> . EXPRESION por EXPRESION
-    (7) EXPRESION -> . EXPRESION divid EXPRESION
-    (8) EXPRESION -> . menos EXPRESION
-    (9) EXPRESION -> . pariz EXPRESION parder
-    (10) EXPRESION -> . entero
-    (11) EXPRESION -> . decimal
-
-    menos           shift and go to state 4
-    pariz           shift and go to state 5
-    entero          shift and go to state 6
-    decimal         shift and go to state 7
-
-    EXPRESION                      shift and go to state 16
-
-state 11
-
-    (5) EXPRESION -> EXPRESION menos . EXPRESION
-    (4) EXPRESION -> . EXPRESION mas EXPRESION
-    (5) EXPRESION -> . EXPRESION menos EXPRESION
-    (6) EXPRESION -> . EXPRESION por EXPRESION
-    (7) EXPRESION -> . EXPRESION divid EXPRESION
-    (8) EXPRESION -> . menos EXPRESION
-    (9) EXPRESION -> . pariz EXPRESION parder
-    (10) EXPRESION -> . entero
-    (11) EXPRESION -> . decimal
-
-    menos           shift and go to state 4
-    pariz           shift and go to state 5
-    entero          shift and go to state 6
-    decimal         shift and go to state 7
-
-    EXPRESION                      shift and go to state 17
-
-state 12
-
-    (6) EXPRESION -> EXPRESION por . EXPRESION
-    (4) EXPRESION -> . EXPRESION mas EXPRESION
-    (5) EXPRESION -> . EXPRESION menos EXPRESION
-    (6) EXPRESION -> . EXPRESION por EXPRESION
-    (7) EXPRESION -> . EXPRESION divid EXPRESION
-    (8) EXPRESION -> . menos EXPRESION
-    (9) EXPRESION -> . pariz EXPRESION parder
-    (10) EXPRESION -> . entero
-    (11) EXPRESION -> . decimal
-
-    menos           shift and go to state 4
-    pariz           shift and go to state 5
-    entero          shift and go to state 6
-    decimal         shift and go to state 7
+    menos           shift and go to state 11
+    pariz           shift and go to state 9
+    entero          shift and go to state 12
+    decimal         shift and go to state 13
+    cadena          shift and go to state 14
+    caracter        shift and go to state 15
+    restrue         shift and go to state 16
+    resfalse        shift and go to state 17
 
     EXPRESION                      shift and go to state 18
 
+state 10
+
+    (4) PRINT -> resprint not pariz EXPRESION . parder
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . por EXPRESION
+    (8) EXPRESION -> EXPRESION . modulo EXPRESION
+    (9) EXPRESION -> EXPRESION . divid EXPRESION
+
+    parder          shift and go to state 19
+    mas             shift and go to state 20
+    menos           shift and go to state 21
+    por             shift and go to state 22
+    modulo          shift and go to state 23
+    divid           shift and go to state 24
+
+
+state 11
+
+    (10) EXPRESION -> menos . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION por EXPRESION
+    (8) EXPRESION -> . EXPRESION modulo EXPRESION
+    (9) EXPRESION -> . EXPRESION divid EXPRESION
+    (10) EXPRESION -> . menos EXPRESION
+    (11) EXPRESION -> . pariz EXPRESION parder
+    (12) EXPRESION -> . entero
+    (13) EXPRESION -> . decimal
+    (14) EXPRESION -> . cadena
+    (15) EXPRESION -> . caracter
+    (16) EXPRESION -> . restrue
+    (17) EXPRESION -> . resfalse
+
+    menos           shift and go to state 11
+    pariz           shift and go to state 9
+    entero          shift and go to state 12
+    decimal         shift and go to state 13
+    cadena          shift and go to state 14
+    caracter        shift and go to state 15
+    restrue         shift and go to state 16
+    resfalse        shift and go to state 17
+
+    EXPRESION                      shift and go to state 25
+
+state 12
+
+    (12) EXPRESION -> entero .
+
+    parder          reduce using rule 12 (EXPRESION -> entero .)
+    mas             reduce using rule 12 (EXPRESION -> entero .)
+    menos           reduce using rule 12 (EXPRESION -> entero .)
+    por             reduce using rule 12 (EXPRESION -> entero .)
+    modulo          reduce using rule 12 (EXPRESION -> entero .)
+    divid           reduce using rule 12 (EXPRESION -> entero .)
+
+
 state 13
 
-    (7) EXPRESION -> EXPRESION divid . EXPRESION
-    (4) EXPRESION -> . EXPRESION mas EXPRESION
-    (5) EXPRESION -> . EXPRESION menos EXPRESION
-    (6) EXPRESION -> . EXPRESION por EXPRESION
-    (7) EXPRESION -> . EXPRESION divid EXPRESION
-    (8) EXPRESION -> . menos EXPRESION
-    (9) EXPRESION -> . pariz EXPRESION parder
-    (10) EXPRESION -> . entero
-    (11) EXPRESION -> . decimal
+    (13) EXPRESION -> decimal .
 
-    menos           shift and go to state 4
-    pariz           shift and go to state 5
-    entero          shift and go to state 6
-    decimal         shift and go to state 7
+    parder          reduce using rule 13 (EXPRESION -> decimal .)
+    mas             reduce using rule 13 (EXPRESION -> decimal .)
+    menos           reduce using rule 13 (EXPRESION -> decimal .)
+    por             reduce using rule 13 (EXPRESION -> decimal .)
+    modulo          reduce using rule 13 (EXPRESION -> decimal .)
+    divid           reduce using rule 13 (EXPRESION -> decimal .)
 
-    EXPRESION                      shift and go to state 19
 
 state 14
 
-    (8) EXPRESION -> menos EXPRESION .
-    (4) EXPRESION -> EXPRESION . mas EXPRESION
-    (5) EXPRESION -> EXPRESION . menos EXPRESION
-    (6) EXPRESION -> EXPRESION . por EXPRESION
-    (7) EXPRESION -> EXPRESION . divid EXPRESION
+    (14) EXPRESION -> cadena .
 
-    puntycom        reduce using rule 8 (EXPRESION -> menos EXPRESION .)
-    mas             reduce using rule 8 (EXPRESION -> menos EXPRESION .)
-    menos           reduce using rule 8 (EXPRESION -> menos EXPRESION .)
-    por             reduce using rule 8 (EXPRESION -> menos EXPRESION .)
-    divid           reduce using rule 8 (EXPRESION -> menos EXPRESION .)
-    parder          reduce using rule 8 (EXPRESION -> menos EXPRESION .)
-
-  ! mas             [ shift and go to state 10 ]
-  ! menos           [ shift and go to state 11 ]
-  ! por             [ shift and go to state 12 ]
-  ! divid           [ shift and go to state 13 ]
+    parder          reduce using rule 14 (EXPRESION -> cadena .)
+    mas             reduce using rule 14 (EXPRESION -> cadena .)
+    menos           reduce using rule 14 (EXPRESION -> cadena .)
+    por             reduce using rule 14 (EXPRESION -> cadena .)
+    modulo          reduce using rule 14 (EXPRESION -> cadena .)
+    divid           reduce using rule 14 (EXPRESION -> cadena .)
 
 
 state 15
 
-    (9) EXPRESION -> pariz EXPRESION . parder
-    (4) EXPRESION -> EXPRESION . mas EXPRESION
-    (5) EXPRESION -> EXPRESION . menos EXPRESION
-    (6) EXPRESION -> EXPRESION . por EXPRESION
-    (7) EXPRESION -> EXPRESION . divid EXPRESION
+    (15) EXPRESION -> caracter .
 
-    parder          shift and go to state 20
-    mas             shift and go to state 10
-    menos           shift and go to state 11
-    por             shift and go to state 12
-    divid           shift and go to state 13
+    parder          reduce using rule 15 (EXPRESION -> caracter .)
+    mas             reduce using rule 15 (EXPRESION -> caracter .)
+    menos           reduce using rule 15 (EXPRESION -> caracter .)
+    por             reduce using rule 15 (EXPRESION -> caracter .)
+    modulo          reduce using rule 15 (EXPRESION -> caracter .)
+    divid           reduce using rule 15 (EXPRESION -> caracter .)
 
 
 state 16
 
-    (4) EXPRESION -> EXPRESION mas EXPRESION .
-    (4) EXPRESION -> EXPRESION . mas EXPRESION
-    (5) EXPRESION -> EXPRESION . menos EXPRESION
-    (6) EXPRESION -> EXPRESION . por EXPRESION
-    (7) EXPRESION -> EXPRESION . divid EXPRESION
+    (16) EXPRESION -> restrue .
 
-    puntycom        reduce using rule 4 (EXPRESION -> EXPRESION mas EXPRESION .)
-    mas             reduce using rule 4 (EXPRESION -> EXPRESION mas EXPRESION .)
-    menos           reduce using rule 4 (EXPRESION -> EXPRESION mas EXPRESION .)
-    parder          reduce using rule 4 (EXPRESION -> EXPRESION mas EXPRESION .)
-    por             shift and go to state 12
-    divid           shift and go to state 13
-
-  ! por             [ reduce using rule 4 (EXPRESION -> EXPRESION mas EXPRESION .) ]
-  ! divid           [ reduce using rule 4 (EXPRESION -> EXPRESION mas EXPRESION .) ]
-  ! mas             [ shift and go to state 10 ]
-  ! menos           [ shift and go to state 11 ]
+    parder          reduce using rule 16 (EXPRESION -> restrue .)
+    mas             reduce using rule 16 (EXPRESION -> restrue .)
+    menos           reduce using rule 16 (EXPRESION -> restrue .)
+    por             reduce using rule 16 (EXPRESION -> restrue .)
+    modulo          reduce using rule 16 (EXPRESION -> restrue .)
+    divid           reduce using rule 16 (EXPRESION -> restrue .)
 
 
 state 17
 
-    (5) EXPRESION -> EXPRESION menos EXPRESION .
-    (4) EXPRESION -> EXPRESION . mas EXPRESION
-    (5) EXPRESION -> EXPRESION . menos EXPRESION
-    (6) EXPRESION -> EXPRESION . por EXPRESION
-    (7) EXPRESION -> EXPRESION . divid EXPRESION
+    (17) EXPRESION -> resfalse .
 
-    puntycom        reduce using rule 5 (EXPRESION -> EXPRESION menos EXPRESION .)
-    mas             reduce using rule 5 (EXPRESION -> EXPRESION menos EXPRESION .)
-    menos           reduce using rule 5 (EXPRESION -> EXPRESION menos EXPRESION .)
-    parder          reduce using rule 5 (EXPRESION -> EXPRESION menos EXPRESION .)
-    por             shift and go to state 12
-    divid           shift and go to state 13
-
-  ! por             [ reduce using rule 5 (EXPRESION -> EXPRESION menos EXPRESION .) ]
-  ! divid           [ reduce using rule 5 (EXPRESION -> EXPRESION menos EXPRESION .) ]
-  ! mas             [ shift and go to state 10 ]
-  ! menos           [ shift and go to state 11 ]
+    parder          reduce using rule 17 (EXPRESION -> resfalse .)
+    mas             reduce using rule 17 (EXPRESION -> resfalse .)
+    menos           reduce using rule 17 (EXPRESION -> resfalse .)
+    por             reduce using rule 17 (EXPRESION -> resfalse .)
+    modulo          reduce using rule 17 (EXPRESION -> resfalse .)
+    divid           reduce using rule 17 (EXPRESION -> resfalse .)
 
 
 state 18
 
-    (6) EXPRESION -> EXPRESION por EXPRESION .
-    (4) EXPRESION -> EXPRESION . mas EXPRESION
-    (5) EXPRESION -> EXPRESION . menos EXPRESION
-    (6) EXPRESION -> EXPRESION . por EXPRESION
-    (7) EXPRESION -> EXPRESION . divid EXPRESION
+    (11) EXPRESION -> pariz EXPRESION . parder
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . por EXPRESION
+    (8) EXPRESION -> EXPRESION . modulo EXPRESION
+    (9) EXPRESION -> EXPRESION . divid EXPRESION
 
-    puntycom        reduce using rule 6 (EXPRESION -> EXPRESION por EXPRESION .)
-    mas             reduce using rule 6 (EXPRESION -> EXPRESION por EXPRESION .)
-    menos           reduce using rule 6 (EXPRESION -> EXPRESION por EXPRESION .)
-    por             reduce using rule 6 (EXPRESION -> EXPRESION por EXPRESION .)
-    divid           reduce using rule 6 (EXPRESION -> EXPRESION por EXPRESION .)
-    parder          reduce using rule 6 (EXPRESION -> EXPRESION por EXPRESION .)
-
-  ! mas             [ shift and go to state 10 ]
-  ! menos           [ shift and go to state 11 ]
-  ! por             [ shift and go to state 12 ]
-  ! divid           [ shift and go to state 13 ]
+    parder          shift and go to state 26
+    mas             shift and go to state 20
+    menos           shift and go to state 21
+    por             shift and go to state 22
+    modulo          shift and go to state 23
+    divid           shift and go to state 24
 
 
 state 19
 
-    (7) EXPRESION -> EXPRESION divid EXPRESION .
-    (4) EXPRESION -> EXPRESION . mas EXPRESION
-    (5) EXPRESION -> EXPRESION . menos EXPRESION
-    (6) EXPRESION -> EXPRESION . por EXPRESION
-    (7) EXPRESION -> EXPRESION . divid EXPRESION
+    (4) PRINT -> resprint not pariz EXPRESION parder .
 
-    puntycom        reduce using rule 7 (EXPRESION -> EXPRESION divid EXPRESION .)
-    mas             reduce using rule 7 (EXPRESION -> EXPRESION divid EXPRESION .)
-    menos           reduce using rule 7 (EXPRESION -> EXPRESION divid EXPRESION .)
-    por             reduce using rule 7 (EXPRESION -> EXPRESION divid EXPRESION .)
-    divid           reduce using rule 7 (EXPRESION -> EXPRESION divid EXPRESION .)
-    parder          reduce using rule 7 (EXPRESION -> EXPRESION divid EXPRESION .)
-
-  ! mas             [ shift and go to state 10 ]
-  ! menos           [ shift and go to state 11 ]
-  ! por             [ shift and go to state 12 ]
-  ! divid           [ shift and go to state 13 ]
+    puntycom        reduce using rule 4 (PRINT -> resprint not pariz EXPRESION parder .)
 
 
 state 20
 
-    (9) EXPRESION -> pariz EXPRESION parder .
+    (5) EXPRESION -> EXPRESION mas . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION por EXPRESION
+    (8) EXPRESION -> . EXPRESION modulo EXPRESION
+    (9) EXPRESION -> . EXPRESION divid EXPRESION
+    (10) EXPRESION -> . menos EXPRESION
+    (11) EXPRESION -> . pariz EXPRESION parder
+    (12) EXPRESION -> . entero
+    (13) EXPRESION -> . decimal
+    (14) EXPRESION -> . cadena
+    (15) EXPRESION -> . caracter
+    (16) EXPRESION -> . restrue
+    (17) EXPRESION -> . resfalse
 
-    puntycom        reduce using rule 9 (EXPRESION -> pariz EXPRESION parder .)
-    mas             reduce using rule 9 (EXPRESION -> pariz EXPRESION parder .)
-    menos           reduce using rule 9 (EXPRESION -> pariz EXPRESION parder .)
-    por             reduce using rule 9 (EXPRESION -> pariz EXPRESION parder .)
-    divid           reduce using rule 9 (EXPRESION -> pariz EXPRESION parder .)
-    parder          reduce using rule 9 (EXPRESION -> pariz EXPRESION parder .)
+    menos           shift and go to state 11
+    pariz           shift and go to state 9
+    entero          shift and go to state 12
+    decimal         shift and go to state 13
+    cadena          shift and go to state 14
+    caracter        shift and go to state 15
+    restrue         shift and go to state 16
+    resfalse        shift and go to state 17
 
+    EXPRESION                      shift and go to state 27
+
+state 21
+
+    (6) EXPRESION -> EXPRESION menos . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION por EXPRESION
+    (8) EXPRESION -> . EXPRESION modulo EXPRESION
+    (9) EXPRESION -> . EXPRESION divid EXPRESION
+    (10) EXPRESION -> . menos EXPRESION
+    (11) EXPRESION -> . pariz EXPRESION parder
+    (12) EXPRESION -> . entero
+    (13) EXPRESION -> . decimal
+    (14) EXPRESION -> . cadena
+    (15) EXPRESION -> . caracter
+    (16) EXPRESION -> . restrue
+    (17) EXPRESION -> . resfalse
+
+    menos           shift and go to state 11
+    pariz           shift and go to state 9
+    entero          shift and go to state 12
+    decimal         shift and go to state 13
+    cadena          shift and go to state 14
+    caracter        shift and go to state 15
+    restrue         shift and go to state 16
+    resfalse        shift and go to state 17
+
+    EXPRESION                      shift and go to state 28
+
+state 22
+
+    (7) EXPRESION -> EXPRESION por . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION por EXPRESION
+    (8) EXPRESION -> . EXPRESION modulo EXPRESION
+    (9) EXPRESION -> . EXPRESION divid EXPRESION
+    (10) EXPRESION -> . menos EXPRESION
+    (11) EXPRESION -> . pariz EXPRESION parder
+    (12) EXPRESION -> . entero
+    (13) EXPRESION -> . decimal
+    (14) EXPRESION -> . cadena
+    (15) EXPRESION -> . caracter
+    (16) EXPRESION -> . restrue
+    (17) EXPRESION -> . resfalse
+
+    menos           shift and go to state 11
+    pariz           shift and go to state 9
+    entero          shift and go to state 12
+    decimal         shift and go to state 13
+    cadena          shift and go to state 14
+    caracter        shift and go to state 15
+    restrue         shift and go to state 16
+    resfalse        shift and go to state 17
+
+    EXPRESION                      shift and go to state 29
+
+state 23
+
+    (8) EXPRESION -> EXPRESION modulo . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION por EXPRESION
+    (8) EXPRESION -> . EXPRESION modulo EXPRESION
+    (9) EXPRESION -> . EXPRESION divid EXPRESION
+    (10) EXPRESION -> . menos EXPRESION
+    (11) EXPRESION -> . pariz EXPRESION parder
+    (12) EXPRESION -> . entero
+    (13) EXPRESION -> . decimal
+    (14) EXPRESION -> . cadena
+    (15) EXPRESION -> . caracter
+    (16) EXPRESION -> . restrue
+    (17) EXPRESION -> . resfalse
+
+    menos           shift and go to state 11
+    pariz           shift and go to state 9
+    entero          shift and go to state 12
+    decimal         shift and go to state 13
+    cadena          shift and go to state 14
+    caracter        shift and go to state 15
+    restrue         shift and go to state 16
+    resfalse        shift and go to state 17
+
+    EXPRESION                      shift and go to state 30
+
+state 24
+
+    (9) EXPRESION -> EXPRESION divid . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION por EXPRESION
+    (8) EXPRESION -> . EXPRESION modulo EXPRESION
+    (9) EXPRESION -> . EXPRESION divid EXPRESION
+    (10) EXPRESION -> . menos EXPRESION
+    (11) EXPRESION -> . pariz EXPRESION parder
+    (12) EXPRESION -> . entero
+    (13) EXPRESION -> . decimal
+    (14) EXPRESION -> . cadena
+    (15) EXPRESION -> . caracter
+    (16) EXPRESION -> . restrue
+    (17) EXPRESION -> . resfalse
+
+    menos           shift and go to state 11
+    pariz           shift and go to state 9
+    entero          shift and go to state 12
+    decimal         shift and go to state 13
+    cadena          shift and go to state 14
+    caracter        shift and go to state 15
+    restrue         shift and go to state 16
+    resfalse        shift and go to state 17
+
+    EXPRESION                      shift and go to state 31
+
+state 25
+
+    (10) EXPRESION -> menos EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . por EXPRESION
+    (8) EXPRESION -> EXPRESION . modulo EXPRESION
+    (9) EXPRESION -> EXPRESION . divid EXPRESION
+
+    parder          reduce using rule 10 (EXPRESION -> menos EXPRESION .)
+    mas             reduce using rule 10 (EXPRESION -> menos EXPRESION .)
+    menos           reduce using rule 10 (EXPRESION -> menos EXPRESION .)
+    por             reduce using rule 10 (EXPRESION -> menos EXPRESION .)
+    modulo          reduce using rule 10 (EXPRESION -> menos EXPRESION .)
+    divid           reduce using rule 10 (EXPRESION -> menos EXPRESION .)
+
+  ! mas             [ shift and go to state 20 ]
+  ! menos           [ shift and go to state 21 ]
+  ! por             [ shift and go to state 22 ]
+  ! modulo          [ shift and go to state 23 ]
+  ! divid           [ shift and go to state 24 ]
+
+
+state 26
+
+    (11) EXPRESION -> pariz EXPRESION parder .
+
+    parder          reduce using rule 11 (EXPRESION -> pariz EXPRESION parder .)
+    mas             reduce using rule 11 (EXPRESION -> pariz EXPRESION parder .)
+    menos           reduce using rule 11 (EXPRESION -> pariz EXPRESION parder .)
+    por             reduce using rule 11 (EXPRESION -> pariz EXPRESION parder .)
+    modulo          reduce using rule 11 (EXPRESION -> pariz EXPRESION parder .)
+    divid           reduce using rule 11 (EXPRESION -> pariz EXPRESION parder .)
+
+
+state 27
+
+    (5) EXPRESION -> EXPRESION mas EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . por EXPRESION
+    (8) EXPRESION -> EXPRESION . modulo EXPRESION
+    (9) EXPRESION -> EXPRESION . divid EXPRESION
+
+    parder          reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    mas             reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    menos           reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    modulo          reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    por             shift and go to state 22
+    divid           shift and go to state 24
+
+  ! por             [ reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .) ]
+  ! divid           [ reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .) ]
+  ! mas             [ shift and go to state 20 ]
+  ! menos           [ shift and go to state 21 ]
+  ! modulo          [ shift and go to state 23 ]
+
+
+state 28
+
+    (6) EXPRESION -> EXPRESION menos EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . por EXPRESION
+    (8) EXPRESION -> EXPRESION . modulo EXPRESION
+    (9) EXPRESION -> EXPRESION . divid EXPRESION
+
+    parder          reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    mas             reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    menos           reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    modulo          reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    por             shift and go to state 22
+    divid           shift and go to state 24
+
+  ! por             [ reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .) ]
+  ! divid           [ reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .) ]
+  ! mas             [ shift and go to state 20 ]
+  ! menos           [ shift and go to state 21 ]
+  ! modulo          [ shift and go to state 23 ]
+
+
+state 29
+
+    (7) EXPRESION -> EXPRESION por EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . por EXPRESION
+    (8) EXPRESION -> EXPRESION . modulo EXPRESION
+    (9) EXPRESION -> EXPRESION . divid EXPRESION
+
+    parder          reduce using rule 7 (EXPRESION -> EXPRESION por EXPRESION .)
+    mas             reduce using rule 7 (EXPRESION -> EXPRESION por EXPRESION .)
+    menos           reduce using rule 7 (EXPRESION -> EXPRESION por EXPRESION .)
+    por             reduce using rule 7 (EXPRESION -> EXPRESION por EXPRESION .)
+    modulo          reduce using rule 7 (EXPRESION -> EXPRESION por EXPRESION .)
+    divid           reduce using rule 7 (EXPRESION -> EXPRESION por EXPRESION .)
+
+  ! mas             [ shift and go to state 20 ]
+  ! menos           [ shift and go to state 21 ]
+  ! por             [ shift and go to state 22 ]
+  ! modulo          [ shift and go to state 23 ]
+  ! divid           [ shift and go to state 24 ]
+
+
+state 30
+
+    (8) EXPRESION -> EXPRESION modulo EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . por EXPRESION
+    (8) EXPRESION -> EXPRESION . modulo EXPRESION
+    (9) EXPRESION -> EXPRESION . divid EXPRESION
+
+  ! shift/reduce conflict for mas resolved as shift
+  ! shift/reduce conflict for menos resolved as shift
+  ! shift/reduce conflict for por resolved as shift
+  ! shift/reduce conflict for modulo resolved as shift
+  ! shift/reduce conflict for divid resolved as shift
+    parder          reduce using rule 8 (EXPRESION -> EXPRESION modulo EXPRESION .)
+    mas             shift and go to state 20
+    menos           shift and go to state 21
+    por             shift and go to state 22
+    modulo          shift and go to state 23
+    divid           shift and go to state 24
+
+  ! mas             [ reduce using rule 8 (EXPRESION -> EXPRESION modulo EXPRESION .) ]
+  ! menos           [ reduce using rule 8 (EXPRESION -> EXPRESION modulo EXPRESION .) ]
+  ! por             [ reduce using rule 8 (EXPRESION -> EXPRESION modulo EXPRESION .) ]
+  ! modulo          [ reduce using rule 8 (EXPRESION -> EXPRESION modulo EXPRESION .) ]
+  ! divid           [ reduce using rule 8 (EXPRESION -> EXPRESION modulo EXPRESION .) ]
+
+
+state 31
+
+    (9) EXPRESION -> EXPRESION divid EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . por EXPRESION
+    (8) EXPRESION -> EXPRESION . modulo EXPRESION
+    (9) EXPRESION -> EXPRESION . divid EXPRESION
+
+    parder          reduce using rule 9 (EXPRESION -> EXPRESION divid EXPRESION .)
+    mas             reduce using rule 9 (EXPRESION -> EXPRESION divid EXPRESION .)
+    menos           reduce using rule 9 (EXPRESION -> EXPRESION divid EXPRESION .)
+    por             reduce using rule 9 (EXPRESION -> EXPRESION divid EXPRESION .)
+    modulo          reduce using rule 9 (EXPRESION -> EXPRESION divid EXPRESION .)
+    divid           reduce using rule 9 (EXPRESION -> EXPRESION divid EXPRESION .)
+
+  ! mas             [ shift and go to state 20 ]
+  ! menos           [ shift and go to state 21 ]
+  ! por             [ shift and go to state 22 ]
+  ! modulo          [ shift and go to state 23 ]
+  ! divid           [ shift and go to state 24 ]
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for mas in state 30 resolved as shift
+WARNING: shift/reduce conflict for menos in state 30 resolved as shift
+WARNING: shift/reduce conflict for por in state 30 resolved as shift
+WARNING: shift/reduce conflict for modulo in state 30 resolved as shift
+WARNING: shift/reduce conflict for divid in state 30 resolved as shift
