@@ -13,7 +13,7 @@ reserved = {
     'bool': 'resbool',
     'char': 'reschar',
     'String': 'resString',
-    '&str': 'resStr',
+    '&str': 'resStr',#REVISAR MAS ADELANTEEE
     'struct': 'resstruct',
     'println' : 'resprint',
 }
@@ -26,12 +26,15 @@ tokens  = [
     'menos',
     'por',
     'divid',
+    'igual',
     'modulo',
     'decimal',
     'cadena',
     'entero',
     'caracter',
+    'id',
     'puntycom',
+    'dospunt',
     'not'
 ]+ list(reserved.values())
 
@@ -42,9 +45,10 @@ t_menos     = r'-'
 t_por       = r'\*'
 t_divid     = r'/'
 t_puntycom  = r';'
+t_dospunt   = r':'
 t_modulo    = r'%'
 t_not       = r'!'
-
+t_igual     = r'='
 def t_id(t):
     r'[a-zA-Z][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value.lower(), 'id')
@@ -102,6 +106,8 @@ def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
+from expresion.variable import variable
+from instrucciones.declarar import declarar
 import ply.lex as lex
 lexer = lex.lex()
 
@@ -140,12 +146,44 @@ def p_instrucciones_lista_unica(t):
         t[0]=[]
         
 def p_instrucciones_evaluar(t):
-    '''INSTRUCCION :  PRINT  puntycom'''
+    '''INSTRUCCION :  PRINT  puntycom
+                | DECLARAR puntycom'''
     t[0]=t[1]
 
 def p_impresion(t):
     '''PRINT :  resprint not  pariz EXPRESION parder'''
     t[0]=Print(t.lineno(1), t.lexpos(1),t[4])
+
+def p_declarar_mut_tipo(t):
+    '''DECLARAR : reslet resmut id dospunt TIPOVAL igual EXPRESION'''
+    t[0]= declarar(t.lineno(1), t.lexpos(1),t[3],t[5],t[7],True)
+
+def p_declarar_mut(t):
+    '''DECLARAR : reslet resmut id igual EXPRESION'''
+    t[0]= declarar(t.lineno(1), t.lexpos(1),t[3],None,t[5],True)
+
+def p_declarar_tipo(t):
+    '''DECLARAR : reslet id dospunt TIPOVAL igual EXPRESION'''
+    t[0]= declarar(t.lineno(1), t.lexpos(1),t[2],t[4],t[6],False)
+
+def p_declarar(t):
+    '''DECLARAR : reslet id igual EXPRESION'''
+    t[0]= declarar(t.lineno(1), t.lexpos(1),t[2],None,t[4],False)
+
+def p_tipoval(t):
+    '''TIPOVAL : resi64
+            | resf64
+            | resbool
+            | reschar
+            | resString
+            | resStr'''
+    if (str(t[1])=="i64"):t[0]=Tipo.ENTERO
+    elif (str(t[1])=="f64"):t[0]=Tipo.DECIMAL
+    elif (str(t[1])=="bool"):t[0]=Tipo.BOOL
+    elif (str(t[1])=="char"):t[0]=Tipo.CHAR
+    elif (str(t[1])=="char"):t[0]=Tipo.CHAR
+    elif (str(t[1])=="String"):t[0]=Tipo.STRING
+    elif (str(t[1])=="&str"):t[0]=Tipo.STRING
 
 def p_expresion_binaria(t):
     '''EXPRESION : EXPRESION mas EXPRESION
@@ -178,6 +216,10 @@ def p_expresion_cadena(t):
 def p_expresion_caracter(t):
     'EXPRESION    : caracter'
     t[0] = nativo(t.lineno(1), t.lexpos(1),Tipo.CHAR,t[1])
+
+def p_expresion_id(t):
+    'EXPRESION    : id'
+    t[0] = variable(t.lineno(1),t.lexpos(1),t[1])
 
 def p_expresion_boolean(t):
     '''EXPRESION    : restrue
