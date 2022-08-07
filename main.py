@@ -13,7 +13,7 @@ ventana.title("Proyecto1 Compiladores 2 201701015")
 
 #FUNCIONES
 def ejecutar():
-    Imprimir.consola=""
+    Imprimir.vaciar()
     print(txtFuente.get("1.0", "end"))
     Respuesta= parser.parse(str(txtFuente.get("1.0", "end")))
     global_a = ambito()
@@ -24,6 +24,7 @@ def ejecutar():
     
     #print("------------------------------------")
     #print(Imprimir.consola)
+    txtConsola.delete("1.0","end")
     txtConsola.insert("end",Imprimir.consola)
 
 def Info():

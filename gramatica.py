@@ -107,6 +107,7 @@ def t_error(t):
     t.lexer.skip(1)
 
 from expresion.variable import variable
+from instrucciones.asignar import asignar
 from instrucciones.declarar import declarar
 import ply.lex as lex
 lexer = lex.lex()
@@ -147,7 +148,8 @@ def p_instrucciones_lista_unica(t):
         
 def p_instrucciones_evaluar(t):
     '''INSTRUCCION :  PRINT  puntycom
-                | DECLARAR puntycom'''
+                | DECLARAR puntycom
+                | ASIGNAR puntycom'''
     t[0]=t[1]
 
 def p_impresion(t):
@@ -169,6 +171,10 @@ def p_declarar_tipo(t):
 def p_declarar(t):
     '''DECLARAR : reslet id igual EXPRESION'''
     t[0]= declarar(t.lineno(1), t.lexpos(1),t[2],None,t[4],False)
+    
+def p_asignar(t):
+    '''ASIGNAR :  id igual EXPRESION'''
+    t[0]= asignar(t.lineno(1), t.lexpos(1),t[1],t[3])
 
 def p_tipoval(t):
     '''TIPOVAL : resi64

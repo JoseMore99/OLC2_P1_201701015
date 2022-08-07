@@ -12,5 +12,10 @@ class Print(instrucciones):
     def ejecutar(self,ambito):
         global consola
         aux = self.valor.ejecutar(ambito)
-        consola += str(aux["valor"])+"\n"
+        if(aux!=None):
+            consola += str(aux["valor"])+"\n"
         #print(consola)
+
+def vaciar():
+    global consola
+    consola=""

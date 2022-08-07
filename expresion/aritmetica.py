@@ -12,6 +12,7 @@ class aritmetica(expresion):
     def ejecutar(self,ambito):
         valIz = self.izquierda.ejecutar(ambito)
         valDer = self.derecha.ejecutar(ambito)
+        #print(str(valIz["tipo"])+"+"+str(valDer["tipo"]))
         if(valIz["tipo"]==valDer["tipo"]):
             if self.tipoArit == "+"  : 
                 return {"valor": valIz["valor"]+valDer["valor"], "tipo": valIz["tipo"]}
@@ -37,4 +38,5 @@ class aritmetica(expresion):
                     print("error en el modulo Aritmetica")
         else:
             print("error en la Aritmetica")
+            
         
