@@ -15,6 +15,7 @@ reserved = {
     'String': 'resString',
     '&str': 'resStr',#REVISAR MAS ADELANTEEE
     'struct': 'resstruct',
+    'fn': 'resfn',
     'println' : 'resprint',
 }
 
@@ -22,11 +23,15 @@ reserved = {
 tokens  = [
     'pariz',
     'parder',
+    'llaveiz',
+    'llaveder',
     'mas',
     'menos',
     'por',
     'divid',
     'igual',
+    'mayorque',
+    'menorque',
     'modulo',
     'decimal',
     'cadena',
@@ -40,6 +45,8 @@ tokens  = [
 
 t_pariz     = r'\('
 t_parder    = r'\)'
+t_llaveiz     = r'\{'
+t_llaveder    = r'\}'
 t_mas       = r'\+'
 t_menos     = r'-'
 t_por       = r'\*'
@@ -49,6 +56,8 @@ t_dospunt   = r':'
 t_modulo    = r'%'
 t_not       = r'!'
 t_igual     = r'='
+t_mayorque  = r'>'
+t_menorque  = r'<'
 def t_id(t):
     r'[a-zA-Z][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value.lower(), 'id')
@@ -108,7 +117,9 @@ def t_error(t):
 
 from expresion.variable import variable
 from instrucciones.asignar import asignar
+from instrucciones.bloque import bloque
 from instrucciones.declarar import declarar
+from instrucciones.funcion import funcion
 import ply.lex as lex
 lexer = lex.lex()
 
@@ -149,7 +160,8 @@ def p_instrucciones_lista_unica(t):
 def p_instrucciones_evaluar(t):
     '''INSTRUCCION :  PRINT  puntycom
                 | DECLARAR puntycom
-                | ASIGNAR puntycom'''
+                | ASIGNAR puntycom
+                | INSTFUNC '''
     t[0]=t[1]
 
 def p_impresion(t):
@@ -175,6 +187,18 @@ def p_declarar(t):
 def p_asignar(t):
     '''ASIGNAR :  id igual EXPRESION'''
     t[0]= asignar(t.lineno(1), t.lexpos(1),t[1],t[3])
+
+def p_funcion(t):
+    '''INSTFUNC : resfn id pariz parder llaveiz BLOQUE llaveder'''
+    t[0]= funcion(t.lineno(1), t.lexpos(1),t[2],None,t[6],[])
+
+def p_funcion_tipo(t):
+    '''INSTFUNC : resfn id pariz parder menos mayorque TIPOVAL llaveiz BLOQUE llaveder'''
+    t[0]= funcion(t.lineno(1), t.lexpos(1),t[2],t[7],t[9],[])
+
+def p_funcion_tipo(t):
+    '''BLOQUE : INSTRUCCIONES'''
+    t[0]= bloque(t.lineno(1), t.lexpos(1),t[1])
 
 def p_tipoval(t):
     '''TIPOVAL : resi64

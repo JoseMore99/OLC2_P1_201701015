@@ -1,4 +1,5 @@
 
+from instrucciones.funcion import funcion
 from simbolo.simbolo import simbolo
 
 
@@ -43,5 +44,26 @@ class ambito:
                 return s
             AmbitoAux = AmbitoAux.anterior
         return None
+    
+    def nuevaFuncion(self, simbolo):
+        s = self.tablaFunciones.get(simbolo.nombre.lower())
+        if s == None:
+            self.tablaFunciones[simbolo.nombre.lower()] = simbolo
+
+    def buscarFuncion(self, llave):
+        ent = self
+        while ent != None:
+            s = ent.tablaFunciones.get(llave)
+            if s != None:
+                return s
+            ent = ent.anterior
+        return None
+
+    def existeFuncion(self, llave):
+        s = self.tablaFunciones.get(llave.lower())
+        if s != None:
+            return True
+        return False
+
 
     

@@ -2,6 +2,8 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
+    mayorque
+    menorque
     resstruct
 
 Grammar
@@ -13,75 +15,85 @@ Rule 3     INSTRUCCIONES -> INSTRUCCION
 Rule 4     INSTRUCCION -> PRINT puntycom
 Rule 5     INSTRUCCION -> DECLARAR puntycom
 Rule 6     INSTRUCCION -> ASIGNAR puntycom
-Rule 7     PRINT -> resprint not pariz EXPRESION parder
-Rule 8     DECLARAR -> reslet resmut id dospunt TIPOVAL igual EXPRESION
-Rule 9     DECLARAR -> reslet resmut id igual EXPRESION
-Rule 10    DECLARAR -> reslet id dospunt TIPOVAL igual EXPRESION
-Rule 11    DECLARAR -> reslet id igual EXPRESION
-Rule 12    ASIGNAR -> id igual EXPRESION
-Rule 13    TIPOVAL -> resi64
-Rule 14    TIPOVAL -> resf64
-Rule 15    TIPOVAL -> resbool
-Rule 16    TIPOVAL -> reschar
-Rule 17    TIPOVAL -> resString
-Rule 18    TIPOVAL -> resStr
-Rule 19    EXPRESION -> EXPRESION mas EXPRESION
-Rule 20    EXPRESION -> EXPRESION menos EXPRESION
-Rule 21    EXPRESION -> EXPRESION por EXPRESION
-Rule 22    EXPRESION -> EXPRESION modulo EXPRESION
-Rule 23    EXPRESION -> EXPRESION divid EXPRESION
-Rule 24    EXPRESION -> menos EXPRESION
-Rule 25    EXPRESION -> pariz EXPRESION parder
-Rule 26    EXPRESION -> entero
-Rule 27    EXPRESION -> decimal
-Rule 28    EXPRESION -> cadena
-Rule 29    EXPRESION -> caracter
-Rule 30    EXPRESION -> id
-Rule 31    EXPRESION -> restrue
-Rule 32    EXPRESION -> resfalse
+Rule 7     INSTRUCCION -> INSTFUNC
+Rule 8     PRINT -> resprint not pariz EXPRESION parder
+Rule 9     DECLARAR -> reslet resmut id dospunt TIPOVAL igual EXPRESION
+Rule 10    DECLARAR -> reslet resmut id igual EXPRESION
+Rule 11    DECLARAR -> reslet id dospunt TIPOVAL igual EXPRESION
+Rule 12    DECLARAR -> reslet id igual EXPRESION
+Rule 13    ASIGNAR -> id igual EXPRESION
+Rule 14    INSTFUNC -> resfn id pariz parder llaveiz BLOQUE llaveder
+Rule 15    BLOQUE -> INSTRUCCIONES
+Rule 16    TIPOVAL -> resi64
+Rule 17    TIPOVAL -> resf64
+Rule 18    TIPOVAL -> resbool
+Rule 19    TIPOVAL -> reschar
+Rule 20    TIPOVAL -> resString
+Rule 21    TIPOVAL -> resStr
+Rule 22    EXPRESION -> EXPRESION mas EXPRESION
+Rule 23    EXPRESION -> EXPRESION menos EXPRESION
+Rule 24    EXPRESION -> EXPRESION por EXPRESION
+Rule 25    EXPRESION -> EXPRESION modulo EXPRESION
+Rule 26    EXPRESION -> EXPRESION divid EXPRESION
+Rule 27    EXPRESION -> menos EXPRESION
+Rule 28    EXPRESION -> pariz EXPRESION parder
+Rule 29    EXPRESION -> entero
+Rule 30    EXPRESION -> decimal
+Rule 31    EXPRESION -> cadena
+Rule 32    EXPRESION -> caracter
+Rule 33    EXPRESION -> id
+Rule 34    EXPRESION -> restrue
+Rule 35    EXPRESION -> resfalse
 
 Terminals, with rules where they appear
 
-cadena               : 28
-caracter             : 29
-decimal              : 27
-divid                : 23
-dospunt              : 8 10
-entero               : 26
+cadena               : 31
+caracter             : 32
+decimal              : 30
+divid                : 26
+dospunt              : 9 11
+entero               : 29
 error                : 
-id                   : 8 9 10 11 12 30
-igual                : 8 9 10 11 12
-mas                  : 19
-menos                : 20 24
-modulo               : 22
-not                  : 7
-parder               : 7 25
-pariz                : 7 25
-por                  : 21
+id                   : 9 10 11 12 13 14 33
+igual                : 9 10 11 12 13
+llaveder             : 14
+llaveiz              : 14
+mas                  : 22
+mayorque             : 
+menorque             : 
+menos                : 23 27
+modulo               : 25
+not                  : 8
+parder               : 8 14 28
+pariz                : 8 14 28
+por                  : 24
 puntycom             : 4 5 6
-resStr               : 18
-resString            : 17
-resbool              : 15
-reschar              : 16
-resf64               : 14
-resfalse             : 32
-resi64               : 13
-reslet               : 8 9 10 11
-resmut               : 8 9
-resprint             : 7
+resStr               : 21
+resString            : 20
+resbool              : 18
+reschar              : 19
+resf64               : 17
+resfalse             : 35
+resfn                : 14
+resi64               : 16
+reslet               : 9 10 11 12
+resmut               : 9 10
+resprint             : 8
 resstruct            : 
-restrue              : 31
+restrue              : 34
 
 Nonterminals, with rules where they appear
 
 ASIGNAR              : 6
+BLOQUE               : 14
 DECLARAR             : 5
-EXPRESION            : 7 8 9 10 11 12 19 19 20 20 21 21 22 22 23 23 24 25
+EXPRESION            : 8 9 10 11 12 13 22 22 23 23 24 24 25 25 26 26 27 28
 INIT                 : 0
+INSTFUNC             : 7
 INSTRUCCION          : 2 3
-INSTRUCCIONES        : 1 2
+INSTRUCCIONES        : 1 2 15
 PRINT                : 4
-TIPOVAL              : 8 10
+TIPOVAL              : 9 11
 
 Parsing method: LALR
 
@@ -94,16 +106,19 @@ state 0
     (4) INSTRUCCION -> . PRINT puntycom
     (5) INSTRUCCION -> . DECLARAR puntycom
     (6) INSTRUCCION -> . ASIGNAR puntycom
-    (7) PRINT -> . resprint not pariz EXPRESION parder
-    (8) DECLARAR -> . reslet resmut id dospunt TIPOVAL igual EXPRESION
-    (9) DECLARAR -> . reslet resmut id igual EXPRESION
-    (10) DECLARAR -> . reslet id dospunt TIPOVAL igual EXPRESION
-    (11) DECLARAR -> . reslet id igual EXPRESION
-    (12) ASIGNAR -> . id igual EXPRESION
+    (7) INSTRUCCION -> . INSTFUNC
+    (8) PRINT -> . resprint not pariz EXPRESION parder
+    (9) DECLARAR -> . reslet resmut id dospunt TIPOVAL igual EXPRESION
+    (10) DECLARAR -> . reslet resmut id igual EXPRESION
+    (11) DECLARAR -> . reslet id dospunt TIPOVAL igual EXPRESION
+    (12) DECLARAR -> . reslet id igual EXPRESION
+    (13) ASIGNAR -> . id igual EXPRESION
+    (14) INSTFUNC -> . resfn id pariz parder llaveiz BLOQUE llaveder
 
-    resprint        shift and go to state 7
-    reslet          shift and go to state 8
-    id              shift and go to state 9
+    resprint        shift and go to state 8
+    reslet          shift and go to state 9
+    id              shift and go to state 10
+    resfn           shift and go to state 11
 
     INIT                           shift and go to state 1
     INSTRUCCIONES                  shift and go to state 2
@@ -111,6 +126,7 @@ state 0
     PRINT                          shift and go to state 4
     DECLARAR                       shift and go to state 5
     ASIGNAR                        shift and go to state 6
+    INSTFUNC                       shift and go to state 7
 
 state 1
 
@@ -125,22 +141,26 @@ state 2
     (4) INSTRUCCION -> . PRINT puntycom
     (5) INSTRUCCION -> . DECLARAR puntycom
     (6) INSTRUCCION -> . ASIGNAR puntycom
-    (7) PRINT -> . resprint not pariz EXPRESION parder
-    (8) DECLARAR -> . reslet resmut id dospunt TIPOVAL igual EXPRESION
-    (9) DECLARAR -> . reslet resmut id igual EXPRESION
-    (10) DECLARAR -> . reslet id dospunt TIPOVAL igual EXPRESION
-    (11) DECLARAR -> . reslet id igual EXPRESION
-    (12) ASIGNAR -> . id igual EXPRESION
+    (7) INSTRUCCION -> . INSTFUNC
+    (8) PRINT -> . resprint not pariz EXPRESION parder
+    (9) DECLARAR -> . reslet resmut id dospunt TIPOVAL igual EXPRESION
+    (10) DECLARAR -> . reslet resmut id igual EXPRESION
+    (11) DECLARAR -> . reslet id dospunt TIPOVAL igual EXPRESION
+    (12) DECLARAR -> . reslet id igual EXPRESION
+    (13) ASIGNAR -> . id igual EXPRESION
+    (14) INSTFUNC -> . resfn id pariz parder llaveiz BLOQUE llaveder
 
     $end            reduce using rule 1 (INIT -> INSTRUCCIONES .)
-    resprint        shift and go to state 7
-    reslet          shift and go to state 8
-    id              shift and go to state 9
+    resprint        shift and go to state 8
+    reslet          shift and go to state 9
+    id              shift and go to state 10
+    resfn           shift and go to state 11
 
-    INSTRUCCION                    shift and go to state 10
+    INSTRUCCION                    shift and go to state 12
     PRINT                          shift and go to state 4
     DECLARAR                       shift and go to state 5
     ASIGNAR                        shift and go to state 6
+    INSTFUNC                       shift and go to state 7
 
 state 3
 
@@ -149,982 +169,1110 @@ state 3
     resprint        reduce using rule 3 (INSTRUCCIONES -> INSTRUCCION .)
     reslet          reduce using rule 3 (INSTRUCCIONES -> INSTRUCCION .)
     id              reduce using rule 3 (INSTRUCCIONES -> INSTRUCCION .)
+    resfn           reduce using rule 3 (INSTRUCCIONES -> INSTRUCCION .)
     $end            reduce using rule 3 (INSTRUCCIONES -> INSTRUCCION .)
+    llaveder        reduce using rule 3 (INSTRUCCIONES -> INSTRUCCION .)
 
 
 state 4
 
     (4) INSTRUCCION -> PRINT . puntycom
 
-    puntycom        shift and go to state 11
+    puntycom        shift and go to state 13
 
 
 state 5
 
     (5) INSTRUCCION -> DECLARAR . puntycom
 
-    puntycom        shift and go to state 12
+    puntycom        shift and go to state 14
 
 
 state 6
 
     (6) INSTRUCCION -> ASIGNAR . puntycom
 
-    puntycom        shift and go to state 13
+    puntycom        shift and go to state 15
 
 
 state 7
 
-    (7) PRINT -> resprint . not pariz EXPRESION parder
+    (7) INSTRUCCION -> INSTFUNC .
 
-    not             shift and go to state 14
+    resprint        reduce using rule 7 (INSTRUCCION -> INSTFUNC .)
+    reslet          reduce using rule 7 (INSTRUCCION -> INSTFUNC .)
+    id              reduce using rule 7 (INSTRUCCION -> INSTFUNC .)
+    resfn           reduce using rule 7 (INSTRUCCION -> INSTFUNC .)
+    $end            reduce using rule 7 (INSTRUCCION -> INSTFUNC .)
+    llaveder        reduce using rule 7 (INSTRUCCION -> INSTFUNC .)
 
 
 state 8
 
-    (8) DECLARAR -> reslet . resmut id dospunt TIPOVAL igual EXPRESION
-    (9) DECLARAR -> reslet . resmut id igual EXPRESION
-    (10) DECLARAR -> reslet . id dospunt TIPOVAL igual EXPRESION
-    (11) DECLARAR -> reslet . id igual EXPRESION
+    (8) PRINT -> resprint . not pariz EXPRESION parder
 
-    resmut          shift and go to state 15
-    id              shift and go to state 16
+    not             shift and go to state 16
 
 
 state 9
 
-    (12) ASIGNAR -> id . igual EXPRESION
+    (9) DECLARAR -> reslet . resmut id dospunt TIPOVAL igual EXPRESION
+    (10) DECLARAR -> reslet . resmut id igual EXPRESION
+    (11) DECLARAR -> reslet . id dospunt TIPOVAL igual EXPRESION
+    (12) DECLARAR -> reslet . id igual EXPRESION
 
-    igual           shift and go to state 17
+    resmut          shift and go to state 17
+    id              shift and go to state 18
 
 
 state 10
+
+    (13) ASIGNAR -> id . igual EXPRESION
+
+    igual           shift and go to state 19
+
+
+state 11
+
+    (14) INSTFUNC -> resfn . id pariz parder llaveiz BLOQUE llaveder
+
+    id              shift and go to state 20
+
+
+state 12
 
     (2) INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION .
 
     resprint        reduce using rule 2 (INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION .)
     reslet          reduce using rule 2 (INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION .)
     id              reduce using rule 2 (INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION .)
+    resfn           reduce using rule 2 (INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION .)
     $end            reduce using rule 2 (INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION .)
+    llaveder        reduce using rule 2 (INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION .)
 
 
-state 11
+state 13
 
     (4) INSTRUCCION -> PRINT puntycom .
 
     resprint        reduce using rule 4 (INSTRUCCION -> PRINT puntycom .)
     reslet          reduce using rule 4 (INSTRUCCION -> PRINT puntycom .)
     id              reduce using rule 4 (INSTRUCCION -> PRINT puntycom .)
+    resfn           reduce using rule 4 (INSTRUCCION -> PRINT puntycom .)
     $end            reduce using rule 4 (INSTRUCCION -> PRINT puntycom .)
+    llaveder        reduce using rule 4 (INSTRUCCION -> PRINT puntycom .)
 
 
-state 12
+state 14
 
     (5) INSTRUCCION -> DECLARAR puntycom .
 
     resprint        reduce using rule 5 (INSTRUCCION -> DECLARAR puntycom .)
     reslet          reduce using rule 5 (INSTRUCCION -> DECLARAR puntycom .)
     id              reduce using rule 5 (INSTRUCCION -> DECLARAR puntycom .)
+    resfn           reduce using rule 5 (INSTRUCCION -> DECLARAR puntycom .)
     $end            reduce using rule 5 (INSTRUCCION -> DECLARAR puntycom .)
+    llaveder        reduce using rule 5 (INSTRUCCION -> DECLARAR puntycom .)
 
 
-state 13
+state 15
 
     (6) INSTRUCCION -> ASIGNAR puntycom .
 
     resprint        reduce using rule 6 (INSTRUCCION -> ASIGNAR puntycom .)
     reslet          reduce using rule 6 (INSTRUCCION -> ASIGNAR puntycom .)
     id              reduce using rule 6 (INSTRUCCION -> ASIGNAR puntycom .)
+    resfn           reduce using rule 6 (INSTRUCCION -> ASIGNAR puntycom .)
     $end            reduce using rule 6 (INSTRUCCION -> ASIGNAR puntycom .)
-
-
-state 14
-
-    (7) PRINT -> resprint not . pariz EXPRESION parder
-
-    pariz           shift and go to state 18
-
-
-state 15
-
-    (8) DECLARAR -> reslet resmut . id dospunt TIPOVAL igual EXPRESION
-    (9) DECLARAR -> reslet resmut . id igual EXPRESION
-
-    id              shift and go to state 19
+    llaveder        reduce using rule 6 (INSTRUCCION -> ASIGNAR puntycom .)
 
 
 state 16
 
-    (10) DECLARAR -> reslet id . dospunt TIPOVAL igual EXPRESION
-    (11) DECLARAR -> reslet id . igual EXPRESION
+    (8) PRINT -> resprint not . pariz EXPRESION parder
 
-    dospunt         shift and go to state 20
-    igual           shift and go to state 21
+    pariz           shift and go to state 21
 
 
 state 17
 
-    (12) ASIGNAR -> id igual . EXPRESION
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (9) DECLARAR -> reslet resmut . id dospunt TIPOVAL igual EXPRESION
+    (10) DECLARAR -> reslet resmut . id igual EXPRESION
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
     id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
 
-    EXPRESION                      shift and go to state 23
 
 state 18
 
-    (7) PRINT -> resprint not pariz . EXPRESION parder
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (11) DECLARAR -> reslet id . dospunt TIPOVAL igual EXPRESION
+    (12) DECLARAR -> reslet id . igual EXPRESION
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    dospunt         shift and go to state 23
+    igual           shift and go to state 24
 
-    EXPRESION                      shift and go to state 32
 
 state 19
 
-    (8) DECLARAR -> reslet resmut id . dospunt TIPOVAL igual EXPRESION
-    (9) DECLARAR -> reslet resmut id . igual EXPRESION
+    (13) ASIGNAR -> id igual . EXPRESION
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    dospunt         shift and go to state 33
-    igual           shift and go to state 34
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
+    EXPRESION                      shift and go to state 26
 
 state 20
 
-    (10) DECLARAR -> reslet id dospunt . TIPOVAL igual EXPRESION
-    (13) TIPOVAL -> . resi64
-    (14) TIPOVAL -> . resf64
-    (15) TIPOVAL -> . resbool
-    (16) TIPOVAL -> . reschar
-    (17) TIPOVAL -> . resString
-    (18) TIPOVAL -> . resStr
+    (14) INSTFUNC -> resfn id . pariz parder llaveiz BLOQUE llaveder
 
-    resi64          shift and go to state 36
-    resf64          shift and go to state 37
-    resbool         shift and go to state 38
-    reschar         shift and go to state 39
-    resString       shift and go to state 40
-    resStr          shift and go to state 41
+    pariz           shift and go to state 35
 
-    TIPOVAL                        shift and go to state 35
 
 state 21
 
-    (11) DECLARAR -> reslet id igual . EXPRESION
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (8) PRINT -> resprint not pariz . EXPRESION parder
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
-    EXPRESION                      shift and go to state 42
+    EXPRESION                      shift and go to state 36
 
 state 22
 
-    (30) EXPRESION -> id .
+    (9) DECLARAR -> reslet resmut id . dospunt TIPOVAL igual EXPRESION
+    (10) DECLARAR -> reslet resmut id . igual EXPRESION
 
-    mas             reduce using rule 30 (EXPRESION -> id .)
-    menos           reduce using rule 30 (EXPRESION -> id .)
-    por             reduce using rule 30 (EXPRESION -> id .)
-    modulo          reduce using rule 30 (EXPRESION -> id .)
-    divid           reduce using rule 30 (EXPRESION -> id .)
-    puntycom        reduce using rule 30 (EXPRESION -> id .)
-    parder          reduce using rule 30 (EXPRESION -> id .)
+    dospunt         shift and go to state 37
+    igual           shift and go to state 38
 
 
 state 23
 
-    (12) ASIGNAR -> id igual EXPRESION .
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (11) DECLARAR -> reslet id dospunt . TIPOVAL igual EXPRESION
+    (16) TIPOVAL -> . resi64
+    (17) TIPOVAL -> . resf64
+    (18) TIPOVAL -> . resbool
+    (19) TIPOVAL -> . reschar
+    (20) TIPOVAL -> . resString
+    (21) TIPOVAL -> . resStr
 
-    puntycom        reduce using rule 12 (ASIGNAR -> id igual EXPRESION .)
-    mas             shift and go to state 43
-    menos           shift and go to state 44
-    por             shift and go to state 45
-    modulo          shift and go to state 46
-    divid           shift and go to state 47
+    resi64          shift and go to state 40
+    resf64          shift and go to state 41
+    resbool         shift and go to state 42
+    reschar         shift and go to state 43
+    resString       shift and go to state 44
+    resStr          shift and go to state 45
 
+    TIPOVAL                        shift and go to state 39
 
 state 24
 
-    (24) EXPRESION -> menos . EXPRESION
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (12) DECLARAR -> reslet id igual . EXPRESION
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
-    EXPRESION                      shift and go to state 48
+    EXPRESION                      shift and go to state 46
 
 state 25
 
-    (25) EXPRESION -> pariz . EXPRESION parder
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (33) EXPRESION -> id .
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    mas             reduce using rule 33 (EXPRESION -> id .)
+    menos           reduce using rule 33 (EXPRESION -> id .)
+    por             reduce using rule 33 (EXPRESION -> id .)
+    modulo          reduce using rule 33 (EXPRESION -> id .)
+    divid           reduce using rule 33 (EXPRESION -> id .)
+    puntycom        reduce using rule 33 (EXPRESION -> id .)
+    parder          reduce using rule 33 (EXPRESION -> id .)
 
-    EXPRESION                      shift and go to state 49
 
 state 26
 
-    (26) EXPRESION -> entero .
+    (13) ASIGNAR -> id igual EXPRESION .
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
 
-    mas             reduce using rule 26 (EXPRESION -> entero .)
-    menos           reduce using rule 26 (EXPRESION -> entero .)
-    por             reduce using rule 26 (EXPRESION -> entero .)
-    modulo          reduce using rule 26 (EXPRESION -> entero .)
-    divid           reduce using rule 26 (EXPRESION -> entero .)
-    puntycom        reduce using rule 26 (EXPRESION -> entero .)
-    parder          reduce using rule 26 (EXPRESION -> entero .)
+    puntycom        reduce using rule 13 (ASIGNAR -> id igual EXPRESION .)
+    mas             shift and go to state 47
+    menos           shift and go to state 48
+    por             shift and go to state 49
+    modulo          shift and go to state 50
+    divid           shift and go to state 51
 
 
 state 27
 
-    (27) EXPRESION -> decimal .
+    (27) EXPRESION -> menos . EXPRESION
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    mas             reduce using rule 27 (EXPRESION -> decimal .)
-    menos           reduce using rule 27 (EXPRESION -> decimal .)
-    por             reduce using rule 27 (EXPRESION -> decimal .)
-    modulo          reduce using rule 27 (EXPRESION -> decimal .)
-    divid           reduce using rule 27 (EXPRESION -> decimal .)
-    puntycom        reduce using rule 27 (EXPRESION -> decimal .)
-    parder          reduce using rule 27 (EXPRESION -> decimal .)
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
+    EXPRESION                      shift and go to state 52
 
 state 28
 
-    (28) EXPRESION -> cadena .
+    (28) EXPRESION -> pariz . EXPRESION parder
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    mas             reduce using rule 28 (EXPRESION -> cadena .)
-    menos           reduce using rule 28 (EXPRESION -> cadena .)
-    por             reduce using rule 28 (EXPRESION -> cadena .)
-    modulo          reduce using rule 28 (EXPRESION -> cadena .)
-    divid           reduce using rule 28 (EXPRESION -> cadena .)
-    puntycom        reduce using rule 28 (EXPRESION -> cadena .)
-    parder          reduce using rule 28 (EXPRESION -> cadena .)
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
+    EXPRESION                      shift and go to state 53
 
 state 29
 
-    (29) EXPRESION -> caracter .
+    (29) EXPRESION -> entero .
 
-    mas             reduce using rule 29 (EXPRESION -> caracter .)
-    menos           reduce using rule 29 (EXPRESION -> caracter .)
-    por             reduce using rule 29 (EXPRESION -> caracter .)
-    modulo          reduce using rule 29 (EXPRESION -> caracter .)
-    divid           reduce using rule 29 (EXPRESION -> caracter .)
-    puntycom        reduce using rule 29 (EXPRESION -> caracter .)
-    parder          reduce using rule 29 (EXPRESION -> caracter .)
+    mas             reduce using rule 29 (EXPRESION -> entero .)
+    menos           reduce using rule 29 (EXPRESION -> entero .)
+    por             reduce using rule 29 (EXPRESION -> entero .)
+    modulo          reduce using rule 29 (EXPRESION -> entero .)
+    divid           reduce using rule 29 (EXPRESION -> entero .)
+    puntycom        reduce using rule 29 (EXPRESION -> entero .)
+    parder          reduce using rule 29 (EXPRESION -> entero .)
 
 
 state 30
 
-    (31) EXPRESION -> restrue .
+    (30) EXPRESION -> decimal .
 
-    mas             reduce using rule 31 (EXPRESION -> restrue .)
-    menos           reduce using rule 31 (EXPRESION -> restrue .)
-    por             reduce using rule 31 (EXPRESION -> restrue .)
-    modulo          reduce using rule 31 (EXPRESION -> restrue .)
-    divid           reduce using rule 31 (EXPRESION -> restrue .)
-    puntycom        reduce using rule 31 (EXPRESION -> restrue .)
-    parder          reduce using rule 31 (EXPRESION -> restrue .)
+    mas             reduce using rule 30 (EXPRESION -> decimal .)
+    menos           reduce using rule 30 (EXPRESION -> decimal .)
+    por             reduce using rule 30 (EXPRESION -> decimal .)
+    modulo          reduce using rule 30 (EXPRESION -> decimal .)
+    divid           reduce using rule 30 (EXPRESION -> decimal .)
+    puntycom        reduce using rule 30 (EXPRESION -> decimal .)
+    parder          reduce using rule 30 (EXPRESION -> decimal .)
 
 
 state 31
 
-    (32) EXPRESION -> resfalse .
+    (31) EXPRESION -> cadena .
 
-    mas             reduce using rule 32 (EXPRESION -> resfalse .)
-    menos           reduce using rule 32 (EXPRESION -> resfalse .)
-    por             reduce using rule 32 (EXPRESION -> resfalse .)
-    modulo          reduce using rule 32 (EXPRESION -> resfalse .)
-    divid           reduce using rule 32 (EXPRESION -> resfalse .)
-    puntycom        reduce using rule 32 (EXPRESION -> resfalse .)
-    parder          reduce using rule 32 (EXPRESION -> resfalse .)
+    mas             reduce using rule 31 (EXPRESION -> cadena .)
+    menos           reduce using rule 31 (EXPRESION -> cadena .)
+    por             reduce using rule 31 (EXPRESION -> cadena .)
+    modulo          reduce using rule 31 (EXPRESION -> cadena .)
+    divid           reduce using rule 31 (EXPRESION -> cadena .)
+    puntycom        reduce using rule 31 (EXPRESION -> cadena .)
+    parder          reduce using rule 31 (EXPRESION -> cadena .)
 
 
 state 32
 
-    (7) PRINT -> resprint not pariz EXPRESION . parder
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (32) EXPRESION -> caracter .
 
-    parder          shift and go to state 50
-    mas             shift and go to state 43
-    menos           shift and go to state 44
-    por             shift and go to state 45
-    modulo          shift and go to state 46
-    divid           shift and go to state 47
+    mas             reduce using rule 32 (EXPRESION -> caracter .)
+    menos           reduce using rule 32 (EXPRESION -> caracter .)
+    por             reduce using rule 32 (EXPRESION -> caracter .)
+    modulo          reduce using rule 32 (EXPRESION -> caracter .)
+    divid           reduce using rule 32 (EXPRESION -> caracter .)
+    puntycom        reduce using rule 32 (EXPRESION -> caracter .)
+    parder          reduce using rule 32 (EXPRESION -> caracter .)
 
 
 state 33
 
-    (8) DECLARAR -> reslet resmut id dospunt . TIPOVAL igual EXPRESION
-    (13) TIPOVAL -> . resi64
-    (14) TIPOVAL -> . resf64
-    (15) TIPOVAL -> . resbool
-    (16) TIPOVAL -> . reschar
-    (17) TIPOVAL -> . resString
-    (18) TIPOVAL -> . resStr
+    (34) EXPRESION -> restrue .
 
-    resi64          shift and go to state 36
-    resf64          shift and go to state 37
-    resbool         shift and go to state 38
-    reschar         shift and go to state 39
-    resString       shift and go to state 40
-    resStr          shift and go to state 41
+    mas             reduce using rule 34 (EXPRESION -> restrue .)
+    menos           reduce using rule 34 (EXPRESION -> restrue .)
+    por             reduce using rule 34 (EXPRESION -> restrue .)
+    modulo          reduce using rule 34 (EXPRESION -> restrue .)
+    divid           reduce using rule 34 (EXPRESION -> restrue .)
+    puntycom        reduce using rule 34 (EXPRESION -> restrue .)
+    parder          reduce using rule 34 (EXPRESION -> restrue .)
 
-    TIPOVAL                        shift and go to state 51
 
 state 34
 
-    (9) DECLARAR -> reslet resmut id igual . EXPRESION
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (35) EXPRESION -> resfalse .
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    mas             reduce using rule 35 (EXPRESION -> resfalse .)
+    menos           reduce using rule 35 (EXPRESION -> resfalse .)
+    por             reduce using rule 35 (EXPRESION -> resfalse .)
+    modulo          reduce using rule 35 (EXPRESION -> resfalse .)
+    divid           reduce using rule 35 (EXPRESION -> resfalse .)
+    puntycom        reduce using rule 35 (EXPRESION -> resfalse .)
+    parder          reduce using rule 35 (EXPRESION -> resfalse .)
 
-    EXPRESION                      shift and go to state 52
 
 state 35
 
-    (10) DECLARAR -> reslet id dospunt TIPOVAL . igual EXPRESION
+    (14) INSTFUNC -> resfn id pariz . parder llaveiz BLOQUE llaveder
 
-    igual           shift and go to state 53
+    parder          shift and go to state 54
 
 
 state 36
 
-    (13) TIPOVAL -> resi64 .
+    (8) PRINT -> resprint not pariz EXPRESION . parder
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
 
-    igual           reduce using rule 13 (TIPOVAL -> resi64 .)
+    parder          shift and go to state 55
+    mas             shift and go to state 47
+    menos           shift and go to state 48
+    por             shift and go to state 49
+    modulo          shift and go to state 50
+    divid           shift and go to state 51
 
 
 state 37
 
-    (14) TIPOVAL -> resf64 .
+    (9) DECLARAR -> reslet resmut id dospunt . TIPOVAL igual EXPRESION
+    (16) TIPOVAL -> . resi64
+    (17) TIPOVAL -> . resf64
+    (18) TIPOVAL -> . resbool
+    (19) TIPOVAL -> . reschar
+    (20) TIPOVAL -> . resString
+    (21) TIPOVAL -> . resStr
 
-    igual           reduce using rule 14 (TIPOVAL -> resf64 .)
+    resi64          shift and go to state 40
+    resf64          shift and go to state 41
+    resbool         shift and go to state 42
+    reschar         shift and go to state 43
+    resString       shift and go to state 44
+    resStr          shift and go to state 45
 
+    TIPOVAL                        shift and go to state 56
 
 state 38
 
-    (15) TIPOVAL -> resbool .
+    (10) DECLARAR -> reslet resmut id igual . EXPRESION
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    igual           reduce using rule 15 (TIPOVAL -> resbool .)
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
+    EXPRESION                      shift and go to state 57
 
 state 39
 
-    (16) TIPOVAL -> reschar .
+    (11) DECLARAR -> reslet id dospunt TIPOVAL . igual EXPRESION
 
-    igual           reduce using rule 16 (TIPOVAL -> reschar .)
+    igual           shift and go to state 58
 
 
 state 40
 
-    (17) TIPOVAL -> resString .
+    (16) TIPOVAL -> resi64 .
 
-    igual           reduce using rule 17 (TIPOVAL -> resString .)
+    igual           reduce using rule 16 (TIPOVAL -> resi64 .)
 
 
 state 41
 
-    (18) TIPOVAL -> resStr .
+    (17) TIPOVAL -> resf64 .
 
-    igual           reduce using rule 18 (TIPOVAL -> resStr .)
+    igual           reduce using rule 17 (TIPOVAL -> resf64 .)
 
 
 state 42
 
-    (11) DECLARAR -> reslet id igual EXPRESION .
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (18) TIPOVAL -> resbool .
 
-    puntycom        reduce using rule 11 (DECLARAR -> reslet id igual EXPRESION .)
-    mas             shift and go to state 43
-    menos           shift and go to state 44
-    por             shift and go to state 45
-    modulo          shift and go to state 46
-    divid           shift and go to state 47
+    igual           reduce using rule 18 (TIPOVAL -> resbool .)
 
 
 state 43
 
-    (19) EXPRESION -> EXPRESION mas . EXPRESION
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (19) TIPOVAL -> reschar .
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    igual           reduce using rule 19 (TIPOVAL -> reschar .)
 
-    EXPRESION                      shift and go to state 54
 
 state 44
 
-    (20) EXPRESION -> EXPRESION menos . EXPRESION
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (20) TIPOVAL -> resString .
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    igual           reduce using rule 20 (TIPOVAL -> resString .)
 
-    EXPRESION                      shift and go to state 55
 
 state 45
 
-    (21) EXPRESION -> EXPRESION por . EXPRESION
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (21) TIPOVAL -> resStr .
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    igual           reduce using rule 21 (TIPOVAL -> resStr .)
 
-    EXPRESION                      shift and go to state 56
 
 state 46
 
-    (22) EXPRESION -> EXPRESION modulo . EXPRESION
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (12) DECLARAR -> reslet id igual EXPRESION .
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    puntycom        reduce using rule 12 (DECLARAR -> reslet id igual EXPRESION .)
+    mas             shift and go to state 47
+    menos           shift and go to state 48
+    por             shift and go to state 49
+    modulo          shift and go to state 50
+    divid           shift and go to state 51
 
-    EXPRESION                      shift and go to state 57
 
 state 47
 
-    (23) EXPRESION -> EXPRESION divid . EXPRESION
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (22) EXPRESION -> EXPRESION mas . EXPRESION
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
-    EXPRESION                      shift and go to state 58
+    EXPRESION                      shift and go to state 59
 
 state 48
 
-    (24) EXPRESION -> menos EXPRESION .
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (23) EXPRESION -> EXPRESION menos . EXPRESION
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    mas             reduce using rule 24 (EXPRESION -> menos EXPRESION .)
-    menos           reduce using rule 24 (EXPRESION -> menos EXPRESION .)
-    por             reduce using rule 24 (EXPRESION -> menos EXPRESION .)
-    modulo          reduce using rule 24 (EXPRESION -> menos EXPRESION .)
-    divid           reduce using rule 24 (EXPRESION -> menos EXPRESION .)
-    puntycom        reduce using rule 24 (EXPRESION -> menos EXPRESION .)
-    parder          reduce using rule 24 (EXPRESION -> menos EXPRESION .)
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
-  ! mas             [ shift and go to state 43 ]
-  ! menos           [ shift and go to state 44 ]
-  ! por             [ shift and go to state 45 ]
-  ! modulo          [ shift and go to state 46 ]
-  ! divid           [ shift and go to state 47 ]
-
+    EXPRESION                      shift and go to state 60
 
 state 49
 
-    (25) EXPRESION -> pariz EXPRESION . parder
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (24) EXPRESION -> EXPRESION por . EXPRESION
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    parder          shift and go to state 59
-    mas             shift and go to state 43
-    menos           shift and go to state 44
-    por             shift and go to state 45
-    modulo          shift and go to state 46
-    divid           shift and go to state 47
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
+    EXPRESION                      shift and go to state 61
 
 state 50
 
-    (7) PRINT -> resprint not pariz EXPRESION parder .
+    (25) EXPRESION -> EXPRESION modulo . EXPRESION
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    puntycom        reduce using rule 7 (PRINT -> resprint not pariz EXPRESION parder .)
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
+    EXPRESION                      shift and go to state 62
 
 state 51
 
-    (8) DECLARAR -> reslet resmut id dospunt TIPOVAL . igual EXPRESION
+    (26) EXPRESION -> EXPRESION divid . EXPRESION
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    igual           shift and go to state 60
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
+    EXPRESION                      shift and go to state 63
 
 state 52
 
-    (9) DECLARAR -> reslet resmut id igual EXPRESION .
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (27) EXPRESION -> menos EXPRESION .
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
 
-    puntycom        reduce using rule 9 (DECLARAR -> reslet resmut id igual EXPRESION .)
-    mas             shift and go to state 43
-    menos           shift and go to state 44
-    por             shift and go to state 45
-    modulo          shift and go to state 46
-    divid           shift and go to state 47
+    mas             reduce using rule 27 (EXPRESION -> menos EXPRESION .)
+    menos           reduce using rule 27 (EXPRESION -> menos EXPRESION .)
+    por             reduce using rule 27 (EXPRESION -> menos EXPRESION .)
+    modulo          reduce using rule 27 (EXPRESION -> menos EXPRESION .)
+    divid           reduce using rule 27 (EXPRESION -> menos EXPRESION .)
+    puntycom        reduce using rule 27 (EXPRESION -> menos EXPRESION .)
+    parder          reduce using rule 27 (EXPRESION -> menos EXPRESION .)
+
+  ! mas             [ shift and go to state 47 ]
+  ! menos           [ shift and go to state 48 ]
+  ! por             [ shift and go to state 49 ]
+  ! modulo          [ shift and go to state 50 ]
+  ! divid           [ shift and go to state 51 ]
 
 
 state 53
 
-    (10) DECLARAR -> reslet id dospunt TIPOVAL igual . EXPRESION
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (28) EXPRESION -> pariz EXPRESION . parder
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    parder          shift and go to state 64
+    mas             shift and go to state 47
+    menos           shift and go to state 48
+    por             shift and go to state 49
+    modulo          shift and go to state 50
+    divid           shift and go to state 51
 
-    EXPRESION                      shift and go to state 61
 
 state 54
 
-    (19) EXPRESION -> EXPRESION mas EXPRESION .
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (14) INSTFUNC -> resfn id pariz parder . llaveiz BLOQUE llaveder
 
-    mas             reduce using rule 19 (EXPRESION -> EXPRESION mas EXPRESION .)
-    menos           reduce using rule 19 (EXPRESION -> EXPRESION mas EXPRESION .)
-    puntycom        reduce using rule 19 (EXPRESION -> EXPRESION mas EXPRESION .)
-    parder          reduce using rule 19 (EXPRESION -> EXPRESION mas EXPRESION .)
-    por             shift and go to state 45
-    modulo          shift and go to state 46
-    divid           shift and go to state 47
-
-  ! por             [ reduce using rule 19 (EXPRESION -> EXPRESION mas EXPRESION .) ]
-  ! modulo          [ reduce using rule 19 (EXPRESION -> EXPRESION mas EXPRESION .) ]
-  ! divid           [ reduce using rule 19 (EXPRESION -> EXPRESION mas EXPRESION .) ]
-  ! mas             [ shift and go to state 43 ]
-  ! menos           [ shift and go to state 44 ]
+    llaveiz         shift and go to state 65
 
 
 state 55
 
-    (20) EXPRESION -> EXPRESION menos EXPRESION .
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (8) PRINT -> resprint not pariz EXPRESION parder .
 
-    mas             reduce using rule 20 (EXPRESION -> EXPRESION menos EXPRESION .)
-    menos           reduce using rule 20 (EXPRESION -> EXPRESION menos EXPRESION .)
-    puntycom        reduce using rule 20 (EXPRESION -> EXPRESION menos EXPRESION .)
-    parder          reduce using rule 20 (EXPRESION -> EXPRESION menos EXPRESION .)
-    por             shift and go to state 45
-    modulo          shift and go to state 46
-    divid           shift and go to state 47
-
-  ! por             [ reduce using rule 20 (EXPRESION -> EXPRESION menos EXPRESION .) ]
-  ! modulo          [ reduce using rule 20 (EXPRESION -> EXPRESION menos EXPRESION .) ]
-  ! divid           [ reduce using rule 20 (EXPRESION -> EXPRESION menos EXPRESION .) ]
-  ! mas             [ shift and go to state 43 ]
-  ! menos           [ shift and go to state 44 ]
+    puntycom        reduce using rule 8 (PRINT -> resprint not pariz EXPRESION parder .)
 
 
 state 56
 
-    (21) EXPRESION -> EXPRESION por EXPRESION .
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (9) DECLARAR -> reslet resmut id dospunt TIPOVAL . igual EXPRESION
 
-    mas             reduce using rule 21 (EXPRESION -> EXPRESION por EXPRESION .)
-    menos           reduce using rule 21 (EXPRESION -> EXPRESION por EXPRESION .)
-    por             reduce using rule 21 (EXPRESION -> EXPRESION por EXPRESION .)
-    modulo          reduce using rule 21 (EXPRESION -> EXPRESION por EXPRESION .)
-    divid           reduce using rule 21 (EXPRESION -> EXPRESION por EXPRESION .)
-    puntycom        reduce using rule 21 (EXPRESION -> EXPRESION por EXPRESION .)
-    parder          reduce using rule 21 (EXPRESION -> EXPRESION por EXPRESION .)
-
-  ! mas             [ shift and go to state 43 ]
-  ! menos           [ shift and go to state 44 ]
-  ! por             [ shift and go to state 45 ]
-  ! modulo          [ shift and go to state 46 ]
-  ! divid           [ shift and go to state 47 ]
+    igual           shift and go to state 66
 
 
 state 57
 
-    (22) EXPRESION -> EXPRESION modulo EXPRESION .
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (10) DECLARAR -> reslet resmut id igual EXPRESION .
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
 
-    mas             reduce using rule 22 (EXPRESION -> EXPRESION modulo EXPRESION .)
-    menos           reduce using rule 22 (EXPRESION -> EXPRESION modulo EXPRESION .)
-    por             reduce using rule 22 (EXPRESION -> EXPRESION modulo EXPRESION .)
-    modulo          reduce using rule 22 (EXPRESION -> EXPRESION modulo EXPRESION .)
-    divid           reduce using rule 22 (EXPRESION -> EXPRESION modulo EXPRESION .)
-    puntycom        reduce using rule 22 (EXPRESION -> EXPRESION modulo EXPRESION .)
-    parder          reduce using rule 22 (EXPRESION -> EXPRESION modulo EXPRESION .)
-
-  ! mas             [ shift and go to state 43 ]
-  ! menos           [ shift and go to state 44 ]
-  ! por             [ shift and go to state 45 ]
-  ! modulo          [ shift and go to state 46 ]
-  ! divid           [ shift and go to state 47 ]
+    puntycom        reduce using rule 10 (DECLARAR -> reslet resmut id igual EXPRESION .)
+    mas             shift and go to state 47
+    menos           shift and go to state 48
+    por             shift and go to state 49
+    modulo          shift and go to state 50
+    divid           shift and go to state 51
 
 
 state 58
 
-    (23) EXPRESION -> EXPRESION divid EXPRESION .
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (11) DECLARAR -> reslet id dospunt TIPOVAL igual . EXPRESION
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
 
-    mas             reduce using rule 23 (EXPRESION -> EXPRESION divid EXPRESION .)
-    menos           reduce using rule 23 (EXPRESION -> EXPRESION divid EXPRESION .)
-    por             reduce using rule 23 (EXPRESION -> EXPRESION divid EXPRESION .)
-    modulo          reduce using rule 23 (EXPRESION -> EXPRESION divid EXPRESION .)
-    divid           reduce using rule 23 (EXPRESION -> EXPRESION divid EXPRESION .)
-    puntycom        reduce using rule 23 (EXPRESION -> EXPRESION divid EXPRESION .)
-    parder          reduce using rule 23 (EXPRESION -> EXPRESION divid EXPRESION .)
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
 
-  ! mas             [ shift and go to state 43 ]
-  ! menos           [ shift and go to state 44 ]
-  ! por             [ shift and go to state 45 ]
-  ! modulo          [ shift and go to state 46 ]
-  ! divid           [ shift and go to state 47 ]
-
+    EXPRESION                      shift and go to state 67
 
 state 59
 
-    (25) EXPRESION -> pariz EXPRESION parder .
+    (22) EXPRESION -> EXPRESION mas EXPRESION .
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
 
-    mas             reduce using rule 25 (EXPRESION -> pariz EXPRESION parder .)
-    menos           reduce using rule 25 (EXPRESION -> pariz EXPRESION parder .)
-    por             reduce using rule 25 (EXPRESION -> pariz EXPRESION parder .)
-    modulo          reduce using rule 25 (EXPRESION -> pariz EXPRESION parder .)
-    divid           reduce using rule 25 (EXPRESION -> pariz EXPRESION parder .)
-    puntycom        reduce using rule 25 (EXPRESION -> pariz EXPRESION parder .)
-    parder          reduce using rule 25 (EXPRESION -> pariz EXPRESION parder .)
+    mas             reduce using rule 22 (EXPRESION -> EXPRESION mas EXPRESION .)
+    menos           reduce using rule 22 (EXPRESION -> EXPRESION mas EXPRESION .)
+    puntycom        reduce using rule 22 (EXPRESION -> EXPRESION mas EXPRESION .)
+    parder          reduce using rule 22 (EXPRESION -> EXPRESION mas EXPRESION .)
+    por             shift and go to state 49
+    modulo          shift and go to state 50
+    divid           shift and go to state 51
+
+  ! por             [ reduce using rule 22 (EXPRESION -> EXPRESION mas EXPRESION .) ]
+  ! modulo          [ reduce using rule 22 (EXPRESION -> EXPRESION mas EXPRESION .) ]
+  ! divid           [ reduce using rule 22 (EXPRESION -> EXPRESION mas EXPRESION .) ]
+  ! mas             [ shift and go to state 47 ]
+  ! menos           [ shift and go to state 48 ]
 
 
 state 60
 
-    (8) DECLARAR -> reslet resmut id dospunt TIPOVAL igual . EXPRESION
-    (19) EXPRESION -> . EXPRESION mas EXPRESION
-    (20) EXPRESION -> . EXPRESION menos EXPRESION
-    (21) EXPRESION -> . EXPRESION por EXPRESION
-    (22) EXPRESION -> . EXPRESION modulo EXPRESION
-    (23) EXPRESION -> . EXPRESION divid EXPRESION
-    (24) EXPRESION -> . menos EXPRESION
-    (25) EXPRESION -> . pariz EXPRESION parder
-    (26) EXPRESION -> . entero
-    (27) EXPRESION -> . decimal
-    (28) EXPRESION -> . cadena
-    (29) EXPRESION -> . caracter
-    (30) EXPRESION -> . id
-    (31) EXPRESION -> . restrue
-    (32) EXPRESION -> . resfalse
+    (23) EXPRESION -> EXPRESION menos EXPRESION .
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
 
-    menos           shift and go to state 24
-    pariz           shift and go to state 25
-    entero          shift and go to state 26
-    decimal         shift and go to state 27
-    cadena          shift and go to state 28
-    caracter        shift and go to state 29
-    id              shift and go to state 22
-    restrue         shift and go to state 30
-    resfalse        shift and go to state 31
+    mas             reduce using rule 23 (EXPRESION -> EXPRESION menos EXPRESION .)
+    menos           reduce using rule 23 (EXPRESION -> EXPRESION menos EXPRESION .)
+    puntycom        reduce using rule 23 (EXPRESION -> EXPRESION menos EXPRESION .)
+    parder          reduce using rule 23 (EXPRESION -> EXPRESION menos EXPRESION .)
+    por             shift and go to state 49
+    modulo          shift and go to state 50
+    divid           shift and go to state 51
 
-    EXPRESION                      shift and go to state 62
+  ! por             [ reduce using rule 23 (EXPRESION -> EXPRESION menos EXPRESION .) ]
+  ! modulo          [ reduce using rule 23 (EXPRESION -> EXPRESION menos EXPRESION .) ]
+  ! divid           [ reduce using rule 23 (EXPRESION -> EXPRESION menos EXPRESION .) ]
+  ! mas             [ shift and go to state 47 ]
+  ! menos           [ shift and go to state 48 ]
+
 
 state 61
 
-    (10) DECLARAR -> reslet id dospunt TIPOVAL igual EXPRESION .
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (24) EXPRESION -> EXPRESION por EXPRESION .
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
 
-    puntycom        reduce using rule 10 (DECLARAR -> reslet id dospunt TIPOVAL igual EXPRESION .)
-    mas             shift and go to state 43
-    menos           shift and go to state 44
-    por             shift and go to state 45
-    modulo          shift and go to state 46
-    divid           shift and go to state 47
+    mas             reduce using rule 24 (EXPRESION -> EXPRESION por EXPRESION .)
+    menos           reduce using rule 24 (EXPRESION -> EXPRESION por EXPRESION .)
+    por             reduce using rule 24 (EXPRESION -> EXPRESION por EXPRESION .)
+    modulo          reduce using rule 24 (EXPRESION -> EXPRESION por EXPRESION .)
+    divid           reduce using rule 24 (EXPRESION -> EXPRESION por EXPRESION .)
+    puntycom        reduce using rule 24 (EXPRESION -> EXPRESION por EXPRESION .)
+    parder          reduce using rule 24 (EXPRESION -> EXPRESION por EXPRESION .)
+
+  ! mas             [ shift and go to state 47 ]
+  ! menos           [ shift and go to state 48 ]
+  ! por             [ shift and go to state 49 ]
+  ! modulo          [ shift and go to state 50 ]
+  ! divid           [ shift and go to state 51 ]
 
 
 state 62
 
-    (8) DECLARAR -> reslet resmut id dospunt TIPOVAL igual EXPRESION .
-    (19) EXPRESION -> EXPRESION . mas EXPRESION
-    (20) EXPRESION -> EXPRESION . menos EXPRESION
-    (21) EXPRESION -> EXPRESION . por EXPRESION
-    (22) EXPRESION -> EXPRESION . modulo EXPRESION
-    (23) EXPRESION -> EXPRESION . divid EXPRESION
+    (25) EXPRESION -> EXPRESION modulo EXPRESION .
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
 
-    puntycom        reduce using rule 8 (DECLARAR -> reslet resmut id dospunt TIPOVAL igual EXPRESION .)
-    mas             shift and go to state 43
-    menos           shift and go to state 44
-    por             shift and go to state 45
-    modulo          shift and go to state 46
-    divid           shift and go to state 47
+    mas             reduce using rule 25 (EXPRESION -> EXPRESION modulo EXPRESION .)
+    menos           reduce using rule 25 (EXPRESION -> EXPRESION modulo EXPRESION .)
+    por             reduce using rule 25 (EXPRESION -> EXPRESION modulo EXPRESION .)
+    modulo          reduce using rule 25 (EXPRESION -> EXPRESION modulo EXPRESION .)
+    divid           reduce using rule 25 (EXPRESION -> EXPRESION modulo EXPRESION .)
+    puntycom        reduce using rule 25 (EXPRESION -> EXPRESION modulo EXPRESION .)
+    parder          reduce using rule 25 (EXPRESION -> EXPRESION modulo EXPRESION .)
+
+  ! mas             [ shift and go to state 47 ]
+  ! menos           [ shift and go to state 48 ]
+  ! por             [ shift and go to state 49 ]
+  ! modulo          [ shift and go to state 50 ]
+  ! divid           [ shift and go to state 51 ]
+
+
+state 63
+
+    (26) EXPRESION -> EXPRESION divid EXPRESION .
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
+
+    mas             reduce using rule 26 (EXPRESION -> EXPRESION divid EXPRESION .)
+    menos           reduce using rule 26 (EXPRESION -> EXPRESION divid EXPRESION .)
+    por             reduce using rule 26 (EXPRESION -> EXPRESION divid EXPRESION .)
+    modulo          reduce using rule 26 (EXPRESION -> EXPRESION divid EXPRESION .)
+    divid           reduce using rule 26 (EXPRESION -> EXPRESION divid EXPRESION .)
+    puntycom        reduce using rule 26 (EXPRESION -> EXPRESION divid EXPRESION .)
+    parder          reduce using rule 26 (EXPRESION -> EXPRESION divid EXPRESION .)
+
+  ! mas             [ shift and go to state 47 ]
+  ! menos           [ shift and go to state 48 ]
+  ! por             [ shift and go to state 49 ]
+  ! modulo          [ shift and go to state 50 ]
+  ! divid           [ shift and go to state 51 ]
+
+
+state 64
+
+    (28) EXPRESION -> pariz EXPRESION parder .
+
+    mas             reduce using rule 28 (EXPRESION -> pariz EXPRESION parder .)
+    menos           reduce using rule 28 (EXPRESION -> pariz EXPRESION parder .)
+    por             reduce using rule 28 (EXPRESION -> pariz EXPRESION parder .)
+    modulo          reduce using rule 28 (EXPRESION -> pariz EXPRESION parder .)
+    divid           reduce using rule 28 (EXPRESION -> pariz EXPRESION parder .)
+    puntycom        reduce using rule 28 (EXPRESION -> pariz EXPRESION parder .)
+    parder          reduce using rule 28 (EXPRESION -> pariz EXPRESION parder .)
+
+
+state 65
+
+    (14) INSTFUNC -> resfn id pariz parder llaveiz . BLOQUE llaveder
+    (15) BLOQUE -> . INSTRUCCIONES
+    (2) INSTRUCCIONES -> . INSTRUCCIONES INSTRUCCION
+    (3) INSTRUCCIONES -> . INSTRUCCION
+    (4) INSTRUCCION -> . PRINT puntycom
+    (5) INSTRUCCION -> . DECLARAR puntycom
+    (6) INSTRUCCION -> . ASIGNAR puntycom
+    (7) INSTRUCCION -> . INSTFUNC
+    (8) PRINT -> . resprint not pariz EXPRESION parder
+    (9) DECLARAR -> . reslet resmut id dospunt TIPOVAL igual EXPRESION
+    (10) DECLARAR -> . reslet resmut id igual EXPRESION
+    (11) DECLARAR -> . reslet id dospunt TIPOVAL igual EXPRESION
+    (12) DECLARAR -> . reslet id igual EXPRESION
+    (13) ASIGNAR -> . id igual EXPRESION
+    (14) INSTFUNC -> . resfn id pariz parder llaveiz BLOQUE llaveder
+
+    resprint        shift and go to state 8
+    reslet          shift and go to state 9
+    id              shift and go to state 10
+    resfn           shift and go to state 11
+
+    BLOQUE                         shift and go to state 68
+    INSTRUCCIONES                  shift and go to state 69
+    INSTRUCCION                    shift and go to state 3
+    PRINT                          shift and go to state 4
+    DECLARAR                       shift and go to state 5
+    ASIGNAR                        shift and go to state 6
+    INSTFUNC                       shift and go to state 7
+
+state 66
+
+    (9) DECLARAR -> reslet resmut id dospunt TIPOVAL igual . EXPRESION
+    (22) EXPRESION -> . EXPRESION mas EXPRESION
+    (23) EXPRESION -> . EXPRESION menos EXPRESION
+    (24) EXPRESION -> . EXPRESION por EXPRESION
+    (25) EXPRESION -> . EXPRESION modulo EXPRESION
+    (26) EXPRESION -> . EXPRESION divid EXPRESION
+    (27) EXPRESION -> . menos EXPRESION
+    (28) EXPRESION -> . pariz EXPRESION parder
+    (29) EXPRESION -> . entero
+    (30) EXPRESION -> . decimal
+    (31) EXPRESION -> . cadena
+    (32) EXPRESION -> . caracter
+    (33) EXPRESION -> . id
+    (34) EXPRESION -> . restrue
+    (35) EXPRESION -> . resfalse
+
+    menos           shift and go to state 27
+    pariz           shift and go to state 28
+    entero          shift and go to state 29
+    decimal         shift and go to state 30
+    cadena          shift and go to state 31
+    caracter        shift and go to state 32
+    id              shift and go to state 25
+    restrue         shift and go to state 33
+    resfalse        shift and go to state 34
+
+    EXPRESION                      shift and go to state 70
+
+state 67
+
+    (11) DECLARAR -> reslet id dospunt TIPOVAL igual EXPRESION .
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
+
+    puntycom        reduce using rule 11 (DECLARAR -> reslet id dospunt TIPOVAL igual EXPRESION .)
+    mas             shift and go to state 47
+    menos           shift and go to state 48
+    por             shift and go to state 49
+    modulo          shift and go to state 50
+    divid           shift and go to state 51
+
+
+state 68
+
+    (14) INSTFUNC -> resfn id pariz parder llaveiz BLOQUE . llaveder
+
+    llaveder        shift and go to state 71
+
+
+state 69
+
+    (15) BLOQUE -> INSTRUCCIONES .
+    (2) INSTRUCCIONES -> INSTRUCCIONES . INSTRUCCION
+    (4) INSTRUCCION -> . PRINT puntycom
+    (5) INSTRUCCION -> . DECLARAR puntycom
+    (6) INSTRUCCION -> . ASIGNAR puntycom
+    (7) INSTRUCCION -> . INSTFUNC
+    (8) PRINT -> . resprint not pariz EXPRESION parder
+    (9) DECLARAR -> . reslet resmut id dospunt TIPOVAL igual EXPRESION
+    (10) DECLARAR -> . reslet resmut id igual EXPRESION
+    (11) DECLARAR -> . reslet id dospunt TIPOVAL igual EXPRESION
+    (12) DECLARAR -> . reslet id igual EXPRESION
+    (13) ASIGNAR -> . id igual EXPRESION
+    (14) INSTFUNC -> . resfn id pariz parder llaveiz BLOQUE llaveder
+
+    llaveder        reduce using rule 15 (BLOQUE -> INSTRUCCIONES .)
+    resprint        shift and go to state 8
+    reslet          shift and go to state 9
+    id              shift and go to state 10
+    resfn           shift and go to state 11
+
+    INSTRUCCION                    shift and go to state 12
+    PRINT                          shift and go to state 4
+    DECLARAR                       shift and go to state 5
+    ASIGNAR                        shift and go to state 6
+    INSTFUNC                       shift and go to state 7
+
+state 70
+
+    (9) DECLARAR -> reslet resmut id dospunt TIPOVAL igual EXPRESION .
+    (22) EXPRESION -> EXPRESION . mas EXPRESION
+    (23) EXPRESION -> EXPRESION . menos EXPRESION
+    (24) EXPRESION -> EXPRESION . por EXPRESION
+    (25) EXPRESION -> EXPRESION . modulo EXPRESION
+    (26) EXPRESION -> EXPRESION . divid EXPRESION
+
+    puntycom        reduce using rule 9 (DECLARAR -> reslet resmut id dospunt TIPOVAL igual EXPRESION .)
+    mas             shift and go to state 47
+    menos           shift and go to state 48
+    por             shift and go to state 49
+    modulo          shift and go to state 50
+    divid           shift and go to state 51
+
+
+state 71
+
+    (14) INSTFUNC -> resfn id pariz parder llaveiz BLOQUE llaveder .
+
+    resprint        reduce using rule 14 (INSTFUNC -> resfn id pariz parder llaveiz BLOQUE llaveder .)
+    reslet          reduce using rule 14 (INSTFUNC -> resfn id pariz parder llaveiz BLOQUE llaveder .)
+    id              reduce using rule 14 (INSTFUNC -> resfn id pariz parder llaveiz BLOQUE llaveder .)
+    resfn           reduce using rule 14 (INSTFUNC -> resfn id pariz parder llaveiz BLOQUE llaveder .)
+    $end            reduce using rule 14 (INSTFUNC -> resfn id pariz parder llaveiz BLOQUE llaveder .)
+    llaveder        reduce using rule 14 (INSTFUNC -> resfn id pariz parder llaveiz BLOQUE llaveder .)
 

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftmasmenosleftpordividmodulorightUmenoscadena caracter decimal divid dospunt entero id igual mas menos modulo not parder pariz por puntycom resStr resString resbool reschar resf64 resfalse resi64 reslet resmut resprint resstruct restrueINIT   :  INSTRUCCIONES INSTRUCCIONES    :  INSTRUCCIONES INSTRUCCIONINSTRUCCIONES    : INSTRUCCION INSTRUCCION :  PRINT  puntycom\n                | DECLARAR puntycom\n                | ASIGNAR puntycomPRINT :  resprint not  pariz EXPRESION parderDECLARAR : reslet resmut id dospunt TIPOVAL igual EXPRESIONDECLARAR : reslet resmut id igual EXPRESIONDECLARAR : reslet id dospunt TIPOVAL igual EXPRESIONDECLARAR : reslet id igual EXPRESIONASIGNAR :  id igual EXPRESIONTIPOVAL : resi64\n            | resf64\n            | resbool\n            | reschar\n            | resString\n            | resStrEXPRESION : EXPRESION mas EXPRESION\n                  | EXPRESION menos EXPRESION\n                  | EXPRESION por EXPRESION\n                  | EXPRESION modulo EXPRESION\n                  | EXPRESION divid EXPRESIONEXPRESION : menos EXPRESION %prec UmenosEXPRESION : pariz EXPRESION parderEXPRESION    : enteroEXPRESION    : decimalEXPRESION    : cadenaEXPRESION    : caracterEXPRESION    : idEXPRESION    : restrue\n                    | resfalse '
+_lr_signature = 'leftmasmenosleftpordividmodulorightUmenoscadena caracter decimal divid dospunt entero id igual llaveder llaveiz mas mayorque menorque menos modulo not parder pariz por puntycom resStr resString resbool reschar resf64 resfalse resfn resi64 reslet resmut resprint resstruct restrueINIT   :  INSTRUCCIONES INSTRUCCIONES    :  INSTRUCCIONES INSTRUCCIONINSTRUCCIONES    : INSTRUCCION INSTRUCCION :  PRINT  puntycom\n                | DECLARAR puntycom\n                | ASIGNAR puntycom\n                | INSTFUNC PRINT :  resprint not  pariz EXPRESION parderDECLARAR : reslet resmut id dospunt TIPOVAL igual EXPRESIONDECLARAR : reslet resmut id igual EXPRESIONDECLARAR : reslet id dospunt TIPOVAL igual EXPRESIONDECLARAR : reslet id igual EXPRESIONASIGNAR :  id igual EXPRESIONINSTFUNC : resfn id pariz parder llaveiz BLOQUE llavederBLOQUE : INSTRUCCIONESTIPOVAL : resi64\n            | resf64\n            | resbool\n            | reschar\n            | resString\n            | resStrEXPRESION : EXPRESION mas EXPRESION\n                  | EXPRESION menos EXPRESION\n                  | EXPRESION por EXPRESION\n                  | EXPRESION modulo EXPRESION\n                  | EXPRESION divid EXPRESIONEXPRESION : menos EXPRESION %prec UmenosEXPRESION : pariz EXPRESION parderEXPRESION    : enteroEXPRESION    : decimalEXPRESION    : cadenaEXPRESION    : caracterEXPRESION    : idEXPRESION    : restrue\n                    | resfalse '
     
-_lr_action_items = {'resprint':([0,2,3,10,11,12,13,],[7,7,-3,-2,-4,-5,-6,]),'reslet':([0,2,3,10,11,12,13,],[8,8,-3,-2,-4,-5,-6,]),'id':([0,2,3,8,10,11,12,13,15,17,18,21,24,25,34,43,44,45,46,47,53,60,],[9,9,-3,16,-2,-4,-5,-6,19,22,22,22,22,22,22,22,22,22,22,22,22,22,]),'$end':([1,2,3,10,11,12,13,],[0,-1,-3,-2,-4,-5,-6,]),'puntycom':([4,5,6,22,23,26,27,28,29,30,31,42,48,50,52,54,55,56,57,58,59,61,62,],[11,12,13,-30,-12,-26,-27,-28,-29,-31,-32,-11,-24,-7,-9,-19,-20,-21,-22,-23,-25,-10,-8,]),'not':([7,],[14,]),'resmut':([8,],[15,]),'igual':([9,16,19,35,36,37,38,39,40,41,51,],[17,21,34,53,-13,-14,-15,-16,-17,-18,60,]),'pariz':([14,17,18,21,24,25,34,43,44,45,46,47,53,60,],[18,25,25,25,25,25,25,25,25,25,25,25,25,25,]),'dospunt':([16,19,],[20,33,]),'menos':([17,18,21,22,23,24,25,26,27,28,29,30,31,32,34,42,43,44,45,46,47,48,49,52,53,54,55,56,57,58,59,60,61,62,],[24,24,24,-30,44,24,24,-26,-27,-28,-29,-31,-32,44,24,44,24,24,24,24,24,-24,44,44,24,-19,-20,-21,-22,-23,-25,24,44,44,]),'entero':([17,18,21,24,25,34,43,44,45,46,47,53,60,],[26,26,26,26,26,26,26,26,26,26,26,26,26,]),'decimal':([17,18,21,24,25,34,43,44,45,46,47,53,60,],[27,27,27,27,27,27,27,27,27,27,27,27,27,]),'cadena':([17,18,21,24,25,34,43,44,45,46,47,53,60,],[28,28,28,28,28,28,28,28,28,28,28,28,28,]),'caracter':([17,18,21,24,25,34,43,44,45,46,47,53,60,],[29,29,29,29,29,29,29,29,29,29,29,29,29,]),'restrue':([17,18,21,24,25,34,43,44,45,46,47,53,60,],[30,30,30,30,30,30,30,30,30,30,30,30,30,]),'resfalse':([17,18,21,24,25,34,43,44,45,46,47,53,60,],[31,31,31,31,31,31,31,31,31,31,31,31,31,]),'resi64':([20,33,],[36,36,]),'resf64':([20,33,],[37,37,]),'resbool':([20,33,],[38,38,]),'reschar':([20,33,],[39,39,]),'resString':([20,33,],[40,40,]),'resStr':([20,33,],[41,41,]),'mas':([22,23,26,27,28,29,30,31,32,42,48,49,52,54,55,56,57,58,59,61,62,],[-30,43,-26,-27,-28,-29,-31,-32,43,43,-24,43,43,-19,-20,-21,-22,-23,-25,43,43,]),'por':([22,23,26,27,28,29,30,31,32,42,48,49,52,54,55,56,57,58,59,61,62,],[-30,45,-26,-27,-28,-29,-31,-32,45,45,-24,45,45,45,45,-21,-22,-23,-25,45,45,]),'modulo':([22,23,26,27,28,29,30,31,32,42,48,49,52,54,55,56,57,58,59,61,62,],[-30,46,-26,-27,-28,-29,-31,-32,46,46,-24,46,46,46,46,-21,-22,-23,-25,46,46,]),'divid':([22,23,26,27,28,29,30,31,32,42,48,49,52,54,55,56,57,58,59,61,62,],[-30,47,-26,-27,-28,-29,-31,-32,47,47,-24,47,47,47,47,-21,-22,-23,-25,47,47,]),'parder':([22,26,27,28,29,30,31,32,48,49,54,55,56,57,58,59,],[-30,-26,-27,-28,-29,-31,-32,50,-24,59,-19,-20,-21,-22,-23,-25,]),}
+_lr_action_items = {'resprint':([0,2,3,7,12,13,14,15,65,69,71,],[8,8,-3,-7,-2,-4,-5,-6,8,8,-14,]),'reslet':([0,2,3,7,12,13,14,15,65,69,71,],[9,9,-3,-7,-2,-4,-5,-6,9,9,-14,]),'id':([0,2,3,7,9,11,12,13,14,15,17,19,21,24,27,28,38,47,48,49,50,51,58,65,66,69,71,],[10,10,-3,-7,18,20,-2,-4,-5,-6,22,25,25,25,25,25,25,25,25,25,25,25,25,10,25,10,-14,]),'resfn':([0,2,3,7,12,13,14,15,65,69,71,],[11,11,-3,-7,-2,-4,-5,-6,11,11,-14,]),'$end':([1,2,3,7,12,13,14,15,71,],[0,-1,-3,-7,-2,-4,-5,-6,-14,]),'llaveder':([3,7,12,13,14,15,68,69,71,],[-3,-7,-2,-4,-5,-6,71,-15,-14,]),'puntycom':([4,5,6,25,26,29,30,31,32,33,34,46,52,55,57,59,60,61,62,63,64,67,70,],[13,14,15,-33,-13,-29,-30,-31,-32,-34,-35,-12,-27,-8,-10,-22,-23,-24,-25,-26,-28,-11,-9,]),'not':([8,],[16,]),'resmut':([9,],[17,]),'igual':([10,18,22,39,40,41,42,43,44,45,56,],[19,24,38,58,-16,-17,-18,-19,-20,-21,66,]),'pariz':([16,19,20,21,24,27,28,38,47,48,49,50,51,58,66,],[21,28,35,28,28,28,28,28,28,28,28,28,28,28,28,]),'dospunt':([18,22,],[23,37,]),'menos':([19,21,24,25,26,27,28,29,30,31,32,33,34,36,38,46,47,48,49,50,51,52,53,57,58,59,60,61,62,63,64,66,67,70,],[27,27,27,-33,48,27,27,-29,-30,-31,-32,-34,-35,48,27,48,27,27,27,27,27,-27,48,48,27,-22,-23,-24,-25,-26,-28,27,48,48,]),'entero':([19,21,24,27,28,38,47,48,49,50,51,58,66,],[29,29,29,29,29,29,29,29,29,29,29,29,29,]),'decimal':([19,21,24,27,28,38,47,48,49,50,51,58,66,],[30,30,30,30,30,30,30,30,30,30,30,30,30,]),'cadena':([19,21,24,27,28,38,47,48,49,50,51,58,66,],[31,31,31,31,31,31,31,31,31,31,31,31,31,]),'caracter':([19,21,24,27,28,38,47,48,49,50,51,58,66,],[32,32,32,32,32,32,32,32,32,32,32,32,32,]),'restrue':([19,21,24,27,28,38,47,48,49,50,51,58,66,],[33,33,33,33,33,33,33,33,33,33,33,33,33,]),'resfalse':([19,21,24,27,28,38,47,48,49,50,51,58,66,],[34,34,34,34,34,34,34,34,34,34,34,34,34,]),'resi64':([23,37,],[40,40,]),'resf64':([23,37,],[41,41,]),'resbool':([23,37,],[42,42,]),'reschar':([23,37,],[43,43,]),'resString':([23,37,],[44,44,]),'resStr':([23,37,],[45,45,]),'mas':([25,26,29,30,31,32,33,34,36,46,52,53,57,59,60,61,62,63,64,67,70,],[-33,47,-29,-30,-31,-32,-34,-35,47,47,-27,47,47,-22,-23,-24,-25,-26,-28,47,47,]),'por':([25,26,29,30,31,32,33,34,36,46,52,53,57,59,60,61,62,63,64,67,70,],[-33,49,-29,-30,-31,-32,-34,-35,49,49,-27,49,49,49,49,-24,-25,-26,-28,49,49,]),'modulo':([25,26,29,30,31,32,33,34,36,46,52,53,57,59,60,61,62,63,64,67,70,],[-33,50,-29,-30,-31,-32,-34,-35,50,50,-27,50,50,50,50,-24,-25,-26,-28,50,50,]),'divid':([25,26,29,30,31,32,33,34,36,46,52,53,57,59,60,61,62,63,64,67,70,],[-33,51,-29,-30,-31,-32,-34,-35,51,51,-27,51,51,51,51,-24,-25,-26,-28,51,51,]),'parder':([25,29,30,31,32,33,34,35,36,52,53,59,60,61,62,63,64,],[-33,-29,-30,-31,-32,-34,-35,54,55,-27,64,-22,-23,-24,-25,-26,-28,]),'llaveiz':([54,],[65,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'INIT':([0,],[1,]),'INSTRUCCIONES':([0,],[2,]),'INSTRUCCION':([0,2,],[3,10,]),'PRINT':([0,2,],[4,4,]),'DECLARAR':([0,2,],[5,5,]),'ASIGNAR':([0,2,],[6,6,]),'EXPRESION':([17,18,21,24,25,34,43,44,45,46,47,53,60,],[23,32,42,48,49,52,54,55,56,57,58,61,62,]),'TIPOVAL':([20,33,],[35,51,]),}
+_lr_goto_items = {'INIT':([0,],[1,]),'INSTRUCCIONES':([0,65,],[2,69,]),'INSTRUCCION':([0,2,65,69,],[3,12,3,12,]),'PRINT':([0,2,65,69,],[4,4,4,4,]),'DECLARAR':([0,2,65,69,],[5,5,5,5,]),'ASIGNAR':([0,2,65,69,],[6,6,6,6,]),'INSTFUNC':([0,2,65,69,],[7,7,7,7,]),'EXPRESION':([19,21,24,27,28,38,47,48,49,50,51,58,66,],[26,36,46,52,53,57,59,60,61,62,63,67,70,]),'TIPOVAL':([23,37,],[39,56,]),'BLOQUE':([65,],[68,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,36 +27,39 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> INIT","S'",1,None,None,None),
-  ('INIT -> INSTRUCCIONES','INIT',1,'p_inicial','gramatica.py',132),
-  ('INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION','INSTRUCCIONES',2,'p_instrucciones_lista_conjunto','gramatica.py',136),
-  ('INSTRUCCIONES -> INSTRUCCION','INSTRUCCIONES',1,'p_instrucciones_lista_unica','gramatica.py',143),
-  ('INSTRUCCION -> PRINT puntycom','INSTRUCCION',2,'p_instrucciones_evaluar','gramatica.py',150),
-  ('INSTRUCCION -> DECLARAR puntycom','INSTRUCCION',2,'p_instrucciones_evaluar','gramatica.py',151),
-  ('INSTRUCCION -> ASIGNAR puntycom','INSTRUCCION',2,'p_instrucciones_evaluar','gramatica.py',152),
-  ('PRINT -> resprint not pariz EXPRESION parder','PRINT',5,'p_impresion','gramatica.py',156),
-  ('DECLARAR -> reslet resmut id dospunt TIPOVAL igual EXPRESION','DECLARAR',7,'p_declarar_mut_tipo','gramatica.py',160),
-  ('DECLARAR -> reslet resmut id igual EXPRESION','DECLARAR',5,'p_declarar_mut','gramatica.py',164),
-  ('DECLARAR -> reslet id dospunt TIPOVAL igual EXPRESION','DECLARAR',6,'p_declarar_tipo','gramatica.py',168),
-  ('DECLARAR -> reslet id igual EXPRESION','DECLARAR',4,'p_declarar','gramatica.py',172),
-  ('ASIGNAR -> id igual EXPRESION','ASIGNAR',3,'p_asignar','gramatica.py',176),
-  ('TIPOVAL -> resi64','TIPOVAL',1,'p_tipoval','gramatica.py',180),
-  ('TIPOVAL -> resf64','TIPOVAL',1,'p_tipoval','gramatica.py',181),
-  ('TIPOVAL -> resbool','TIPOVAL',1,'p_tipoval','gramatica.py',182),
-  ('TIPOVAL -> reschar','TIPOVAL',1,'p_tipoval','gramatica.py',183),
-  ('TIPOVAL -> resString','TIPOVAL',1,'p_tipoval','gramatica.py',184),
-  ('TIPOVAL -> resStr','TIPOVAL',1,'p_tipoval','gramatica.py',185),
-  ('EXPRESION -> EXPRESION mas EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',195),
-  ('EXPRESION -> EXPRESION menos EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',196),
-  ('EXPRESION -> EXPRESION por EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',197),
-  ('EXPRESION -> EXPRESION modulo EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',198),
-  ('EXPRESION -> EXPRESION divid EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',199),
-  ('EXPRESION -> menos EXPRESION','EXPRESION',2,'p_expresion_unaria','gramatica.py',203),
-  ('EXPRESION -> pariz EXPRESION parder','EXPRESION',3,'p_expresion_agrupacion','gramatica.py',207),
-  ('EXPRESION -> entero','EXPRESION',1,'p_expresion_entero','gramatica.py',211),
-  ('EXPRESION -> decimal','EXPRESION',1,'p_expresion_decimal','gramatica.py',215),
-  ('EXPRESION -> cadena','EXPRESION',1,'p_expresion_cadena','gramatica.py',219),
-  ('EXPRESION -> caracter','EXPRESION',1,'p_expresion_caracter','gramatica.py',223),
-  ('EXPRESION -> id','EXPRESION',1,'p_expresion_id','gramatica.py',227),
-  ('EXPRESION -> restrue','EXPRESION',1,'p_expresion_boolean','gramatica.py',231),
-  ('EXPRESION -> resfalse','EXPRESION',1,'p_expresion_boolean','gramatica.py',232),
+  ('INIT -> INSTRUCCIONES','INIT',1,'p_inicial','gramatica.py',143),
+  ('INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION','INSTRUCCIONES',2,'p_instrucciones_lista_conjunto','gramatica.py',147),
+  ('INSTRUCCIONES -> INSTRUCCION','INSTRUCCIONES',1,'p_instrucciones_lista_unica','gramatica.py',154),
+  ('INSTRUCCION -> PRINT puntycom','INSTRUCCION',2,'p_instrucciones_evaluar','gramatica.py',161),
+  ('INSTRUCCION -> DECLARAR puntycom','INSTRUCCION',2,'p_instrucciones_evaluar','gramatica.py',162),
+  ('INSTRUCCION -> ASIGNAR puntycom','INSTRUCCION',2,'p_instrucciones_evaluar','gramatica.py',163),
+  ('INSTRUCCION -> INSTFUNC','INSTRUCCION',1,'p_instrucciones_evaluar','gramatica.py',164),
+  ('PRINT -> resprint not pariz EXPRESION parder','PRINT',5,'p_impresion','gramatica.py',168),
+  ('DECLARAR -> reslet resmut id dospunt TIPOVAL igual EXPRESION','DECLARAR',7,'p_declarar_mut_tipo','gramatica.py',172),
+  ('DECLARAR -> reslet resmut id igual EXPRESION','DECLARAR',5,'p_declarar_mut','gramatica.py',176),
+  ('DECLARAR -> reslet id dospunt TIPOVAL igual EXPRESION','DECLARAR',6,'p_declarar_tipo','gramatica.py',180),
+  ('DECLARAR -> reslet id igual EXPRESION','DECLARAR',4,'p_declarar','gramatica.py',184),
+  ('ASIGNAR -> id igual EXPRESION','ASIGNAR',3,'p_asignar','gramatica.py',188),
+  ('INSTFUNC -> resfn id pariz parder llaveiz BLOQUE llaveder','INSTFUNC',7,'p_funcion','gramatica.py',192),
+  ('BLOQUE -> INSTRUCCIONES','BLOQUE',1,'p_funcion_tipo','gramatica.py',200),
+  ('TIPOVAL -> resi64','TIPOVAL',1,'p_tipoval','gramatica.py',204),
+  ('TIPOVAL -> resf64','TIPOVAL',1,'p_tipoval','gramatica.py',205),
+  ('TIPOVAL -> resbool','TIPOVAL',1,'p_tipoval','gramatica.py',206),
+  ('TIPOVAL -> reschar','TIPOVAL',1,'p_tipoval','gramatica.py',207),
+  ('TIPOVAL -> resString','TIPOVAL',1,'p_tipoval','gramatica.py',208),
+  ('TIPOVAL -> resStr','TIPOVAL',1,'p_tipoval','gramatica.py',209),
+  ('EXPRESION -> EXPRESION mas EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',219),
+  ('EXPRESION -> EXPRESION menos EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',220),
+  ('EXPRESION -> EXPRESION por EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',221),
+  ('EXPRESION -> EXPRESION modulo EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',222),
+  ('EXPRESION -> EXPRESION divid EXPRESION','EXPRESION',3,'p_expresion_binaria','gramatica.py',223),
+  ('EXPRESION -> menos EXPRESION','EXPRESION',2,'p_expresion_unaria','gramatica.py',227),
+  ('EXPRESION -> pariz EXPRESION parder','EXPRESION',3,'p_expresion_agrupacion','gramatica.py',231),
+  ('EXPRESION -> entero','EXPRESION',1,'p_expresion_entero','gramatica.py',235),
+  ('EXPRESION -> decimal','EXPRESION',1,'p_expresion_decimal','gramatica.py',239),
+  ('EXPRESION -> cadena','EXPRESION',1,'p_expresion_cadena','gramatica.py',243),
+  ('EXPRESION -> caracter','EXPRESION',1,'p_expresion_caracter','gramatica.py',247),
+  ('EXPRESION -> id','EXPRESION',1,'p_expresion_id','gramatica.py',251),
+  ('EXPRESION -> restrue','EXPRESION',1,'p_expresion_boolean','gramatica.py',255),
+  ('EXPRESION -> resfalse','EXPRESION',1,'p_expresion_boolean','gramatica.py',256),
 ]
