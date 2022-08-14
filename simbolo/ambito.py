@@ -45,10 +45,10 @@ class ambito:
             AmbitoAux = AmbitoAux.anterior
         return None
     
-    def nuevaFuncion(self, simbolo):
-        s = self.tablaFunciones.get(simbolo.nombre.lower())
+    def nuevaFuncion(self, simbolo:funcion ):
+        s = self.tablaFunciones.get(simbolo.id.lower())
         if s == None:
-            self.tablaFunciones[simbolo.nombre.lower()] = simbolo
+            self.tablaFunciones[simbolo.id.lower()] = simbolo
 
     def buscarFuncion(self, llave):
         ent = self

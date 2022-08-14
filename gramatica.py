@@ -39,6 +39,7 @@ tokens  = [
     'caracter',
     'id',
     'puntycom',
+    'com',
     'dospunt',
     'not'
 ]+ list(reserved.values())
@@ -52,16 +53,18 @@ t_menos     = r'-'
 t_por       = r'\*'
 t_divid     = r'/'
 t_puntycom  = r';'
+t_com       = r','
 t_dospunt   = r':'
 t_modulo    = r'%'
 t_not       = r'!'
 t_igual     = r'='
 t_mayorque  = r'>'
 t_menorque  = r'<'
+
 def t_id(t):
     r'[a-zA-Z][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value.lower(), 'id')
-    t.value = t.value.lower()
+    t.value = t.value.lower() 
     return t
 
 
@@ -120,6 +123,12 @@ from instrucciones.asignar import asignar
 from instrucciones.bloque import bloque
 from instrucciones.declarar import declarar
 from instrucciones.funcion import funcion
+from expresion.aritmetica import aritmetica
+from expresion.Tipo import Tipo
+from expresion.nativo import nativo
+from instrucciones.Print import Print
+from instrucciones.llamarfunc import llamarfunc
+
 import ply.lex as lex
 lexer = lex.lex()
 
@@ -128,10 +137,7 @@ lexer = lex.lex()
 #######################        ANALISIS SINTACTICO           #############################
 ##########################################################################################
 
-from expresion.aritmetica import aritmetica
-from expresion.Tipo import Tipo
-from expresion.nativo import nativo
-from instrucciones.Print import Print
+
 
 precedence = (
     ('left','mas','menos'),
@@ -145,14 +151,14 @@ def p_inicial(t):
 
 def p_instrucciones_lista_conjunto(t):
     '''INSTRUCCIONES    :  INSTRUCCIONES INSTRUCCION'''
-    if t[2] != "":
+    if (t[2] != ""):
        t[1].append(t[2])
     t[0] = t[1]
 
 
 def p_instrucciones_lista_unica(t):
     '''INSTRUCCIONES    : INSTRUCCION '''
-    if t[1] != "":
+    if (t[1] != ""):
        t[0]=[t[1]]
     else:
         t[0]=[]
@@ -161,12 +167,17 @@ def p_instrucciones_evaluar(t):
     '''INSTRUCCION :  PRINT  puntycom
                 | DECLARAR puntycom
                 | ASIGNAR puntycom
-                | INSTFUNC '''
+                | INSTFUNC 
+                | LLAMARFUNC puntycom'''
     t[0]=t[1]
 
 def p_impresion(t):
     '''PRINT :  resprint not  pariz EXPRESION parder'''
-    t[0]=Print(t.lineno(1), t.lexpos(1),t[4])
+    t[0]=Print(t.lineno(1), t.lexpos(1),t[4],[])
+
+def p_impresion_lista(t):
+    '''PRINT :  resprint not  pariz EXPRESION com LISTAEXP parder'''
+    t[0]=Print(t.lineno(1), t.lexpos(1),t[4],t[6])
 
 def p_declarar_mut_tipo(t):
     '''DECLARAR : reslet resmut id dospunt TIPOVAL igual EXPRESION'''
@@ -196,9 +207,26 @@ def p_funcion_tipo(t):
     '''INSTFUNC : resfn id pariz parder menos mayorque TIPOVAL llaveiz BLOQUE llaveder'''
     t[0]= funcion(t.lineno(1), t.lexpos(1),t[2],t[7],t[9],[])
 
+def p_llamar_f(t):
+    '''LLAMARFUNC : id pariz parder'''
+    t[0]=llamarfunc(t.lineno(1), t.lexpos(1),t[1],[])
+
 def p_funcion_tipo(t):
     '''BLOQUE : INSTRUCCIONES'''
     t[0]= bloque(t.lineno(1), t.lexpos(1),t[1])
+
+def p_lista_expre_conjunto(t):
+    '''LISTAEXP : LISTAEXP com EXPRESION '''
+    if (t[3] != ""):
+       t[1].append(t[3])
+    t[0] = t[1]
+    
+def p_lista_expre(t):
+    '''LISTAEXP : EXPRESION '''
+    if (t[1] != ""):
+       t[0]=[t[1]]
+    else:
+        t[0]=[]
 
 def p_tipoval(t):
     '''TIPOVAL : resi64
