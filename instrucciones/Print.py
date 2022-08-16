@@ -21,7 +21,10 @@ class Print(instrucciones):
                 texto = str(aux["valor"])
                 for i in self.expresiones:
                     temp = i.ejecutar(ambito)
-                    texto = texto.replace("{}",str(temp["valor"]),1)
+                    if(temp!=None):
+                        texto = texto.replace("{}",str(temp["valor"]),1)
+                    else:
+                        print("Error en replace del print")
                 consola+=texto+"\n"
         else:
             print("Error en imprimir")

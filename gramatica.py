@@ -12,8 +12,7 @@ reserved = {
     'f64': 'resf64',#TIPO FLOTANTE
     'bool': 'resbool',
     'char': 'reschar',
-    'String': 'resString',
-    '&str': 'resStr',#REVISAR MAS ADELANTEEE
+    'string': 'restring',
     'struct': 'resstruct',
     'fn': 'resfn',
     'println' : 'resprint',
@@ -21,6 +20,7 @@ reserved = {
 
 
 tokens  = [
+    'str',
     'pariz',
     'parder',
     'llaveiz',
@@ -44,6 +44,7 @@ tokens  = [
     'not'
 ]+ list(reserved.values())
 
+t_str       = r'&str'
 t_pariz     = r'\('
 t_parder    = r'\)'
 t_llaveiz     = r'\{'
@@ -118,6 +119,7 @@ def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
+import re
 from expresion.variable import variable
 from instrucciones.asignar import asignar
 from instrucciones.bloque import bloque
@@ -207,9 +209,21 @@ def p_funcion_tipo(t):
     '''INSTFUNC : resfn id pariz parder menos mayorque TIPOVAL llaveiz BLOQUE llaveder'''
     t[0]= funcion(t.lineno(1), t.lexpos(1),t[2],t[7],t[9],[])
 
+def p_funcion_parametros(t):
+    '''INSTFUNC : resfn id pariz PARAMETROS parder llaveiz BLOQUE llaveder'''
+    t[0]= funcion(t.lineno(1), t.lexpos(1),t[2],None,t[7],t[4])
+
+def p_funcion_tipo_parametros(t):
+    '''INSTFUNC : resfn id pariz PARAMETROS parder menos mayorque TIPOVAL llaveiz BLOQUE llaveder'''
+    t[0]= funcion(t.lineno(1), t.lexpos(1),t[2],t[8],t[10],t[4])
+
 def p_llamar_f(t):
     '''LLAMARFUNC : id pariz parder'''
     t[0]=llamarfunc(t.lineno(1), t.lexpos(1),t[1],[])
+
+def p_llamar_f_parametros(t):
+    '''LLAMARFUNC : id pariz LISTAEXP parder'''
+    t[0]=llamarfunc(t.lineno(1), t.lexpos(1),t[1],t[3])
 
 def p_funcion_tipo(t):
     '''BLOQUE : INSTRUCCIONES'''
@@ -228,19 +242,33 @@ def p_lista_expre(t):
     else:
         t[0]=[]
 
+def p_lista_para_conjunto(t):
+    '''PARAMETROS : PARAMETROS com id dospunt TIPOVAL '''
+    if (t[3] != ""):
+       t[1].append(declarar(t.lineno(1), t.lexpos(1),t[3],t[5],None,True))
+    t[0] = t[1]
+    
+def p_lista_para(t):
+    '''PARAMETROS : id dospunt TIPOVAL '''
+    if (t[1] != ""):
+       t[0]=[declarar(t.lineno(1), t.lexpos(1),t[1],t[3],None,True)]
+    else:
+        t[0]=[]
+
 def p_tipoval(t):
     '''TIPOVAL : resi64
             | resf64
             | resbool
             | reschar
-            | resString
-            | resStr'''
+            | restring
+            | str'''
+    #print(t[1])
     if (str(t[1])=="i64"):t[0]=Tipo.ENTERO
     elif (str(t[1])=="f64"):t[0]=Tipo.DECIMAL
     elif (str(t[1])=="bool"):t[0]=Tipo.BOOL
     elif (str(t[1])=="char"):t[0]=Tipo.CHAR
     elif (str(t[1])=="char"):t[0]=Tipo.CHAR
-    elif (str(t[1])=="String"):t[0]=Tipo.STRING
+    elif (str(t[1])=="string"):t[0]=Tipo.STRING
     elif (str(t[1])=="&str"):t[0]=Tipo.STRING
 
 def p_expresion_binaria(t):

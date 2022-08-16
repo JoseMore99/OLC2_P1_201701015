@@ -13,8 +13,19 @@ class llamarfunc(expresion):
     def ejecutar(self,Ambito:ambito):
         auxfuncion = Ambito.buscarFuncion(self.id)
         if (auxfuncion!=None):
-            entornoAnt= ambito(Ambito)
-            auxfuncion.contenido.ejecutar(entornoAnt)
+            if(len(self.parametros)==len(auxfuncion.parametros)):
+                entornoAnt= ambito(Ambito)
+                for p in range(len(self.parametros)):
+                    auxpara = self.parametros[p].ejecutar(Ambito)
+                    auxfunc = auxfuncion.parametros[p]
+                    if (auxpara["tipo"]==auxfunc.tipo):
+                        auxfunc.valor = self.parametros[p]
+                        auxfunc.ejecutar(entornoAnt)
+                    else:
+                        print("Error en asignacion de parametroes")
+                auxfuncion.contenido.ejecutar(entornoAnt)
+            else:
+                print("Error en parametros de llamar funcion")
         else:
             print("error en llamar funcion")
     

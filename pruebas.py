@@ -11,3 +11,5 @@ x=x.replace("o","3",1)
 x=x.replace("o","4",1)
 x=x.replace("o","5",1)
 print(x)
+for i in range(5):
+    print(i)

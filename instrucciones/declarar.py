@@ -17,9 +17,11 @@ class declarar(instrucciones):
         if(self.tipo!=None):
             if (self.valor !=None):
                 auxval = self.valor.ejecutar(ambito)
+               # print(str(auxval["tipo"])+"---"+str(self.tipo))
                 if (auxval["tipo"]==self.tipo):
                     simboloNew= simbolo(self.tipo,self.id,auxval["valor"],self.mutabilidad,self.fila,self.comlumna)
                     ambito.nuevosimbolo(simboloNew)
+                else:
                     print("Error en declarar")
         else:
             auxval = self.valor.ejecutar(ambito)
