@@ -15,6 +15,8 @@ reserved = {
     'string': 'restring',
     'struct': 'resstruct',
     'fn': 'resfn',
+    'if': 'resif',
+    'else': 'reselse',
     'println' : 'resprint',
 }
 
@@ -121,6 +123,7 @@ def t_error(t):
 
 import re
 from expresion.variable import variable
+from instrucciones.If import If
 from instrucciones.asignar import asignar
 from instrucciones.bloque import bloque
 from instrucciones.declarar import declarar
@@ -170,7 +173,8 @@ def p_instrucciones_evaluar(t):
                 | DECLARAR puntycom
                 | ASIGNAR puntycom
                 | INSTFUNC 
-                | LLAMARFUNC puntycom'''
+                | LLAMARFUNC puntycom
+                | INSTIF'''
     t[0]=t[1]
 
 def p_impresion(t):
@@ -200,6 +204,23 @@ def p_declarar(t):
 def p_asignar(t):
     '''ASIGNAR :  id igual EXPRESION'''
     t[0]= asignar(t.lineno(1), t.lexpos(1),t[1],t[3])
+
+def p_if(t):
+    '''INSTIF : resif  EXPRESION  llaveiz BLOQUE llaveder '''
+    t[0]= If(t.lineno(1), t.lexpos(1),t[2],t[4],None)
+
+def p_if_else(t):
+    '''INSTIF : resif  EXPRESION  llaveiz BLOQUE llaveder INSTELSE'''
+    t[0]= If(t.lineno(1), t.lexpos(1),t[2],t[4],t[6])
+    
+def p_elseif(t):
+    '''INSTELSE : reselse INSTIF'''
+    t[0]=t[2]
+
+def p_else(t):
+    '''INSTELSE : reselse llaveiz BLOQUE llaveder'''
+    t[0]=t[3]
+
 
 def p_funcion(t):
     '''INSTFUNC : resfn id pariz parder llaveiz BLOQUE llaveder'''
