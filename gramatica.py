@@ -18,6 +18,7 @@ reserved = {
     'if': 'resif',
     'else': 'reselse',
     'println' : 'resprint',
+    'while' : 'reswhile',
 }
 
 
@@ -43,7 +44,9 @@ tokens  = [
     'puntycom',
     'com',
     'dospunt',
-    'not'
+    'not',
+    'and',
+    'or'
 ]+ list(reserved.values())
 
 t_str       = r'&str'
@@ -63,6 +66,8 @@ t_not       = r'!'
 t_igual     = r'='
 t_mayorque  = r'>'
 t_menorque  = r'<'
+t_and       = r'&'
+t_or        = r'\|'
 
 def t_id(t):
     r'[a-zA-Z][a-zA-Z_0-9]*'
@@ -103,7 +108,7 @@ def t_caracter(t):
 
 
 def t_comentariosimple(t):
-    r'\\.*\n'
+    r'//.*\n'
     t.lexer.lineno += 1
 
 
@@ -121,9 +126,13 @@ def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
+
 import re
+from expresion.TipoR import TipoR
+from expresion.relaciones import relaciones
 from expresion.variable import variable
 from instrucciones.If import If
+from instrucciones.While import While
 from instrucciones.asignar import asignar
 from instrucciones.bloque import bloque
 from instrucciones.declarar import declarar
@@ -174,7 +183,8 @@ def p_instrucciones_evaluar(t):
                 | ASIGNAR puntycom
                 | INSTFUNC 
                 | LLAMARFUNC puntycom
-                | INSTIF'''
+                | INSTIF
+                | INSTWHILE'''
     t[0]=t[1]
 
 def p_impresion(t):
@@ -221,6 +231,9 @@ def p_else(t):
     '''INSTELSE : reselse llaveiz BLOQUE llaveder'''
     t[0]=t[3]
 
+def p_while(t):
+    '''INSTWHILE : reswhile  EXPRESION  llaveiz BLOQUE llaveder '''
+    t[0]= While(t.lineno(1), t.lexpos(1),t[2],t[4])
 
 def p_funcion(t):
     '''INSTFUNC : resfn id pariz parder llaveiz BLOQUE llaveder'''
@@ -300,9 +313,45 @@ def p_expresion_binaria(t):
                   | EXPRESION divid EXPRESION'''
     t[0]= aritmetica(t.lineno(1), t.lexpos(1),t[1],t[3],t[2])
 
+def p_expresion_binaria_menor(t):
+    '''EXPRESION : EXPRESION menorque EXPRESION'''
+    t[0]= relaciones(t.lineno(1), t.lexpos(1),t[1],t[3],TipoR.MENORQUE)
+
+def p_expresion_binaria_mayor(t):
+    '''EXPRESION : EXPRESION mayorque EXPRESION'''
+    t[0]= relaciones(t.lineno(1), t.lexpos(1),t[1],t[3],TipoR.MAYORQUE)
+
+def p_expresion_binaria_menor_igual(t):
+    '''EXPRESION : EXPRESION menorque igual EXPRESION'''
+    t[0]= relaciones(t.lineno(1), t.lexpos(1),t[1],t[4],TipoR.MENORIGUAL)
+
+def p_expresion_binaria_mayor_igual(t):
+    '''EXPRESION : EXPRESION mayorque igual EXPRESION'''
+    t[0]= relaciones(t.lineno(1), t.lexpos(1),t[1],t[4],TipoR.MAYORIGUAL)
+
+def p_expresion_binaria_igual(t):
+    '''EXPRESION : EXPRESION igual igual EXPRESION'''
+    t[0]= relaciones(t.lineno(1), t.lexpos(1),t[1],t[4],TipoR.IGUAL)
+    
+def p_expresion_binaria_no_igual(t):
+    '''EXPRESION : EXPRESION not igual EXPRESION'''
+    t[0]= relaciones(t.lineno(1), t.lexpos(1),t[1],t[4],TipoR.DIFERENTE)
+
+def p_expresion_binaria_and(t):
+    '''EXPRESION : EXPRESION and and EXPRESION'''
+    t[0]= relaciones(t.lineno(1), t.lexpos(1),t[1],t[4],TipoR.AND)
+
+def p_expresion_binaria_or(t):
+    '''EXPRESION : EXPRESION or or EXPRESION'''
+    t[0]= relaciones(t.lineno(1), t.lexpos(1),t[1],t[4],TipoR.OR)
+
+def p_expresion_unaria_not(t):
+    '''EXPRESION : not EXPRESION'''
+    t[0]= relaciones(t.lineno(1), t.lexpos(1),t[2],t[2],TipoR.NOT)
+
 def p_expresion_unaria(t):
     'EXPRESION : menos EXPRESION %prec Umenos'
-    t[0] = -t[2]
+    t[0]= aritmetica(t.lineno(1), t.lexpos(1),nativo(t.lineno(1), t.lexpos(1),Tipo.ENTERO,"0"),t[2],t[1])
 
 def p_expresion_agrupacion(t):
     'EXPRESION : pariz EXPRESION parder'
