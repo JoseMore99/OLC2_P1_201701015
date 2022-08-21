@@ -6,7 +6,7 @@ class Print(instrucciones):
     
     def __init__(self, fila, columna, valor, expresiones):
         self.fila =fila
-        self.comlumna = columna
+        self.columna = columna
         self.valor = valor
         self.expresiones = expresiones
         

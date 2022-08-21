@@ -19,6 +19,9 @@ reserved = {
     'else': 'reselse',
     'println' : 'resprint',
     'while' : 'reswhile',
+    'break' : 'resbreak',
+    'continue' : 'rescontinue',
+    'return' : 'resreturn'
 }
 
 
@@ -131,7 +134,10 @@ import re
 from expresion.TipoR import TipoR
 from expresion.relaciones import relaciones
 from expresion.variable import variable
+from instrucciones.Break import Break
+from instrucciones.Continue import Continue
 from instrucciones.If import If
+from instrucciones.Return import Return
 from instrucciones.While import While
 from instrucciones.asignar import asignar
 from instrucciones.bloque import bloque
@@ -184,8 +190,31 @@ def p_instrucciones_evaluar(t):
                 | INSTFUNC 
                 | LLAMARFUNC puntycom
                 | INSTIF
-                | INSTWHILE'''
+                | INSTWHILE
+                | INSTBREAK puntycom
+                | INSTCONTINUE puntycom
+                | INSTRETURN puntycom '''
     t[0]=t[1]
+
+def p_break(t):
+    '''INSTBREAK : resbreak
+                | resbreak EXPRESION'''
+    if(len(t)==2):
+        t[0]=Break(t.lineno(1), t.lexpos(1))
+    else:
+        t[0]=Break(t.lineno(1), t.lexpos(1),t[1])
+
+def p_continue(t):
+    '''INSTCONTINUE : rescontinue'''
+    t[0]=Continue(t.lineno(1), t.lexpos(1))
+
+def p_return(t):
+    '''INSTRETURN : resreturn
+                |  resreturn EXPRESION'''
+    if(len(t)==2):
+        t[0]=Return(t.lineno(1), t.lexpos(1))
+    else:
+        t[0]=Return(t.lineno(1), t.lexpos(1),t[2])
 
 def p_impresion(t):
     '''PRINT :  resprint not  pariz EXPRESION parder'''

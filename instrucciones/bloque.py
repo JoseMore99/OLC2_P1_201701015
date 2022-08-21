@@ -1,3 +1,4 @@
+from tkinter.messagebox import NO
 from instrucciones.instrucciones import instrucciones
 
 class bloque(instrucciones):
@@ -9,6 +10,9 @@ class bloque(instrucciones):
         
     
     def ejecutar(self,ambito):
-        for i in self.instrucciones:
-            intruccion = i.ejecutar(ambito)
+        for interar in self.instrucciones:
+            intruccion = interar.ejecutar(ambito)
+            if ( intruccion is not None):
+                
+                return intruccion
 

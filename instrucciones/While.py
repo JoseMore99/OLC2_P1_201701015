@@ -16,6 +16,12 @@ class While(instrucciones):
         if(auxcondi["tipo"]==Tipo.BOOL):
             while(auxcondi["valor"]):
                 respuesta = self.contenido.ejecutar(ambito)
+                if(respuesta is not None):
+                    if(respuesta["tipo"]=="201701015B"):
+                        break
+                    if(respuesta["tipo"]=="201701015C"):
+                        continue
+                    return respuesta
                 auxcondi = self.condicion.ejecutar(ambito)
             return respuesta
         else:
