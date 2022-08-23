@@ -49,7 +49,9 @@ tokens  = [
     'dospunt',
     'not',
     'and',
-    'or'
+    'or',
+    'corcheteiz',
+    'corcheteder'
 ]+ list(reserved.values())
 
 t_str       = r'&str'
@@ -57,6 +59,8 @@ t_pariz     = r'\('
 t_parder    = r'\)'
 t_llaveiz     = r'\{'
 t_llaveder    = r'\}'
+t_corcheteiz = r'\['
+t_corcheteder = r'\]'
 t_mas       = r'\+'
 t_menos     = r'-'
 t_por       = r'\*'
@@ -133,6 +137,7 @@ def t_error(t):
 import re
 from expresion.TipoR import TipoR
 from expresion.relaciones import relaciones
+from expresion.varArray import varArray
 from expresion.variable import variable
 from instrucciones.Break import Break
 from instrucciones.Continue import Continue
@@ -142,6 +147,7 @@ from instrucciones.While import While
 from instrucciones.asignar import asignar
 from instrucciones.bloque import bloque
 from instrucciones.declarar import declarar
+from instrucciones.declararArray import declararArray
 from instrucciones.funcion import funcion
 from expresion.aritmetica import aritmetica
 from expresion.Tipo import Tipo
@@ -193,7 +199,8 @@ def p_instrucciones_evaluar(t):
                 | INSTWHILE
                 | INSTBREAK puntycom
                 | INSTCONTINUE puntycom
-                | INSTRETURN puntycom '''
+                | INSTRETURN puntycom 
+                | INSTARRAY puntycom'''
     t[0]=t[1]
 
 def p_break(t):
@@ -223,6 +230,32 @@ def p_impresion(t):
 def p_impresion_lista(t):
     '''PRINT :  resprint not  pariz EXPRESION com LISTAEXP parder'''
     t[0]=Print(t.lineno(1), t.lexpos(1),t[4],t[6])
+
+def p_array(t):
+    '''INSTARRAY : reslet id igual ARRAY'''
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[2],None,t[4],False)
+
+def p_array_mut(t):
+    '''INSTARRAY : reslet resmut id igual ARRAY'''
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],None,t[5],True)
+
+def p_lista_array(t):
+    '''ARRAY : corcheteiz LISTAEXP corcheteder
+            | corcheteiz LISTARREY corcheteder '''
+    t[0]=t[2]
+
+def p_lista_array_conjunto(t):
+    '''LISTARREY : LISTARREY com ARRAY '''
+    if (t[3] != ""):
+       t[1].append(t[3])
+    t[0] = t[1]
+    
+def p_lista_array_unica(t):
+    '''LISTARREY : ARRAY '''
+    if (t[1] != ""):
+       t[0]=[t[1]]
+    else:
+        t[0]=[]
 
 def p_declarar_mut_tipo(t):
     '''DECLARAR : reslet resmut id dospunt TIPOVAL igual EXPRESION'''
@@ -288,7 +321,7 @@ def p_llamar_f_parametros(t):
     '''LLAMARFUNC : id pariz LISTAEXP parder'''
     t[0]=llamarfunc(t.lineno(1), t.lexpos(1),t[1],t[3])
 
-def p_funcion_tipo(t):
+def p_bloque(t):
     '''BLOQUE : INSTRUCCIONES'''
     t[0]= bloque(t.lineno(1), t.lexpos(1),t[1])
 
@@ -406,10 +439,27 @@ def p_expresion_id(t):
     'EXPRESION    : id'
     t[0] = variable(t.lineno(1),t.lexpos(1),t[1])
 
+def p_expresion_id_array(t):
+    'EXPRESION    : id ACCESO '
+    t[0] = varArray(t.lineno(1),t.lexpos(1),t[1],t[2])
+
 def p_expresion_boolean(t):
     '''EXPRESION    : restrue
                     | resfalse '''
     t[0] = nativo(t.lineno(1), t.lexpos(1),Tipo.BOOL,t[1])
+
+def p_acceso_conjunto(t):
+    '''ACCESO : ACCESO corcheteiz EXPRESION corcheteder '''
+    if (t[3] != ""):
+       t[1].append(t[3])
+    t[0] = t[1]
+
+def p_acceso_unica(t):
+    '''ACCESO : corcheteiz EXPRESION corcheteder '''
+    if (t[2] != ""):
+       t[0]=[t[2]]
+    else:
+        t[0]=[]
 
 def p_error(t):
     print("Error sintáctico en '%s'" % t.value)
