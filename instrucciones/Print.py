@@ -23,6 +23,7 @@ class Print(instrucciones):
                     temp = i.ejecutar(ambito)
                     if(temp!=None):
                         texto = texto.replace("{}",str(temp["valor"]),1)
+                        #print(temp["valor"],"-")
                     else:
                         print("Error en replace del print")
                 consola+=texto+"\n"

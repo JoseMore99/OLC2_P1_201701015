@@ -145,6 +145,7 @@ from instrucciones.If import If
 from instrucciones.Return import Return
 from instrucciones.While import While
 from instrucciones.asignar import asignar
+from instrucciones.asignarArray import asignarArray
 from instrucciones.bloque import bloque
 from instrucciones.declarar import declarar
 from instrucciones.declararArray import declararArray
@@ -200,7 +201,8 @@ def p_instrucciones_evaluar(t):
                 | INSTBREAK puntycom
                 | INSTCONTINUE puntycom
                 | INSTRETURN puntycom 
-                | INSTARRAY puntycom'''
+                | INSTARRAY puntycom
+                | INSTASIGNARARRAY puntycom'''
     t[0]=t[1]
 
 def p_break(t):
@@ -238,6 +240,10 @@ def p_array(t):
 def p_array_mut(t):
     '''INSTARRAY : reslet resmut id igual ARRAY'''
     t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],None,t[5],True)
+
+def p_array_asignar(t):
+    ''' INSTASIGNARARRAY : id ACCESO igual EXPRESION '''
+    t[0]= asignarArray(t.lineno(1), t.lexpos(1),t[1],t[2],t[4])
 
 def p_lista_array(t):
     '''ARRAY : corcheteiz LISTAEXP corcheteder
