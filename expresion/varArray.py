@@ -1,5 +1,7 @@
 from expresion.expresion import expresion
+from expresion.nativo import nativo
 from simbolo.ambito import ambito
+from expresion.Tipo import Tipo
 
 class varArray(expresion):
 
@@ -12,13 +14,18 @@ class varArray(expresion):
     def ejecutar(self,ambito:ambito):
         auxSimbolo = ambito.buscarsimbolo(self.id)
         dimensiones= auxSimbolo.tipo["dimen"]
-        print(dimensiones)
+        #print(dimensiones)
         def getpos(i):
-            aux = self.pocisiones[i].ejecutar(ambito)
-            if i==0:
-                return aux["valor"]
-            return aux["valor"]+dimensiones[i]*getpos(i-1)
-        return auxSimbolo.valor[getpos(len(dimensiones)-1)]
+                aux = self.pocisiones[i].ejecutar(ambito)
+                if i==0:
+                    return aux["valor"]
+                return aux["valor"]+dimensiones[i]*getpos(i-1)
+        try:
+            return auxSimbolo.valor[getpos(len(dimensiones)-1)]
+        except:
+            self.pocisiones.append(nativo(0,0,Tipo.ENTERO,0))
+            medida = dimensiones[-1]
+            return {"tipo":Tipo.ARRAY,"valor":auxSimbolo.valor[getpos(len(dimensiones)-1):(getpos(len(dimensiones)-1)+medida)]}
 
 
     '''def ejecutar(self,ambito:ambito):

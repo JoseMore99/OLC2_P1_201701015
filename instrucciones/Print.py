@@ -22,7 +22,16 @@ class Print(instrucciones):
                 for i in self.expresiones:
                     temp = i.ejecutar(ambito)
                     if(temp!=None):
-                        texto = texto.replace("{}",str(temp["valor"]),1)
+                        print(temp)
+                        if(isinstance(temp["valor"],list)):
+                            contenido ="["
+                            for j in temp["valor"]:
+                                contenido+=str(j["valor"])+","
+                            contenido+="]"
+                            contenido= contenido.replace(",]","]")
+                            texto = texto.replace("{:?}",contenido,1)
+                        else:
+                            texto = texto.replace("{}",str(temp["valor"]),1)
                         #print(temp["valor"],"-")
                     else:
                         print("Error en replace del print")

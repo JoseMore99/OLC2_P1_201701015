@@ -34,9 +34,8 @@ r=[1,2,3,4]
 print(isinstance(list(t),list))
 print(list(t))'''
 z=[[[1,2,3,4],[5,6,7,8]],[[9,10,11,11],[12,13,14,15]]]
-print(z[0][1][1])
 dimensiones =[]
-pocisiones =[1,1,2]
+pocisiones =[0,1,0]
 pos = pocisiones
 temporal=[]
 
@@ -56,19 +55,41 @@ print(dimensiones)
 print(pocisiones)
 print(pos)
 def getpos(i):
-    def papas():
-        print("cocos")
     if i==0:
-        papas()
         return pos[i]
     return pos[i]+dimensiones[i]*getpos(i-1)
+cocal=[0,0]
+cocal.append(0)
+
+def getpos2(i):
+    if i==0:
+        return cocal[i]
+    return cocal[i]+dimensiones[i]*getpos2(i-1)
     
 vectorfial=recorrer(z)
-
-
 print(z)
 print(temporal)
+
+medida = dimensiones[-1]
+nemo = getpos2(len(dimensiones)-1)
+print("nemo"+str(nemo))
+print(vectorfial[nemo:nemo+medida])
+    
+    
+
 print("--------")
 print(getpos(len(dimensiones)-1))
 print(vectorfial)
 print(vectorfial[getpos(len(dimensiones)-1)])
+print("--------------")
+g={"0":{"0":{"0":"1","1":"12","2":"13"},"1":{"0":"1","1":"2","2":"3"}},"1":{"0":{"0":"21","1":"22","2":"23"},"1":{"0":"31","1":"32","2":"33"}}}
+t=[0,0,0]
+aux = g
+print(g)
+for i in range(len(t)-1):
+    aux = aux[str(t[i])]
+
+
+print(aux)
+aux[str(len(t)-1)] = "777"
+print(g)

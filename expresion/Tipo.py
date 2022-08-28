@@ -7,3 +7,4 @@ class Tipo(Enum):
     BOOL = 3
     CHAR = 4
     STRING = 5
+    ARRAY = 6

@@ -1,23 +1,31 @@
 import re
+from xml.dom.minidom import DOMImplementation
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
 from simbolo.simbolo import simbolo
 
 class declararArray(instrucciones):
     
-    def __init__(self, fila, columna,id,tipo, valor,mutabilidad):
+    def __init__(self, fila, columna,id,tipo, valor,mutabilidad,dimensiones):
         self.fila =fila
         self.comlumna = columna
         self.id = id
         self.tipo = tipo
         self.valor = valor
         self.mutabilidad= mutabilidad
-        self.dimensiones=[]
+        self.dimensiones=dimensiones
         
     
     def ejecutar(self,ambito:ambito):
+        #[[[i64;3],2],2]
         if self.dimensiones ==[]:
            self.ObtenerDimen(self.valor)
+        else:
+            temp=[]
+            for i in self.dimensiones:
+                x = i.ejecutar(ambito)
+                temp.append(x["valor"])
+            self.dimensiones=temp[::-1]
         if(self.tipo!=None):
             retorno=self.recorrer(self.valor,ambito)
             print(retorno)
@@ -38,6 +46,7 @@ class declararArray(instrucciones):
                 temp.extend(t)
             else: 
                 try:
+                    self.tipo=i["tipo"]
                     temp.extend(i)
                 except:
                     temp.append(i.ejecutar(ambito))

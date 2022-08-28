@@ -21,7 +21,9 @@ reserved = {
     'while' : 'reswhile',
     'break' : 'resbreak',
     'continue' : 'rescontinue',
-    'return' : 'resreturn'
+    'return' : 'resreturn',
+    'for' : 'resfor',
+    'in' : 'resin'
 }
 
 
@@ -141,6 +143,7 @@ from expresion.varArray import varArray
 from expresion.variable import variable
 from instrucciones.Break import Break
 from instrucciones.Continue import Continue
+from instrucciones.For import For
 from instrucciones.If import If
 from instrucciones.Return import Return
 from instrucciones.While import While
@@ -198,6 +201,7 @@ def p_instrucciones_evaluar(t):
                 | LLAMARFUNC puntycom
                 | INSTIF
                 | INSTWHILE
+                | INSFOR
                 | INSTBREAK puntycom
                 | INSTCONTINUE puntycom
                 | INSTRETURN puntycom 
@@ -235,11 +239,19 @@ def p_impresion_lista(t):
 
 def p_array(t):
     '''INSTARRAY : reslet id igual ARRAY'''
-    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[2],None,t[4],False)
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[2],None,t[4],False,[])
 
 def p_array_mut(t):
     '''INSTARRAY : reslet resmut id igual ARRAY'''
-    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],None,t[5],True)
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],None,t[5],True,[])
+
+def p_array_tipado(t):
+    '''INSTARRAY : reslet id TIPOARRAY igual ARRAY'''
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[2],None,t[5],False,t[3])
+
+def p_array_mut_tipado(t):
+    '''INSTARRAY : reslet resmut id TIPOARRAY igual ARRAY'''
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],None,t[6],True,t[4])
 
 def p_array_asignar(t):
     ''' INSTASIGNARARRAY : id ACCESO igual EXPRESION '''
@@ -302,6 +314,10 @@ def p_else(t):
 def p_while(t):
     '''INSTWHILE : reswhile  EXPRESION  llaveiz BLOQUE llaveder '''
     t[0]= While(t.lineno(1), t.lexpos(1),t[2],t[4])
+
+def p_for(t):
+    '''INSFOR : resfor id resin EXPRESION llaveiz BLOQUE llaveder  '''
+    t[0]=For(t.lineno(1), t.lexpos(1),declarar(t.lineno(1), t.lexpos(1),t[2],None,None,True),t[4],t[4],t[6])
 
 def p_funcion(t):
     '''INSTFUNC : resfn id pariz parder llaveiz BLOQUE llaveder'''
@@ -372,6 +388,16 @@ def p_tipoval(t):
     elif (str(t[1])=="char"):t[0]=Tipo.CHAR
     elif (str(t[1])=="string"):t[0]=Tipo.STRING
     elif (str(t[1])=="&str"):t[0]=Tipo.STRING
+
+def p_tipoarray(t):
+    ''' TIPOARRAY : corcheteiz TIPOARRAY puntycom EXPRESION corcheteder'''
+    if (t[4] != ""):
+       t[2].append(t[4])
+    t[0] = t[2]
+
+def p_tipoarray_exp(t):
+    ''' TIPOARRAY : corcheteiz TIPOVAL puntycom EXPRESION corcheteder'''
+    t[0] = [t[4]]
 
 def p_expresion_binaria(t):
     '''EXPRESION : EXPRESION mas EXPRESION
