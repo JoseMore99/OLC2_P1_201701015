@@ -21,8 +21,9 @@ class While(instrucciones):
                         break
                     if(respuesta["tipo"]=="201701015C"):
                         continue
-                    #return respuesta
+                    if(respuesta["tipo"]=="201701015R"):
+                            return respuesta
                 auxcondi = self.condicion.ejecutar(ambito)
             #return respuesta
         else:
-            print("Error en Condicion del if")
+            print("Error en Condicion del While")

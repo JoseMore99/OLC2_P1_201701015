@@ -22,7 +22,7 @@ class For(instrucciones):
             self.variable.valor=nativo(0, 0,auxcondi["valor"][0]["tipo"],auxcondi["valor"][0]["valor"])
             self.variable.ejecutar(entornoAnt)
             for i in auxcondi["valor"]:
-                ambito.editarSimbolo(entornoAnt,self.variable.id,simbolo(i["tipo"],self.variable.id,i["valor"],True))
+                entornoAnt.editarSimbolo(self.variable.id,simbolo(i["tipo"],self.variable.id,i["valor"],True))
                 respuesta = self.contenido.ejecutar(entornoAnt)
                 if(respuesta is not None):
                     if(respuesta["tipo"]=="201701015B"):
@@ -36,5 +36,22 @@ class For(instrucciones):
                     #return respuesta
             #return respuesta
         else:
-            for i in range(auxcondi):
-                pass
+            auxcondi = self.varcambio.ejecutar(Ambito)
+            auxcondi2 = self.varcambio2.ejecutar(Ambito)
+            if(auxcondi["tipo"]==Tipo.ENTERO and auxcondi2["tipo"]==Tipo.ENTERO):
+                entornoAnt= ambito(Ambito)
+                self.variable.valor=nativo(0, 0,auxcondi["tipo"],auxcondi["valor"])
+                self.variable.ejecutar(entornoAnt)
+                for i in range(auxcondi["valor"],auxcondi2["valor"]):
+                    simbolonew = simbolo(Tipo.ENTERO,self.variable.id,i,True)
+                    entornoAnt.editarSimbolo(self.variable.id,simbolonew)
+                    respuesta = self.contenido.ejecutar(entornoAnt)
+                    if(respuesta is not None):
+                        if(respuesta["tipo"]=="201701015B"):
+                            break
+                        if(respuesta["tipo"]=="201701015C"):
+                            continue
+                        if(respuesta["tipo"]=="201701015R"):
+                            return respuesta
+            else:
+                print("Error en for")

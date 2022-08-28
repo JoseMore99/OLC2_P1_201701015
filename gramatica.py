@@ -23,7 +23,8 @@ reserved = {
     'continue' : 'rescontinue',
     'return' : 'resreturn',
     'for' : 'resfor',
-    'in' : 'resin'
+    'in' : 'resin',
+    'loop' : 'resloop'
 }
 
 
@@ -53,7 +54,8 @@ tokens  = [
     'and',
     'or',
     'corcheteiz',
-    'corcheteder'
+    'corcheteder',
+    'puntdos'
 ]+ list(reserved.values())
 
 t_str       = r'&str'
@@ -68,6 +70,7 @@ t_menos     = r'-'
 t_por       = r'\*'
 t_divid     = r'/'
 t_puntycom  = r';'
+t_puntdos  = r'\.\.'
 t_com       = r','
 t_dospunt   = r':'
 t_modulo    = r'%'
@@ -145,6 +148,7 @@ from instrucciones.Break import Break
 from instrucciones.Continue import Continue
 from instrucciones.For import For
 from instrucciones.If import If
+from instrucciones.Loop import Loop
 from instrucciones.Return import Return
 from instrucciones.While import While
 from instrucciones.asignar import asignar
@@ -202,6 +206,7 @@ def p_instrucciones_evaluar(t):
                 | INSTIF
                 | INSTWHILE
                 | INSFOR
+                | INSLOOP
                 | INSTBREAK puntycom
                 | INSTCONTINUE puntycom
                 | INSTRETURN puntycom 
@@ -315,9 +320,17 @@ def p_while(t):
     '''INSTWHILE : reswhile  EXPRESION  llaveiz BLOQUE llaveder '''
     t[0]= While(t.lineno(1), t.lexpos(1),t[2],t[4])
 
+def p_lup(t):
+    '''INSLOOP : resloop llaveiz BLOQUE llaveder '''
+    t[0]= Loop(t.lineno(1), t.lexpos(1),t[3])
+
 def p_for(t):
     '''INSFOR : resfor id resin EXPRESION llaveiz BLOQUE llaveder  '''
     t[0]=For(t.lineno(1), t.lexpos(1),declarar(t.lineno(1), t.lexpos(1),t[2],None,None,True),t[4],t[4],t[6])
+
+def p_for_range(t):
+    '''INSFOR : resfor id resin EXPRESION puntdos EXPRESION llaveiz BLOQUE llaveder  '''
+    t[0]=For(t.lineno(1), t.lexpos(1),declarar(t.lineno(1), t.lexpos(1),t[2],None,None,True),t[4],t[6],t[8])
 
 def p_funcion(t):
     '''INSTFUNC : resfn id pariz parder llaveiz BLOQUE llaveder'''
