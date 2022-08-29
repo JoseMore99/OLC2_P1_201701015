@@ -24,7 +24,8 @@ reserved = {
     'return' : 'resreturn',
     'for' : 'resfor',
     'in' : 'resin',
-    'loop' : 'resloop'
+    'loop' : 'resloop',
+    'match' : 'resmatch'
 }
 
 
@@ -53,9 +54,12 @@ tokens  = [
     'not',
     'and',
     'or',
+    'barra',
     'corcheteiz',
     'corcheteder',
-    'puntdos'
+    'puntdos',
+    'defaul',
+    'apunta'
 ]+ list(reserved.values())
 
 t_str       = r'&str'
@@ -79,7 +83,10 @@ t_igual     = r'='
 t_mayorque  = r'>'
 t_menorque  = r'<'
 t_and       = r'&'
-t_or        = r'\|'
+t_or        = r'\|\|'
+t_barra        = r'\|'
+t_defaul        = r'_'
+t_apunta = r'=>'
 
 def t_id(t):
     r'[a-zA-Z][a-zA-Z_0-9]*'
@@ -149,6 +156,8 @@ from instrucciones.Continue import Continue
 from instrucciones.For import For
 from instrucciones.If import If
 from instrucciones.Loop import Loop
+from instrucciones.Match import Match
+from instrucciones.MatchCoin import MatchCoin
 from instrucciones.Return import Return
 from instrucciones.While import While
 from instrucciones.asignar import asignar
@@ -207,6 +216,7 @@ def p_instrucciones_evaluar(t):
                 | INSTWHILE
                 | INSFOR
                 | INSLOOP
+                | INSMATCH
                 | INSTBREAK puntycom
                 | INSTCONTINUE puntycom
                 | INSTRETURN puntycom 
@@ -315,6 +325,56 @@ def p_elseif(t):
 def p_else(t):
     '''INSTELSE : reselse llaveiz BLOQUE llaveder'''
     t[0]=t[3]
+
+def p_match(t):
+    '''INSMATCH : resmatch  EXPRESION  llaveiz COINCIDENCIAS llaveder '''
+    t[0]= Match(t.lineno(1), t.lexpos(1),t[2],t[4])
+
+def p_match_coin_conjunto(t):#COINCIDENCIAS DE MATCH
+    '''COINCIDENCIAS : COINCIDENCIAS COINCIDENCIA    '''
+    if (t[2] != ""):
+       t[1].append(t[2])
+    t[0] = t[1]
+
+
+def p_match_coin_unica(t):#COINCIDENCIAS DE MATCH
+    '''COINCIDENCIAS : COINCIDENCIA '''
+    if (t[1] != ""):
+       t[0]=[t[1]]
+    else:
+        t[0]=[]
+
+def p_match_coin(t):#COINCIDENCIAS DE MATCH
+    '''COINCIDENCIA :  LISTACOIN apunta llaveiz BLOQUE llaveder '''
+    t[0]= MatchCoin(t.lineno(1), t.lexpos(1),t[1],t[4])
+
+def p_match_coin_ins(t):#COINCIDENCIAS DE MATCH
+    '''COINCIDENCIA :  LISTACOIN apunta INSTRUCCION com'''
+    t[0]= MatchCoin(t.lineno(1), t.lexpos(1),t[1],t[3])
+    
+def p_match_coin_exp(t):#COINCIDENCIAS DE MATCH
+    '''COINCIDENCIA :  LISTACOIN apunta EXPRESION com'''
+    t[0]= MatchCoin(t.lineno(1), t.lexpos(1),t[1],t[3])
+
+def p_lista_coin_conjunto(t):
+    '''LISTACOIN : LISTACOIN barra EXPRESION '''
+    if (t[3] != ""):
+       t[1].append(t[3])
+    t[0] = t[1]
+    
+def p_lista_coin(t):
+    '''LISTACOIN : EXPRESION '''
+    if (t[1] != ""):
+       t[0]=[t[1]]
+    else:
+        t[0]=[]
+
+def p_lista_coin_defaul(t):
+    '''LISTACOIN : defaul '''
+    if (t[1] != ""):
+       t[0]=[t[1]]
+    else:
+        t[0]=[]
 
 def p_while(t):
     '''INSTWHILE : reswhile  EXPRESION  llaveiz BLOQUE llaveder '''
@@ -449,8 +509,8 @@ def p_expresion_binaria_and(t):
     t[0]= relaciones(t.lineno(1), t.lexpos(1),t[1],t[4],TipoR.AND)
 
 def p_expresion_binaria_or(t):
-    '''EXPRESION : EXPRESION or or EXPRESION'''
-    t[0]= relaciones(t.lineno(1), t.lexpos(1),t[1],t[4],TipoR.OR)
+    '''EXPRESION : EXPRESION or EXPRESION'''
+    t[0]= relaciones(t.lineno(1), t.lexpos(1),t[1],t[3],TipoR.OR)
 
 def p_expresion_unaria_not(t):
     '''EXPRESION : not EXPRESION'''
