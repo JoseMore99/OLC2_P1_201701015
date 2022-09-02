@@ -30,7 +30,10 @@ reserved = {
     'push' : 'respush',
     'new' : 'resnew',
     'insert' : 'resinsert',
-    'remove' : 'resremove'
+    'remove' : 'resremove',
+    'contains' : 'rescontains',
+    'len' : 'reslen',
+    'with_capacity' : 'reswith'
 }
 
 
@@ -156,6 +159,8 @@ def t_error(t):
 
 from os import remove
 import re
+from instrucciones.Funciones_vectores.Contains import Contains
+from instrucciones.Funciones_vectores.Len import Len
 from instrucciones.Funciones_vectores.insert import insert
 from instrucciones.Funciones_vectores.push import push
 from instrucciones.Funciones_vectores.remove import Remove
@@ -269,7 +274,9 @@ def p_impresion_lista(t):
 def p_fvec(t):
     '''FUNCVEC : PUSH
             | INSERT 
-            | REMOVE'''
+            | REMOVE
+            | CONTAINS
+            | LEN'''
     t[0]=t[1]
 
 def p_push(t):
@@ -283,6 +290,14 @@ def p_insert(t):
 def p_remove(t):
     '''REMOVE : id punt resremove pariz EXPRESION parder '''
     t[0]=Remove(t.lineno(1), t.lexpos(1),t[1],t[5])
+    
+def p_contains(t):
+    '''CONTAINS : id punt rescontains pariz and EXPRESION parder '''
+    t[0]=Contains(t.lineno(1), t.lexpos(1),t[1],t[6])
+
+def p_len(t):
+    '''LEN : id punt reslen pariz parder '''
+    t[0]=Len(t.lineno(1), t.lexpos(1),t[1])
 
 def p_array(t):
     '''INSTARRAY : reslet id igual ARRAY'''
@@ -621,8 +636,15 @@ def p_expresion_func(t):
     'EXPRESION    : LLAMARFUNC '
     t[0] = t[1]
 
-def p_expresion_func(t):
+def p_expresion_remub(t):
     'EXPRESION    : REMOVE '
+    t[0] = t[1]
+
+def p_expresion_contain(t):
+    'EXPRESION    : CONTAINS '
+    t[0] = t[1]
+def p_expresion_len(t):
+    'EXPRESION    : LEN '
     t[0] = t[1]
 
 def p_expresion_boolean(t):

@@ -2,7 +2,6 @@ digraph G{
 node [shape=record];
 a0 [label=<<TABLE border="1" cellspacing="5" cellpadding="5" style="rounded" bgcolor="yellow:violet">
 "<TR><TD>FILA</TD><TD>COLUMNA</TD><TD>CLASE</TD><TD>DESCRIPCION</TD></TR>
-<TR><TD>2</TD><TD>41</TD><TD>Sintactico</TD><TD>Error sintactico en '.'</TD></TR>
-<TR><TD>3</TD><TD>69</TD><TD>Semantico</TD><TD>Variable no declarada</TD></TR>
+<TR><TD>1</TD><TD>7</TD><TD>Sintactico</TD><TD>Error sintactico en ':'</TD></TR>
 </TABLE>>];
 }
