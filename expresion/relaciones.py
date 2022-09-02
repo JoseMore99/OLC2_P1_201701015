@@ -2,6 +2,7 @@
 from expresion.Tipo import Tipo
 from expresion.TipoR import TipoR
 from expresion.expresion import expresion
+import simbolo.listaerrores as errores
 class relaciones(expresion):
 
     def __init__(self, fila, columna,izquierda,derecha, tiporel):
@@ -37,8 +38,8 @@ class relaciones(expresion):
             
             
             else:
-                    print("error en el modulo de Relaciones")
+                errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Relacion invalida")
         else:
-            print("error en la Relacion")
+            errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
             
         

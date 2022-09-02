@@ -23,7 +23,15 @@ class llamarfunc(expresion):
                         auxfunc.ejecutar(entornoAnt)
                     else:
                         print("Error en asignacion de parametroes")
-                auxfuncion.contenido.ejecutar(entornoAnt)
+                respuesta=auxfuncion.contenido.ejecutar(entornoAnt)
+                if(respuesta is not None):
+                    if(respuesta["tipo"]=="201701015B"):
+                        print("Break incorrecto")
+                    if(respuesta["tipo"]=="201701015C"):
+                        print("Continue incorrecto")
+                    if(respuesta["tipo"]=="201701015R"):
+                            #print(respuesta["valor"].ejecutar(entornoAnt))
+                            return respuesta["valor"].ejecutar(entornoAnt)
             else:
                 print("Error en parametros de llamar funcion")
         else:

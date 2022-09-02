@@ -54,4 +54,5 @@ class For(instrucciones):
                         if(respuesta["tipo"]=="201701015R"):
                             return respuesta
             else:
-                print("Error en for")
+                import simbolo.listaerrores as errores
+                errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Expresiones en for mo admitidas")

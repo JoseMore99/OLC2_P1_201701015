@@ -1,0 +1,7 @@
+digraph G{
+node [shape=record];
+a0 [label=<<TABLE border="1" cellspacing="5" cellpadding="5" style="rounded" bgcolor="yellow:violet">
+"<TR><TD>FILA</TD><TD>COLUMNA</TD><TD>CLASE</TD><TD>DESCRIPCION</TD></TR>
+<TR><TD>2</TD><TD>10</TD><TD>Semantico</TD><TD>variable declarada dos veces</TD></TR>
+</TABLE>>];
+}

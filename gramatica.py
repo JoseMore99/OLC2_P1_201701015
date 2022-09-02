@@ -2,7 +2,7 @@
 ##########################################################################################
 ########################         ANALISIS LEXICO            ##############################
 ##########################################################################################
-
+input=''
 reserved = {
     'true': 'restrue',
     'false': 'resfalse',
@@ -143,10 +143,12 @@ def t_newline(t):
 
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
+    errores.Errores.nuevoError(t.lexer.lineno, getColumn(input, t), 'Lexico', 'Simbolo '+t.value[0]+' no reconocido')
     t.lexer.skip(1)
 
 
 import re
+import simbolo.listaerrores as errores
 from expresion.TipoR import TipoR
 from expresion.relaciones import relaciones
 from expresion.varArray import varArray
@@ -548,6 +550,14 @@ def p_expresion_id_array(t):
     'EXPRESION    : id ACCESO '
     t[0] = varArray(t.lineno(1),t.lexpos(1),t[1],t[2])
 
+def p_expresion_mach(t):
+    'EXPRESION    : INSMATCH '
+    t[0] = t[1]
+
+def p_expresion_func(t):
+    'EXPRESION    : LLAMARFUNC '
+    t[0] = t[1]
+
 def p_expresion_boolean(t):
     '''EXPRESION    : restrue
                     | resfalse '''
@@ -567,7 +577,9 @@ def p_acceso_unica(t):
         t[0]=[]
 
 def p_error(t):
-    print("Error sintáctico en '%s'" % t.value)
+    if t != None:
+        print("Error sintáctico en '%s'" % t.value)
+        errores.Errores.nuevoError(t.lineno, t.lexpos, 'Sintactico', "Error sintactico en '%s'" % t.value)
 
 import ply.yacc as yacc
 parser = yacc.yacc()

@@ -22,7 +22,7 @@ class Print(instrucciones):
                 for i in self.expresiones:
                     temp = i.ejecutar(ambito)
                     if(temp!=None):
-                        print(temp)
+                        #print(temp)
                         if(isinstance(temp["valor"],list)):
                             contenido ="["
                             for j in temp["valor"]:

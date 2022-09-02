@@ -1,6 +1,7 @@
 
 from expresion.expresion import expresion
 from simbolo.ambito import ambito
+import simbolo.listaerrores as errores
 
 class variable(expresion):
 
@@ -14,7 +15,7 @@ class variable(expresion):
         if (auxSimbolo!=None):
             return {"valor": auxSimbolo.valor, "tipo": auxSimbolo.tipo}
         else:
-            print("error en variable")
+            errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Variable no declarada")
     
 
 

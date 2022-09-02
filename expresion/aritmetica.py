@@ -1,5 +1,6 @@
 
 from expresion.expresion import expresion
+import simbolo.listaerrores as errores
 class aritmetica(expresion):
 
     def __init__(self, fila, columna,izquierda,derecha, tipoArit):
@@ -20,23 +21,23 @@ class aritmetica(expresion):
                 if(str(valIz["valor"]).isdigit and str(valDer["valor"]).isdigit):
                      return {"valor": valIz["valor"]-valDer["valor"], "tipo": valIz["tipo"]}
                 else:
-                    print("error en la resta Aritmetica")
+                    errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
             elif self.tipoArit == "*" :
                 if(str(valIz["valor"]).isdigit and str(valDer["valor"]).isdigit):
                      return {"valor": valIz["valor"]*valDer["valor"], "tipo": valIz["tipo"]}
                 else:
-                    print("error en la multiplicacion Aritmetica")
+                    errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
             elif self.tipoArit == "/" : 
                 if(str(valIz["valor"]).isdigit and str(valDer["valor"]).isdigit):
                      return {"valor": valIz["valor"]/valDer["valor"], "tipo": valIz["tipo"]}
                 else:
-                    print("error en la division Aritmetica")
+                    errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
             elif self.tipoArit == "%" : 
                 if(str(valIz["valor"]).isdigit and str(valDer["valor"]).isdigit):
                      return {"valor": valIz["valor"]%valDer["valor"], "tipo": valIz["tipo"]}
                 else:
-                    print("error en el modulo Aritmetica")
+                    errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
         else:
-            print("error en la Aritmetica")
+            errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
             
         

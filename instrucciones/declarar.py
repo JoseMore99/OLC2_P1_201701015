@@ -14,16 +14,21 @@ class declarar(instrucciones):
         
     
     def ejecutar(self,ambito:ambito):
-        if(self.tipo!=None):
-            if (self.valor !=None):
-                auxval = self.valor.ejecutar(ambito)
-               # print(str(auxval["tipo"])+"---"+str(self.tipo))
-                if (auxval["tipo"]==self.tipo):
-                    simboloNew= simbolo(self.tipo,self.id,auxval["valor"],self.mutabilidad,self.fila,self.comlumna)
-                    ambito.nuevosimbolo(simboloNew)
-                else:
-                    print("Error en declarar")
+        if ambito.existesimbolo(self.id):
+            import simbolo.listaerrores as errores
+            errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', 'variable declarada dos veces')
         else:
-            auxval = self.valor.ejecutar(ambito)
-            simboloNew= simbolo(auxval["tipo"],self.id,auxval["valor"],self.mutabilidad,self.fila,self.comlumna)
-            ambito.nuevosimbolo(simboloNew)
+            if(self.tipo!=None):
+                if (self.valor !=None):
+                    auxval = self.valor.ejecutar(ambito)
+                # print(str(auxval["tipo"])+"---"+str(self.tipo))
+                    if (auxval["tipo"]==self.tipo):
+                        simboloNew= simbolo(self.tipo,self.id,auxval["valor"],self.mutabilidad,self.fila,self.comlumna)
+                        ambito.nuevosimbolo(simboloNew)
+                    else:
+                        import simbolo.listaerrores as errores
+                        errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Declaracion de tipo incitrecta")
+            else:
+                auxval = self.valor.ejecutar(ambito)
+                simboloNew= simbolo(auxval["tipo"],self.id,auxval["valor"],self.mutabilidad,self.fila,self.comlumna)
+                ambito.nuevosimbolo(simboloNew)

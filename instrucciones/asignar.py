@@ -20,6 +20,8 @@ class asignar(instrucciones):
                 simboloNew= simbolo(auxval["tipo"],self.id,auxval["valor"],simbolo_enc.mutabilidad,self.fila,self.comlumna)
                 ambito.editarSimbolo(self.id,simboloNew)
             else:
-                print("Error en asignar")
+                import simbolo.listaerrores as errores
+                errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Tipo incorrecto en asignacion")
         else: 
-            print("Error de mutabilidad en asignar")
+            import simbolo.listaerrores as errores
+            errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Asignacion a variable inmutable")

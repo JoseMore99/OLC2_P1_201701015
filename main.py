@@ -2,8 +2,9 @@ from tkinter import *
 from tkinter import ttk
 from gramatica import parser
 import instrucciones.Print as Imprimir
+import simbolo.listaerrores as errores
 from simbolo.ambito import ambito
-
+ 
 
 ventana = Tk()
 Mifr = Frame()
@@ -22,6 +23,9 @@ def ejecutar():
             if i != None:
                 i.ejecutar(global_a)
     
+    if(errores.Errores.lista!=[]):
+        errores.Errores.graficar()
+        errores.Errores.lista=[]
     #print("------------------------------------")
     #print(Imprimir.consola)
     txtConsola.delete("1.0","end")
