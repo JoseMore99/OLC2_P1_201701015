@@ -19,7 +19,10 @@ class declararArray(instrucciones):
     def ejecutar(self,ambito:ambito):
         #[[[i64;3],2],2]
         if self.dimensiones ==[]:
-           self.ObtenerDimen(self.valor)
+            if self.valor==[]:
+                self.dimensiones=[0]
+            else:
+                self.ObtenerDimen(self.valor)
         else:
             temp=[]
             for i in self.dimensiones:

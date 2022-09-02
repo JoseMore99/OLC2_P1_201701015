@@ -25,7 +25,9 @@ reserved = {
     'for' : 'resfor',
     'in' : 'resin',
     'loop' : 'resloop',
-    'match' : 'resmatch'
+    'match' : 'resmatch',
+    'vec' : 'resvec',
+    'new' : 'resnew'
 }
 
 
@@ -256,19 +258,31 @@ def p_impresion_lista(t):
 
 def p_array(t):
     '''INSTARRAY : reslet id igual ARRAY'''
-    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[2],None,t[4],False,[])
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[2],Tipo.ARRAY,t[4],False,[])
+
+def p_vector(t):
+    '''INSTARRAY : reslet id igual resvec not ARRAY'''
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[2],Tipo.VECTOR,t[6],False,[])
 
 def p_array_mut(t):
     '''INSTARRAY : reslet resmut id igual ARRAY'''
-    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],None,t[5],True,[])
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],Tipo.ARRAY,t[5],True,[])
+
+def p_vector_mut(t):
+    '''INSTARRAY : reslet resmut id igual resvec not ARRAY'''
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],Tipo.VECTOR,t[7],True,[])
 
 def p_array_tipado(t):
-    '''INSTARRAY : reslet id TIPOARRAY igual ARRAY'''
-    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[2],None,t[5],False,t[3])
+    '''INSTARRAY : reslet id dospunt TIPOARRAY igual ARRAY'''
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[2],Tipo.ARRAY,t[6],False,t[4])
+
+def p_vector_tipado(t):
+    '''INSTARRAY : reslet id dospunt resvec menorque TIPOVAL mayorque igual ARRAY'''
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[2],Tipo.VECTOR,t[9],False,[])
 
 def p_array_mut_tipado(t):
-    '''INSTARRAY : reslet resmut id TIPOARRAY igual ARRAY'''
-    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],None,t[6],True,t[4])
+    '''INSTARRAY : reslet resmut id dospunt TIPOARRAY igual ARRAY'''
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],Tipo.ARRAY,t[7],True,t[5])
 
 def p_array_asignar(t):
     ''' INSTASIGNARARRAY : id ACCESO igual EXPRESION '''
@@ -278,6 +292,22 @@ def p_lista_array(t):
     '''ARRAY : corcheteiz LISTAEXP corcheteder
             | corcheteiz LISTARREY corcheteder '''
     t[0]=t[2]
+
+def p_lista_vectores(t):
+    '''ARRAY : resvec not corcheteiz LISTAEXP corcheteder
+            | resvec not corcheteiz LISTARREY corcheteder '''
+    t[0]=t[3]
+
+def p_vector_especial(t):
+    '''ARRAY : resvec not corcheteiz EXPRESION puntycom entero corcheteder '''
+    lista = []
+    for i in range(int(t[6])):
+        lista.append(t[4])
+    t[0]=lista
+def p_vector_new(t):
+    '''ARRAY : resvec dospunt dospunt resnew pariz parder '''
+    t[0]=[]
+
 
 def p_lista_array_conjunto(t):
     '''LISTARREY : LISTARREY com ARRAY '''

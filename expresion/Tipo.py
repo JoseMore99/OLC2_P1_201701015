@@ -8,3 +8,4 @@ class Tipo(Enum):
     CHAR = 4
     STRING = 5
     ARRAY = 6
+    VECTOR=7
