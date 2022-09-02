@@ -27,7 +27,10 @@ reserved = {
     'loop' : 'resloop',
     'match' : 'resmatch',
     'vec' : 'resvec',
-    'new' : 'resnew'
+    'push' : 'respush',
+    'new' : 'resnew',
+    'insert' : 'resinsert',
+    'remove' : 'resremove'
 }
 
 
@@ -52,6 +55,7 @@ tokens  = [
     'id',
     'puntycom',
     'com',
+    'punt',
     'dospunt',
     'not',
     'and',
@@ -76,6 +80,7 @@ t_menos     = r'-'
 t_por       = r'\*'
 t_divid     = r'/'
 t_puntycom  = r';'
+t_punt  = r'\.'
 t_puntdos  = r'\.\.'
 t_com       = r','
 t_dospunt   = r':'
@@ -149,7 +154,11 @@ def t_error(t):
     t.lexer.skip(1)
 
 
+from os import remove
 import re
+from instrucciones.Funciones_vectores.insert import insert
+from instrucciones.Funciones_vectores.push import push
+from instrucciones.Funciones_vectores.remove import Remove
 import simbolo.listaerrores as errores
 from expresion.TipoR import TipoR
 from expresion.relaciones import relaciones
@@ -225,7 +234,8 @@ def p_instrucciones_evaluar(t):
                 | INSTCONTINUE puntycom
                 | INSTRETURN puntycom 
                 | INSTARRAY puntycom
-                | INSTASIGNARARRAY puntycom'''
+                | INSTASIGNARARRAY puntycom
+                | FUNCVEC puntycom'''
     t[0]=t[1]
 
 def p_break(t):
@@ -256,6 +266,24 @@ def p_impresion_lista(t):
     '''PRINT :  resprint not  pariz EXPRESION com LISTAEXP parder'''
     t[0]=Print(t.lineno(1), t.lexpos(1),t[4],t[6])
 
+def p_fvec(t):
+    '''FUNCVEC : PUSH
+            | INSERT 
+            | REMOVE'''
+    t[0]=t[1]
+
+def p_push(t):
+    '''PUSH : id punt respush pariz EXPRESION parder '''
+    t[0]=push(t.lineno(1), t.lexpos(1),t[1],t[5])
+
+def p_insert(t):
+    '''INSERT : id punt resinsert pariz EXPRESION com EXPRESION parder '''
+    t[0]=insert(t.lineno(1), t.lexpos(1),t[1],t[7],t[5])
+
+def p_remove(t):
+    '''REMOVE : id punt resremove pariz EXPRESION parder '''
+    t[0]=Remove(t.lineno(1), t.lexpos(1),t[1],t[5])
+
 def p_array(t):
     '''INSTARRAY : reslet id igual ARRAY'''
     t[0]= declararArray(t.lineno(1), t.lexpos(1),t[2],Tipo.ARRAY,t[4],False,[])
@@ -284,6 +312,10 @@ def p_array_mut_tipado(t):
     '''INSTARRAY : reslet resmut id dospunt TIPOARRAY igual ARRAY'''
     t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],Tipo.ARRAY,t[7],True,t[5])
 
+def p_vector_mut_tipado(t):
+    '''INSTARRAY : reslet resmut id dospunt resvec menorque TIPOVAL mayorque igual ARRAY'''
+    t[0]= declararArray(t.lineno(1), t.lexpos(1),t[3],Tipo.VECTOR,t[10],False,[])
+
 def p_array_asignar(t):
     ''' INSTASIGNARARRAY : id ACCESO igual EXPRESION '''
     t[0]= asignarArray(t.lineno(1), t.lexpos(1),t[1],t[2],t[4])
@@ -304,6 +336,7 @@ def p_vector_especial(t):
     for i in range(int(t[6])):
         lista.append(t[4])
     t[0]=lista
+
 def p_vector_new(t):
     '''ARRAY : resvec dospunt dospunt resnew pariz parder '''
     t[0]=[]
@@ -586,6 +619,10 @@ def p_expresion_mach(t):
 
 def p_expresion_func(t):
     'EXPRESION    : LLAMARFUNC '
+    t[0] = t[1]
+
+def p_expresion_func(t):
+    'EXPRESION    : REMOVE '
     t[0] = t[1]
 
 def p_expresion_boolean(t):

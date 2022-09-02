@@ -15,7 +15,7 @@ class asignarArray(instrucciones):
     def ejecutar(self,ambito:ambito):
         auxSimbolo = ambito.buscarsimbolo(self.id)
         dimensiones= auxSimbolo.tipo["dimen"]
-        print(dimensiones)
+        #print(dimensiones)
         def getpos(i):
             aux = self.pocisiones[i].ejecutar(ambito)
             if i==0:
