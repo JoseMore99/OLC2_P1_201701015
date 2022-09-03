@@ -501,30 +501,51 @@ def p_bloque(t):
     t[0]= bloque(t.lineno(1), t.lexpos(1),t[1])
 
 def p_lista_expre_conjunto(t):
-    '''LISTAEXP : LISTAEXP com EXPRESION '''
+    '''LISTAEXP : LISTAEXP com UNICAEXP '''
     if (t[3] != ""):
        t[1].append(t[3])
     t[0] = t[1]
     
 def p_lista_expre(t):
-    '''LISTAEXP : EXPRESION '''
+    '''LISTAEXP : UNICAEXP '''
     if (t[1] != ""):
        t[0]=[t[1]]
     else:
         t[0]=[]
 
+def p_unica_expre(t):
+    '''UNICAEXP : EXPRESION'''
+    t[0]=t[1]
+
+def p_unica_expre_vec(t):
+    '''UNICAEXP : and resmut id'''
+    t[0]=t[3]
+
 def p_lista_para_conjunto(t):
-    '''PARAMETROS : PARAMETROS com id dospunt TIPOVAL '''
+    '''PARAMETROS : PARAMETROS com PARAUNICO '''
     if (t[3] != ""):
-       t[1].append(declarar(t.lineno(1), t.lexpos(1),t[3],t[5],None,True))
+       t[1].append(t[3])
     t[0] = t[1]
-    
-def p_lista_para(t):
-    '''PARAMETROS : id dospunt TIPOVAL '''
+
+def p_lista_para_unico(t):
+    '''PARAMETROS : PARAUNICO '''
     if (t[1] != ""):
-       t[0]=[declarar(t.lineno(1), t.lexpos(1),t[1],t[3],None,True)]
+       t[0]=[t[1]]
     else:
         t[0]=[]
+
+    
+def p_lista_para(t):
+    '''PARAUNICO : id dospunt TIPOVAL '''
+    t[0]=declarar(t.lineno(1), t.lexpos(1),t[1],t[3],None,True)
+
+def p_lista_vec(t):
+    '''PARAUNICO : id dospunt and resmut resvec menorque TIPOVAL mayorque  '''
+    t[0]=t[1]
+
+def p_lista_arr(t):
+    '''PARAUNICO : id dospunt and resmut  corcheteiz TIPOVAL corcheteder  '''
+    t[0]=t[1]
 
 def p_tipoval(t):
     '''TIPOVAL : resi64

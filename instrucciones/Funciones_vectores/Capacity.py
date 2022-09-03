@@ -4,7 +4,7 @@ from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
 from simbolo.simbolo import simbolo
 
-class Len(instrucciones):
+class Capacity(instrucciones):
     
     def __init__(self, fila, columna, id):
         self.fila = fila

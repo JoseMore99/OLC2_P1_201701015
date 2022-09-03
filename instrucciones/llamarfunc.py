@@ -12,18 +12,33 @@ class llamarfunc(expresion):
 
     def ejecutar(self,Ambito:ambito):
         auxfuncion = Ambito.buscarFuncion(self.id)
+        referencias ={}
         if (auxfuncion!=None):
             if(len(self.parametros)==len(auxfuncion.parametros)):
                 entornoAnt= ambito(Ambito)
                 for p in range(len(self.parametros)):
-                    auxpara = self.parametros[p].ejecutar(Ambito)
-                    auxfunc = auxfuncion.parametros[p]
-                    if (auxpara["tipo"]==auxfunc.tipo):
-                        auxfunc.valor = self.parametros[p]
-                        auxfunc.ejecutar(entornoAnt)
+                    if ( isinstance(self.parametros[p],str)):
+                        print(self.parametros[p])
+                        print(auxfuncion.parametros[p])
+                        auxfunc = Ambito.buscarsimbolo(self.parametros[p])
+                        referencias[auxfuncion.parametros[p]]=auxfunc.nombre
+                        auxfunc.nombre = auxfuncion.parametros[p]
+                        entornoAnt.nuevosimbolo(auxfunc)
                     else:
-                        print("Error en asignacion de parametroes")
+                        auxpara = self.parametros[p].ejecutar(Ambito)
+                        auxfunc = auxfuncion.parametros[p]
+                        if (auxpara["tipo"]==auxfunc.tipo):
+                            auxfunc.valor = self.parametros[p]
+                            auxfunc.ejecutar(entornoAnt)
+                        else:
+                            print("Error en asignacion de parametroes")
                 respuesta=auxfuncion.contenido.ejecutar(entornoAnt)
+                #ACTUALIZANDO NOMBRE DE VECTOR
+                
+                for i in list(referencias.keys()):
+                    auxfunc = entornoAnt.buscarsimbolo(i)
+                    Ambito.editarSimbolo(referencias[i],auxfunc)
+
                 if(respuesta is not None):
                     if(respuesta["tipo"]=="201701015B"):
                         print("Break incorrecto")
