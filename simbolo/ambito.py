@@ -1,4 +1,5 @@
 
+from instrucciones.Struct import Struct
 from instrucciones.funcion import funcion
 from simbolo.simbolo import simbolo
 
@@ -9,6 +10,7 @@ class ambito:
         self.anterior = anterior
         self.tablaSimbolos = {} 
         self.tablaFunciones = {}
+        self.tablaStructs = {}
         self.estaEnCiclo = False
         self.estaEnFuncion = False
 
@@ -65,5 +67,18 @@ class ambito:
             return True
         return False
 
+    def nuevaStruct(self, simbolo:Struct ):
+        s = self.tablaStructs.get(simbolo.id.lower())
+        if s == None:
+            self.tablaStructs[simbolo.id.lower()] = simbolo
+
+    def buscarStruct(self, llave):
+        ent = self
+        while ent != None:
+            s = ent.tablaStructs.get(llave)
+            if s != None:
+                return s.parametros
+            ent = ent.anterior
+        return None
 
     

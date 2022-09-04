@@ -31,7 +31,7 @@ class declararArray(instrucciones):
             self.dimensiones=temp[::-1]
         if(self.tipo!=None):
             retorno=self.recorrer(self.valor,ambito)
-            print(retorno)
+            #print(retorno)
             simboloNew= simbolo({"tipo":self.tipo,"dimen":self.dimensiones},self.id,retorno,self.mutabilidad,self.fila,self.comlumna)
             ambito.nuevosimbolo(simboloNew)
         else:

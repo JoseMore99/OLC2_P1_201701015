@@ -164,6 +164,7 @@ from instrucciones.Funciones_vectores.Len import Len
 from instrucciones.Funciones_vectores.insert import insert
 from instrucciones.Funciones_vectores.push import push
 from instrucciones.Funciones_vectores.remove import Remove
+from instrucciones.Struct import Struct
 import simbolo.listaerrores as errores
 from expresion.TipoR import TipoR
 from expresion.relaciones import relaciones
@@ -235,6 +236,7 @@ def p_instrucciones_evaluar(t):
                 | INSFOR
                 | INSLOOP
                 | INSMATCH
+                | INSSTRUCT
                 | INSTBREAK puntycom
                 | INSTCONTINUE puntycom
                 | INSTRETURN puntycom 
@@ -242,6 +244,28 @@ def p_instrucciones_evaluar(t):
                 | INSTASIGNARARRAY puntycom
                 | FUNCVEC puntycom'''
     t[0]=t[1]
+
+def p_struct(t):
+    '''INSSTRUCT : resstruct id llaveiz VALORESTRUCT llaveder'''
+    t[0]=Struct(t.lineno(1), t.lexpos(1),t[2],t[4])
+
+def p_valores_struct_conjunto(t):
+    '''VALORESTRUCT : VALORESTRUCT com VALORSTRUCT'''
+    if (t[3] != ""):
+       t[1].append(t[3])
+    t[0] = t[1]
+
+def p_valores_struct_unico(t):
+    '''VALORESTRUCT : VALORSTRUCT'''
+    if (t[1] != ""):
+       t[0]=[t[1]]
+    else:
+        t[0]=[]
+
+def p_valor_struct(t):
+    '''VALORSTRUCT : id dospunt TIPOVAL'''
+    t[0]={"nombre":t[1],"tipo":t[3],"valor":None}
+
 
 def p_break(t):
     '''INSTBREAK : resbreak

@@ -18,8 +18,8 @@ class llamarfunc(expresion):
                 entornoAnt= ambito(Ambito)
                 for p in range(len(self.parametros)):
                     if ( isinstance(self.parametros[p],str)):
-                        print(self.parametros[p])
-                        print(auxfuncion.parametros[p])
+                        #print(self.parametros[p])
+                        #print(auxfuncion.parametros[p])
                         auxfunc = Ambito.buscarsimbolo(self.parametros[p])
                         referencias[auxfuncion.parametros[p]]=auxfunc.nombre
                         auxfunc.nombre = auxfuncion.parametros[p]
