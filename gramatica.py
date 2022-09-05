@@ -165,6 +165,7 @@ from instrucciones.Funciones_vectores.insert import insert
 from instrucciones.Funciones_vectores.push import push
 from instrucciones.Funciones_vectores.remove import Remove
 from instrucciones.Struct import Struct
+from instrucciones.declararStruct import declararStruct
 import simbolo.listaerrores as errores
 from expresion.TipoR import TipoR
 from expresion.relaciones import relaciones
@@ -237,6 +238,7 @@ def p_instrucciones_evaluar(t):
                 | INSLOOP
                 | INSMATCH
                 | INSSTRUCT
+                | DECSTRUCT puntycom
                 | INSTBREAK puntycom
                 | INSTCONTINUE puntycom
                 | INSTRETURN puntycom 
@@ -322,6 +324,27 @@ def p_contains(t):
 def p_len(t):
     '''LEN : id punt reslen pariz parder '''
     t[0]=Len(t.lineno(1), t.lexpos(1),t[1])
+
+def p_declarar_structt(t):
+    '''DECSTRUCT : reslet id igual id llaveiz EXPRESIONESTRUCT llaveder'''
+    t[0]= declararStruct(t.lineno(1), t.lexpos(1),t[2],Tipo.STRUCT,t[6],False,t[4])
+
+def p_expresion_struct_conjunto(t):
+    '''EXPRESIONESTRUCT : EXPRESIONESTRUCT com EXPRESTRUCT'''
+    if (t[3] != ""):
+       t[1].append(t[3])
+    t[0] = t[1]
+
+def p_expresion_struct_unico(t):
+    '''EXPRESIONESTRUCT : EXPRESTRUCT'''
+    if (t[1] != ""):
+       t[0]=[t[1]]
+    else:
+        t[0]=[]
+
+def p_expresion_struct(t):
+    '''EXPRESTRUCT : id dospunt EXPRESION'''
+    t[0]={"nombre":t[1],"tipo":None,"valor":t[3]}
 
 def p_array(t):
     '''INSTARRAY : reslet id igual ARRAY'''

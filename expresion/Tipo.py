@@ -9,3 +9,4 @@ class Tipo(Enum):
     STRING = 5
     ARRAY = 6
     VECTOR=7
+    STRUCT=8
