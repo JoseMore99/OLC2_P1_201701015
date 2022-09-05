@@ -159,12 +159,14 @@ def t_error(t):
 
 from os import remove
 import re
+from expresion.varStruct import varStruct
 from instrucciones.Funciones_vectores.Contains import Contains
 from instrucciones.Funciones_vectores.Len import Len
 from instrucciones.Funciones_vectores.insert import insert
 from instrucciones.Funciones_vectores.push import push
 from instrucciones.Funciones_vectores.remove import Remove
 from instrucciones.Struct import Struct
+from instrucciones.asignarStruct import asignarStruct
 from instrucciones.declararStruct import declararStruct
 import simbolo.listaerrores as errores
 from expresion.TipoR import TipoR
@@ -239,6 +241,7 @@ def p_instrucciones_evaluar(t):
                 | INSMATCH
                 | INSSTRUCT
                 | DECSTRUCT puntycom
+                | INSTASIGNARSTRUCT puntycom
                 | INSTBREAK puntycom
                 | INSTCONTINUE puntycom
                 | INSTRETURN puntycom 
@@ -329,6 +332,10 @@ def p_declarar_structt(t):
     '''DECSTRUCT : reslet id igual id llaveiz EXPRESIONESTRUCT llaveder'''
     t[0]= declararStruct(t.lineno(1), t.lexpos(1),t[2],Tipo.STRUCT,t[6],False,t[4])
 
+def p_declarar_structt_mut(t):
+    '''DECSTRUCT : reslet resmut id igual id llaveiz EXPRESIONESTRUCT llaveder'''
+    t[0]= declararStruct(t.lineno(1), t.lexpos(1),t[3],Tipo.STRUCT,t[7],True,t[5])
+
 def p_expresion_struct_conjunto(t):
     '''EXPRESIONESTRUCT : EXPRESIONESTRUCT com EXPRESTRUCT'''
     if (t[3] != ""):
@@ -345,6 +352,10 @@ def p_expresion_struct_unico(t):
 def p_expresion_struct(t):
     '''EXPRESTRUCT : id dospunt EXPRESION'''
     t[0]={"nombre":t[1],"tipo":None,"valor":t[3]}
+
+def p_array_struct(t):
+    ''' INSTASIGNARSTRUCT : id punt id igual EXPRESION '''
+    t[0]= asignarStruct(t.lineno(1), t.lexpos(1),t[1],t[3],t[5])
 
 def p_array(t):
     '''INSTARRAY : reslet id igual ARRAY'''
@@ -714,6 +725,10 @@ def p_expresion_contain(t):
 def p_expresion_len(t):
     'EXPRESION    : LEN '
     t[0] = t[1]
+
+def p_expresion_id_struct(t):
+    'EXPRESION    : id punt id '
+    t[0] = varStruct(t.lineno(1), t.lexpos(1),t[1],t[3])
 
 def p_expresion_boolean(t):
     '''EXPRESION    : restrue

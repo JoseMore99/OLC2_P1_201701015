@@ -22,12 +22,13 @@ class declararStruct(instrucciones):
         else:
             buscador = ambito.buscarStruct(self.idstruct)
             resultado={}
-            print(buscador)
+           # print(buscador)
             for i in buscador:
                 for j in self.valor:
                     if(j["nombre"] ==i["nombre"]):
-                        print(j)
+                        #print(j)
                         aux=j["valor"].ejecutar(ambito) 
                         resultado[i["nombre"]]=aux
+            #print(resultado)
             simboloNew= simbolo(self.tipo,self.id,resultado,self.mutabilidad,self.fila,self.comlumna)
             ambito.nuevosimbolo(simboloNew)
