@@ -12,7 +12,16 @@ class Len(instrucciones):
         self.id = id
 
     def ejecutar(self,ambito:ambito):
-        auxSimbolo = ambito.buscarsimbolo(self.id)
-        dimensiones= auxSimbolo.tipo["dimen"]
-        if len(dimensiones)==1:
+        if (isinstance(self.id,str)):
+            auxSimbolo = ambito.buscarsimbolo(self.id)
+            dimensiones= auxSimbolo.tipo["dimen"]
             return {"valor": dimensiones[0], "tipo": Tipo.ENTERO}
+        else:
+            auxSimbolo = self.id.ejecutar(ambito)
+            #print("+++++++++++++")
+            #print(auxSimbolo)
+            longitud=len(auxSimbolo["valor"])
+            #print("Longitud {}".format(longitud))
+            return {"valor":longitud, "tipo": Tipo.ENTERO}
+        
+            

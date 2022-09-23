@@ -1,5 +1,8 @@
 '''s = {"s":54}
 print(s["s"]+2)'''
+from contextlib import ContextDecorator
+
+
 def recorrer(array):
     temp = []
     for i in array:
@@ -38,7 +41,7 @@ dimensiones =[]
 pocisiones =[0,1,0]
 pos = pocisiones
 temporal=[]
-
+'''
 dimensiones.append(len(z))
 for i in pocisiones:
     if(len(temporal)==0):
@@ -49,8 +52,8 @@ for i in pocisiones:
         try:
             dimensiones.append(len(temporal))
         except: pass
-'''for indice, valor in enumerate(z):
-	print(f'El valor de la posición {indice} es {valor}')'''
+for indice, valor in enumerate(z):
+	print(f'El valor de la posición {indice} es {valor}')
 print(dimensiones)
 print(pocisiones)
 print(pos)
@@ -94,3 +97,25 @@ for i in range(len(t)-1):
 print(aux)
 aux[str(len(t)-1)] = "777"
 print(g)
+
+oiu=[]
+oiu.append({"2":"3"})
+oiu.append({"1":"4"})
+oiu.append({"4":"2"})
+oiu.append({"5":"1"})
+dicti= {}
+print(isinstance(dicti,dict))
+'''
+dictadura = {"0":"01","1":"11","2":"21","3":"31"}
+retorno = dictadura.pop("0")
+print("---------------")
+print(dictadura)
+contador = 0
+valores = list(dictadura.keys())
+print(valores)
+for i in valores:
+    dictadura[str(contador)]=dictadura.pop(i)
+    print(dictadura)
+    contador+=1
+print(retorno)
+print("---------------")

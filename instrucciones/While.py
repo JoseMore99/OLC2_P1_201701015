@@ -26,4 +26,5 @@ class While(instrucciones):
                 auxcondi = self.condicion.ejecutar(ambito)
             #return respuesta
         else:
-            print("Error en Condicion del While")
+            import simbolo.listaerrores as errores
+            errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "condicion incorrecta en while")

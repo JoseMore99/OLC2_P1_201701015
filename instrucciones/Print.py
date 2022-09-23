@@ -30,6 +30,7 @@ class Print(instrucciones):
                             contenido+="]"
                             contenido= contenido.replace(",]","]")
                             texto = texto.replace("{:?}",contenido,1)
+                            #print(texto)
                         else:
                             texto = texto.replace("{}",str(temp["valor"]),1)
                         #print(temp["valor"],"-")
@@ -37,7 +38,8 @@ class Print(instrucciones):
                         print("Error en replace del print")
                 consola+=texto+"\n"
         else:
-            print("Error en imprimir")
+            import simbolo.listaerrores as errores
+            errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Error en print")
         #print(consola)
 
 def vaciar():

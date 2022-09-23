@@ -38,6 +38,8 @@ class For(instrucciones):
         else:
             auxcondi = self.varcambio.ejecutar(Ambito)
             auxcondi2 = self.varcambio2.ejecutar(Ambito)
+            #print(auxcondi)
+            #print(self.varcambio2)
             if(auxcondi["tipo"]==Tipo.ENTERO and auxcondi2["tipo"]==Tipo.ENTERO):
                 entornoAnt= ambito(Ambito)
                 self.variable.valor=nativo(0, 0,auxcondi["tipo"],auxcondi["valor"])
@@ -55,4 +57,4 @@ class For(instrucciones):
                             return respuesta
             else:
                 import simbolo.listaerrores as errores
-                errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Expresiones en for mo admitidas")
+                errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Expresiones en for no admitidas")

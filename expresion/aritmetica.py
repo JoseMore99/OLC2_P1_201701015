@@ -29,12 +29,31 @@ class aritmetica(expresion):
                     errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
             elif self.tipoArit == "/" : 
                 if(str(valIz["valor"]).isdigit and str(valDer["valor"]).isdigit):
-                     return {"valor": valIz["valor"]/valDer["valor"], "tipo": valIz["tipo"]}
+                    if (valDer["valor"]!=0):
+                        return {"valor": valIz["valor"]/valDer["valor"], "tipo": valIz["tipo"]}
+                    else:
+                        errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Aritmetica incorrecta, Division por cero")
                 else:
                     errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
             elif self.tipoArit == "%" : 
                 if(str(valIz["valor"]).isdigit and str(valDer["valor"]).isdigit):
                      return {"valor": valIz["valor"]%valDer["valor"], "tipo": valIz["tipo"]}
+                else:
+                    errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
+            elif self.tipoArit == "^" : 
+                if(str(valIz["valor"]).isdigit and str(valDer["valor"]).isdigit):
+                     return {"valor": valIz["valor"]**valDer["valor"], "tipo": valIz["tipo"]}
+                else:
+                    errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
+            elif self.tipoArit == "r" : 
+                #print("RAIIIIIIIIIIIIIIIIIIIIIIIZ")
+                if(str(valIz["valor"]).isdigit and str(valDer["valor"]).isdigit):
+                     return {"valor": valIz["valor"]**(0.5), "tipo": valIz["tipo"]}
+                else:
+                    errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
+            elif self.tipoArit == "a" : 
+                if(str(valIz["valor"]).isdigit and str(valDer["valor"]).isdigit):
+                     return {"valor": abs(valIz["valor"]), "tipo": valIz["tipo"]}
                 else:
                     errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
         else:

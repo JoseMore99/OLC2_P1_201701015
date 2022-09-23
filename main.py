@@ -1,9 +1,11 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from gramatica import parser
 import instrucciones.Print as Imprimir
 import simbolo.listaerrores as errores
 from simbolo.ambito import ambito
+import simbolo.listasimbolos as simbolo
  
 
 ventana = Tk()
@@ -16,12 +18,15 @@ ventana.title("Proyecto1 Compiladores 2 201701015")
 def ejecutar():
     Imprimir.vaciar()
     print(txtFuente.get("1.0", "end"))
-    Respuesta= parser.parse(str(txtFuente.get("1.0", "end")))
+    Respuesta= parser.parse(str(txtFuente.get("1.0", "end"))+"\nmain();")
     global_a = ambito()
     if(Respuesta!=None):
         for i in Respuesta:
             if i != None:
                 i.ejecutar(global_a)
+        simbolo.Simbolos.graficar()
+        simbolo.Simbolos.lista=[]
+        
     
     if(errores.Errores.lista!=[]):
         errores.Errores.graficar()
@@ -32,7 +37,13 @@ def ejecutar():
     txtConsola.insert("end",Imprimir.consola)
 
 def Info():
-    print("Agregar cuadro de dialogo con mi info")
+    datos = "JOSE CARLOS MOREIRA PAZ\n"
+    datos += "201701015\n"
+    datos += "OLC2 PROYECTO 1 seccion D\n"
+    messagebox.showinfo(message=datos, title="Datos personales")
+
+def Borrar():
+    txtFuente.delete("1.0","end")
 
 #MENU DESPLEGABLE
 barra = Menu(ventana)
@@ -43,6 +54,7 @@ btnInfo=Menu(barra, tearoff=0)
 barra.add_cascade(label="Editor", menu=btnEditor)
 barra.add_cascade(label="Reportes", menu=btnReportes)
 barra.add_cascade(label="Acerca de",command=Info)
+barra.add_cascade(label="Borrar",command=Borrar)
 
 lblTitulo=Label(Mifr,text="DB-Rust")
 lblTitulo.config(bg="#A3E8E2")

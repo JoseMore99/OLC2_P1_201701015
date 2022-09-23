@@ -2,7 +2,7 @@
 from instrucciones.Struct import Struct
 from instrucciones.funcion import funcion
 from simbolo.simbolo import simbolo
-
+import simbolo.listasimbolos as Simbolo
 
 class ambito:
 
@@ -51,6 +51,8 @@ class ambito:
         s = self.tablaFunciones.get(simbolo.id.lower())
         if s == None:
             self.tablaFunciones[simbolo.id.lower()] = simbolo
+            Simbolo.Simbolos.nuevoSimbolo({"fila":simbolo.fila,"columna":simbolo.comlumna,"id":simbolo.id,"TS":"Funcion","TD":simbolo.tipo,"ambito":"Global"})
+            
 
     def buscarFuncion(self, llave):
         ent = self

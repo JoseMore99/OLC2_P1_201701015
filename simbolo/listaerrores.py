@@ -17,6 +17,7 @@ class listaerrores:
         textdot.write('<TR><TD>FILA</TD><TD>COLUMNA</TD><TD>CLASE</TD><TD>DESCRIPCION</TD></TR>\n')
         for i in self.lista:
             i.descripcion=i.descripcion.replace("}","\\}")
+            i.descripcion=i.descripcion.replace("{","\\{")
             i.descripcion=i.descripcion.replace(">","\\>")
             i.descripcion=i.descripcion.replace("<","\\<")
             textdot.write('<TR><TD>{}</TD><TD>{}</TD><TD>{}</TD><TD>{}</TD></TR>\n'.format(str(i.fila),str(i.columna),str(i.clase),str(i.descripcion)))

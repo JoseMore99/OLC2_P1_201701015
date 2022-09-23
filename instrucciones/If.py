@@ -21,4 +21,5 @@ class If(instrucciones):
                 if(self.sino!=None):
                     return self.sino.ejecutar(ambito)
         else:
-            print("Error en Condicion del if")
+            import simbolo.listaerrores as errores
+            errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Error en condicion if")
