@@ -1,5 +1,6 @@
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 from simbolo.simbolo import simbolo
 
 class asignar(instrucciones):
@@ -25,3 +26,5 @@ class asignar(instrucciones):
         else: 
             import simbolo.listaerrores as errores
             errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Asignacion a variable inmutable")
+    def traducir(self,arbol:Arbol, tabla):
+        pass

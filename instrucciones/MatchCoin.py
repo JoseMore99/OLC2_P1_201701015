@@ -1,6 +1,7 @@
 from expresion.Tipo import Tipo
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 
 class MatchCoin(instrucciones):
     
@@ -15,3 +16,5 @@ class MatchCoin(instrucciones):
         aux = self.contenido.ejecutar(ambito)
         if aux is not None:
             return aux
+    def traducir(self,arbol:Arbol, tabla):
+        pass

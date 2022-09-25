@@ -2,6 +2,7 @@ from expresion.expresion import expresion
 from expresion.nativo import nativo
 from simbolo.ambito import ambito
 from expresion.Tipo import Tipo
+from simbolo.arbol import Arbol
 
 class varArray(expresion):
 
@@ -27,6 +28,8 @@ class varArray(expresion):
             medida = dimensiones[-1]
             return {"tipo":Tipo.ARRAY,"valor":auxSimbolo.valor[getpos(len(dimensiones)-1):(getpos(len(dimensiones)-1)+medida)]}
 
+    def traducir(self,arbol:Arbol, tabla):
+        pass
 
     '''def ejecutar(self,ambito:ambito):
         auxSimbolo = ambito.buscarsimbolo(self.id)

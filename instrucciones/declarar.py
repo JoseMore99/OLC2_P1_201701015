@@ -1,5 +1,6 @@
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 from simbolo.simbolo import simbolo
 
 class declarar(instrucciones):
@@ -32,3 +33,5 @@ class declarar(instrucciones):
                 auxval = self.valor.ejecutar(ambito)
                 simboloNew= simbolo(auxval["tipo"],self.id,auxval["valor"],self.mutabilidad,self.fila,self.comlumna)
                 ambito.nuevosimbolo(simboloNew)
+    def traducir(self,arbol:Arbol, tabla):
+        pass

@@ -1,5 +1,6 @@
 
 from expresion.expresion import expresion
+from simbolo.arbol import Arbol
 import simbolo.listaerrores as errores
 class aritmetica(expresion):
 
@@ -58,5 +59,6 @@ class aritmetica(expresion):
                     errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
         else:
             errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
-            
+    def traducir(self,arbol:Arbol, tabla):
+        pass
         

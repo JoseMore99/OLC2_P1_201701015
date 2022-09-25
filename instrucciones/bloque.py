@@ -1,5 +1,6 @@
 from tkinter.messagebox import NO
 from instrucciones.instrucciones import instrucciones
+from simbolo.arbol import Arbol
 
 class bloque(instrucciones):
     
@@ -15,4 +16,6 @@ class bloque(instrucciones):
             if ( intruccion is not None):
                 
                 return intruccion
+    def traducir(self,arbol:Arbol, tabla):
+        pass
 

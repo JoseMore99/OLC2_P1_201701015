@@ -1,6 +1,7 @@
 from expresion.Tipo import Tipo
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 
 class If(instrucciones):
     
@@ -23,3 +24,5 @@ class If(instrucciones):
         else:
             import simbolo.listaerrores as errores
             errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Error en condicion if")
+    def traducir(self,arbol:Arbol, tabla):
+        pass

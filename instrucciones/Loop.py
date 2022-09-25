@@ -1,6 +1,7 @@
 from expresion.Tipo import Tipo
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 
 class Loop(instrucciones):
     
@@ -20,3 +21,5 @@ class Loop(instrucciones):
                     continue
                 if(respuesta["tipo"]=="201701015R"):
                         return respuesta
+    def traducir(self,arbol:Arbol, tabla):
+        pass

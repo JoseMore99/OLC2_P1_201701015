@@ -1,6 +1,7 @@
 from expresion.Tipo import Tipo
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 
 class While(instrucciones):
     
@@ -28,3 +29,6 @@ class While(instrucciones):
         else:
             import simbolo.listaerrores as errores
             errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "condicion incorrecta en while")
+
+    def traducir(self,arbol:Arbol, tabla):
+        pass

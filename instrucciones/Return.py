@@ -1,5 +1,6 @@
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 
 class Return(instrucciones):
     
@@ -11,3 +12,6 @@ class Return(instrucciones):
     
     def ejecutar(self,ambito:ambito):
         return{ "tipo":"201701015R","valor":self.valor,"fila":self.fila,"columna":self.columna}
+    
+    def traducir(self,arbol:Arbol, tabla):
+        pass

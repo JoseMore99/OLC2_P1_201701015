@@ -1,6 +1,7 @@
 
 from expresion.expresion import expresion
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 import simbolo.listaerrores as errores
 
 class variable(expresion):
@@ -16,7 +17,8 @@ class variable(expresion):
             return {"valor": auxSimbolo.valor, "tipo": auxSimbolo.tipo}
         else:
             errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Variable no declarada")
-    
+    def traducir(self,arbol:Arbol, tabla):
+        pass
 
 
 

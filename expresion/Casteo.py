@@ -2,6 +2,7 @@
 from optparse import AmbiguousOptionError
 from expresion.Tipo import Tipo
 from expresion.expresion import expresion
+from simbolo.arbol import Arbol
 
 class Casteo(expresion):
 
@@ -26,5 +27,7 @@ class Casteo(expresion):
             return {"valor": str(temp["valor"]), "tipo": self.tipo}
         elif(self.tipo==Tipo.STRING):
             return {"valor": str(temp["valor"]), "tipo": self.tipo}
+    def traducir(self,arbol:Arbol, tabla):
+        pass
 
 

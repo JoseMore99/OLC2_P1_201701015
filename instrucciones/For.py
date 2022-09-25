@@ -2,6 +2,7 @@ from expresion.Tipo import Tipo
 from expresion.nativo import nativo
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 from simbolo.simbolo import simbolo
 
 class For(instrucciones):
@@ -58,3 +59,6 @@ class For(instrucciones):
             else:
                 import simbolo.listaerrores as errores
                 errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Expresiones en for no admitidas")
+    
+    def traducir(self,arbol:Arbol, tabla):
+        pass

@@ -1,4 +1,5 @@
 from instrucciones.instrucciones import instrucciones
+from simbolo.arbol import Arbol
 
 class Struct(instrucciones):
     
@@ -11,3 +12,6 @@ class Struct(instrucciones):
     
     def ejecutar(self,ambito):
         ambito.nuevaStruct(self)
+    
+    def traducir(self,arbol:Arbol, tabla):
+        pass

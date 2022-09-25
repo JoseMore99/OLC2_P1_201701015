@@ -1,5 +1,6 @@
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 from simbolo.simbolo import simbolo
 
 class declararStruct(instrucciones):
@@ -32,3 +33,5 @@ class declararStruct(instrucciones):
             #print(resultado)
             simboloNew= simbolo(self.tipo,self.id,resultado,self.mutabilidad,self.fila,self.comlumna)
             ambito.nuevosimbolo(simboloNew)
+    def traducir(self,arbol:Arbol, tabla):
+        pass

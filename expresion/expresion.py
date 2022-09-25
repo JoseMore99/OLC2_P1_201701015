@@ -9,3 +9,7 @@ class expresion(ABC):
     @abstractmethod
     def ejecutar(ambito):
         pass
+    
+    @abstractmethod
+    def traducir(arbol,tabla):
+        pass

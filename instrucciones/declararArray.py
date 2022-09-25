@@ -2,6 +2,7 @@ import re
 from xml.dom.minidom import DOMImplementation
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 from simbolo.simbolo import simbolo
 
 class declararArray(instrucciones):
@@ -39,6 +40,9 @@ class declararArray(instrucciones):
             #print(len(retorno))
             simboloNew= simbolo({"tipo":self.tipo,"dimen":self.dimensiones},self.id,retorno,self.mutabilidad,self.fila,self.comlumna)
             ambito.nuevosimbolo(simboloNew)
+
+    def traducir(self,arbol:Arbol, tabla):
+        pass
 
     def recorrer(self,array,ambito,tipo=None):
         temp = []

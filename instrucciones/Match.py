@@ -2,6 +2,7 @@ from __future__ import barry_as_FLUFL
 from expresion.Tipo import Tipo
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 
 class Match(instrucciones):
     
@@ -33,5 +34,7 @@ class Match(instrucciones):
                         return aux
             if not bul:
                 break
+    def traducir(self,arbol:Arbol, tabla):
+        pass
                    
                 

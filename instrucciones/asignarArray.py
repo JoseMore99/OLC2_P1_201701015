@@ -1,6 +1,7 @@
 from wsgiref.validate import validator
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 from simbolo.simbolo import simbolo
 
 class asignarArray(instrucciones):
@@ -22,3 +23,5 @@ class asignarArray(instrucciones):
                 return aux["valor"]
             return aux["valor"]+dimensiones[i]*getpos(i-1)
         auxSimbolo.valor[getpos(len(dimensiones)-1)]=self.valor.ejecutar(ambito)
+    def traducir(self,arbol:Arbol, tabla):
+        pass

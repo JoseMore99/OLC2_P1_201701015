@@ -1,6 +1,7 @@
 
 from expresion.expresion import expresion
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 import simbolo.listasimbolos as simbolo
 
 class llamarfunc(expresion):
@@ -61,3 +62,5 @@ class llamarfunc(expresion):
             import simbolo.listaerrores as errores
             errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Funcion no declarada")
     
+    def traducir(self,arbol:Arbol, tabla):
+        return {'codigo':''}

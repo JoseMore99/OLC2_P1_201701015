@@ -2,6 +2,7 @@
 from expresion.Tipo import Tipo
 from expresion.TipoR import TipoR
 from expresion.expresion import expresion
+from simbolo.arbol import Arbol
 import simbolo.listaerrores as errores
 class relaciones(expresion):
 
@@ -41,5 +42,6 @@ class relaciones(expresion):
                 errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Relacion invalida")
         else:
             errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Tipos de datos no operables")
-            
+    def traducir(self,arbol:Arbol, tabla):
+        pass
         
