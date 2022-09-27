@@ -101,7 +101,11 @@ class Arbol:
     def getImports(self):
         im = ""
         for i in self.listaImports:
-            im += i+"\n"
+            print(i)
+            im += i+","
+        im +=";"
+        im = im.replace(",;",";")
+        im+="\n"
         return im
 
     def setInstrucciones(self, instruccion):
@@ -232,6 +236,7 @@ class Arbol:
             codigo += self.masHeap()
         codigo += self.assigHeapH("-1")
         codigo += self.masHeap()
+        self.setImports(temp["temporal"])
         return {'heap': temp["temporal"], 'codigo': codigo}
 
     def potenciaCadena(self, cadena, cantidad):
