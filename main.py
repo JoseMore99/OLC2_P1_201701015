@@ -36,13 +36,14 @@ def ejecutar():
     tablaC3D.setNombre('Global')
     traduccionOut = ""
     for ins in astC3D.getInstrucciones():
-        nuevaTablaC3D = listasimboloc3d()
+        #nuevaTablaC3D = listasimboloc3d()
         astC3D.setTempNoUsados([])
         if(ins is not None):
-            #print(ins)
-            traduccion = ins.traducir(astC3D, nuevaTablaC3D)
+           # print(ins)
+            traduccion = ins.traducir(astC3D, tablaC3D)
             #print(traduccion)
             traduccionOut += traduccion["codigo"]
+            #print(nuevaTablaC3D.getTamanio())
     encabezado = "#include <stdio.h>\n float stack[10000]; // Stack\n float heap[10000]; // Heap\n float P; // Puntero Stack\n float H; // Puntero Heap\n"
     encabezado+="float {}".format(astC3D.getImports())
     traduccionOut= encabezado+traduccionOut   
@@ -56,7 +57,7 @@ def ejecutar():
     #print(Imprimir.consola)
     txtConsola.delete("1.0","end")
     txtConsola.insert("end",Imprimir.consola)
-    
+    #print(tablaC3D.getTamanio())
     codigo3d.delete("1.0","end")
     codigo3d.insert("end",traduccionOut)
 

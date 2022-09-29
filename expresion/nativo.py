@@ -41,7 +41,7 @@ class nativo(expresion):
             temp = float(ord(self.valor))
         elif(self.tipo==Tipo.STRING):
             return arbol.guardarStr(temp)
-        return arbol.nuevoTemp(str(self.temporal))
+        return arbol.nuevoTemp(str(temp))
 
 
 
