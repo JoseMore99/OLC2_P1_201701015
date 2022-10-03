@@ -40,7 +40,7 @@ class declarar(instrucciones):
     def traducir(self,arbol:Arbol, tabla:listasimboloc3d):
         codigo = ""
         val = self.valor.traducir(arbol, tabla)
-        if self.valor.tipo != self.tipo:
+        if self.tipo != None and self.valor.tipo != self.tipo:
             import simbolo.listaerrores as errores
             errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Tipos incompatibles")
         codigo += val["codigo"]
@@ -52,7 +52,7 @@ class declarar(instrucciones):
                 codigo += arbol.assigTemp1(tVar["temporal"],val["temporal"])
                 codigo += arbol.assigTemp2(tStck["temporal"],"P", "+", tabla.getTamanio())
                 codigo += arbol.assigStackN(tStck["temporal"],tVar["temporal"])
-                nuevaVal = simboloc3d(self.tipo, self.id,  tabla.getTamanio(), True)
+                nuevaVal = simboloc3d(self.valor.tipo, self.id,  tabla.getTamanio(), True)
                 tabla.setVariable(nuevaVal)
                 
             else:
@@ -61,13 +61,13 @@ class declarar(instrucciones):
                 codigo += arbol.assigTemp1(tVar["temporal"], val["heap"])
                 codigo += arbol.assigTemp2(tStck["temporal"],"P", "+", tabla.getTamanio())
                 codigo += arbol.assigStackN(tStck["temporal"],tVar["temporal"])
-                nuevaVal = simboloc3d(self.tipo, self.id,  tabla.getTamanio(), False)
+                nuevaVal = simboloc3d(self.valor.tipo, self.id,  tabla.getTamanio(), False)
                 tabla.setVariable(nuevaVal)
             # else: guardar en heap y despues la referencia en stack
         else:
             import simbolo.listaerrores as errores
             errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Variable ya existente")
 
-        print("aquiiiiiii")
-        print(tabla.getTamanio())
+        #print("aquiiiiiii")
+        #print(tabla.getTamanio())
         return {'codigo': codigo}

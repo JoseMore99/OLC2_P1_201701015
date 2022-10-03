@@ -1,3 +1,4 @@
+import os
 from expresion.Tipo import Tipo
 
 class listasimboloc3d:
@@ -38,6 +39,19 @@ class listasimboloc3d:
             self.tamanio += 1
         return 'La variable existe'
 
+    def graficar(self):
+        textdot = open("Simbolosc3d.dot","w")
+        textdot.write("digraph G{\nnode [shape=record];\n")
+        textdot.write('a0 [label=<<TABLE border="1" cellspacing="5" cellpadding="5" style="rounded" bgcolor="yellow:blue">\n"')
+
+        textdot.write('<TR><TD>ID</TD><TD>TIPO</TD><TD>UBICACION</TD></TR>\n')
+        for i in self.tablaActual.values():
+        #simbolo.Simbolosc3d.nuevoSimbolo({"fila":auxfunc.fila,"columna":auxfunc.columna,"id":auxfunc.nombre,"TS":"Arreglo","TD":auxfunc.tipo,"ambito":self.id})
+            textdot.write('<TR><TD>{}</TD><TD>{}</TD><TD>{}</TD></TR>\n'.format(str(i.id),str(i.tipo),str(i.ubicacion)))
+        textdot.write("</TABLE>>];")
+        textdot.write("\n}")
+        textdot.close()
+        os.system('dot -Tpng Simbolosc3d.dot -o Simbolosc3d.png')
 
     def getVariable(self, id):
         aux = self

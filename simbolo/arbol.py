@@ -101,7 +101,7 @@ class Arbol:
     def getImports(self):
         im = ""
         for i in self.listaImports:
-            print(i)
+            #print(i)
             im += i+","
         im +=";"
         im = im.replace(",;",";")
@@ -187,6 +187,7 @@ class Arbol:
             resultado = {'temporal': 't{}'.format(
                 str(self.t)), 'codigo': codigo}
         self.listaTemporales.append('t{}'.format(str(self.t)))
+        self.listaImports.append('t{}'.format(str(self.t)))
         self.t += 1
         return resultado
 

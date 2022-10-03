@@ -1,6 +1,6 @@
 class simboloc3d:
-    def __init__(self, tipo, identificador, temporal, hipStack):
-        self.identificador = identificador
+    def __init__(self, tipo, id, temporal, hipStack):
+        self.id = id
         self.tipo = tipo
         self.ubicacion = temporal
         self.stck = hipStack
@@ -22,7 +22,7 @@ class simboloc3d:
         return self.tipo
 
     def getIdentificador(self):
-        return self.identificador
+        return self.id
 
     def getUbicacion(self):
         return self.ubicacion

@@ -44,7 +44,9 @@ def ejecutar():
             #print(traduccion)
             traduccionOut += traduccion["codigo"]
             #print(nuevaTablaC3D.getTamanio())
+            #print(astC3D.getImports())
     encabezado = "#include <stdio.h>\n float stack[10000]; // Stack\n float heap[10000]; // Heap\n float P; // Puntero Stack\n float H; // Puntero Heap\n"
+    
     encabezado+="float {}".format(astC3D.getImports())
     traduccionOut= encabezado+traduccionOut   
     traduccionOut+="""int main(){

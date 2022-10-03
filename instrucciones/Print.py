@@ -86,11 +86,120 @@ class Print(instrucciones):
                 errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Error en print")
             elif self.valor.tipo == Tipo.STRING:
                 tempvar = self.valor.valor
+                contador =0
                 for i in self.expresiones:
-                    # se imprime segun el tipo
-                    tempvar = tempvar.replace("{}",str(i.valor),1)
+                    tempvar = tempvar.replace("{}","{")
                 for j in tempvar:
-                    codigo += arbol.imprimir('"%c", (int)'+str(ord(j)))
+                    if (j =="{"):
+                        temporal= self.expresiones[contador].traducir(arbol, tabla)
+                        valor = self.expresiones[contador]
+                        #print(temporal)
+                        #print(valor.tipo)
+                        if "temporal"in temporal:
+                            if valor.tipo == Tipo.ENTERO:
+                                codigo += temporal["codigo"]
+                                codigo += arbol.imprimir(
+                                    '"%d", (int){}'.format(temporal["temporal"]))
+                                #Printf("%d", int(expresion))
+                            elif valor.tipo == Tipo.DECIMAL:
+                                codigo += temporal["codigo"]
+                                codigo += arbol.imprimir(
+                                    '"%f", {}'.format(temporal["temporal"]))
+                                # Printf("%f", 32.2)
+                            elif valor.tipo == Tipo.CHAR:
+                                codigo += temporal["codigo"]
+                                codigo += arbol.imprimir(
+                                    '"%c", {}'.format(temporal["temporal"]))
+                                # Printf("%c", 36)
+                            elif valor.tipo == Tipo.BOOL:
+                                codigo += temporal["codigo"]
+                                temp = arbol.newTemp()
+                                lTrue = arbol.newLabel()
+                                lFalse = arbol.newLabel()
+                                lSalida = arbol.newLabel()
+                                codigo += arbol.assigTemp1(temp["temporal"],
+                                                        temporal["temporal"])
+                                codigo += arbol.getCond2(temp["temporal"],
+                                                        " == ", "1.0", lTrue)
+                                codigo += arbol.goto(lFalse)
+                                codigo += arbol.getLabel(lTrue)
+                                codigo += arbol.imprimir('"%c", 116')  # t
+                                codigo += arbol.imprimir('"%c", 114')  # r
+                                codigo += arbol.imprimir('"%c", 117')  # u
+                                codigo += arbol.imprimir('"%c", 101')  # e
+                                codigo += arbol.goto(lSalida)
+                                codigo += arbol.getLabel(lFalse)
+                                codigo += arbol.imprimir('"%c", 102')  # f
+                                codigo += arbol.imprimir('"%c", 97')  # a
+                                codigo += arbol.imprimir('"%c", 108')  # l
+                                codigo += arbol.imprimir('"%c", 115')  # s
+                                codigo += arbol.imprimir('"%c", 101')  # e
+                                codigo += arbol.getLabel(lSalida)
+                                '''
+                                t1=temporal
+                                if(t1==1.0){goto true}
+                                goto false
+                                true:
+                                imprimir(true) caracter por caracter
+                                goto salida
+                                false:
+                                imprimir(false) caracter por caracter
+                                salida:
+                                '''
+                        elif "heap"in temporal:
+                            if valor.tipo == Tipo.ENTERO:
+                                codigo += temporal["codigo"]
+                                codigo += arbol.imprimir(
+                                    '"%d", (int){}'.format(temporal["heap"]))
+                                #Printf("%d", int(expresion))
+                            elif valor.tipo == Tipo.DECIMAL:
+                                codigo += temporal["codigo"]
+                                codigo += arbol.imprimir(
+                                    '"%f", {}'.format(temporal["heap"]))
+                                # Printf("%f", 32.2)
+                            elif valor.tipo == Tipo.CHAR:
+                                codigo += temporal["codigo"]
+                                codigo += arbol.imprimir(
+                                    '"%c", {}'.format(temporal["heap"]))
+                                # Printf("%c", 36)
+                            elif valor.tipo == Tipo.BOOL:
+                                codigo += temporal["codigo"]
+                                temp = arbol.newTemp()
+                                lTrue = arbol.newLabel()
+                                lFalse = arbol.newLabel()
+                                lSalida = arbol.newLabel()
+                                codigo += arbol.assigTemp1(temp["heap"],
+                                                        temporal["heap"])
+                                codigo += arbol.getCond2(temp["heap"],
+                                                        " == ", "1.0", lTrue)
+                                codigo += arbol.goto(lFalse)
+                                codigo += arbol.getLabel(lTrue)
+                                codigo += arbol.imprimir('"%c", 116')  # t
+                                codigo += arbol.imprimir('"%c", 114')  # r
+                                codigo += arbol.imprimir('"%c", 117')  # u
+                                codigo += arbol.imprimir('"%c", 101')  # e
+                                codigo += arbol.goto(lSalida)
+                                codigo += arbol.getLabel(lFalse)
+                                codigo += arbol.imprimir('"%c", 102')  # f
+                                codigo += arbol.imprimir('"%c", 97')  # a
+                                codigo += arbol.imprimir('"%c", 108')  # l
+                                codigo += arbol.imprimir('"%c", 115')  # s
+                                codigo += arbol.imprimir('"%c", 101')  # e
+                                codigo += arbol.getLabel(lSalida)
+                                '''
+                                t1=temporal
+                                if(t1==1.0){goto true}
+                                goto false
+                                true:
+                                imprimir(true) caracter por caracter
+                                goto salida
+                                false:
+                                imprimir(false) caracter por caracter
+                                salida:
+                                '''
+                        contador+=1
+                    else:
+                        codigo += arbol.imprimir('"%c", (int)'+str(ord(j)))
         
         codigo += arbol.imprimir('"%c", (int)10')
         
