@@ -1,9 +1,10 @@
 class simboloc3d:
-    def __init__(self, tipo, id, temporal, hipStack):
+    def __init__(self, tipo, id, temporal, hipStack,mutabilidad = False):
         self.id = id
         self.tipo = tipo
         self.ubicacion = temporal
         self.stck = hipStack
+        self.mutabilidad=mutabilidad
         self.base = []
 
     def setBase(self, b):

@@ -52,7 +52,7 @@ class declarar(instrucciones):
                 codigo += arbol.assigTemp1(tVar["temporal"],val["temporal"])
                 codigo += arbol.assigTemp2(tStck["temporal"],"P", "+", tabla.getTamanio())
                 codigo += arbol.assigStackN(tStck["temporal"],tVar["temporal"])
-                nuevaVal = simboloc3d(self.valor.tipo, self.id,  tabla.getTamanio(), True)
+                nuevaVal = simboloc3d(self.valor.tipo, self.id,  tabla.getTamanio(), True,self.mutabilidad)
                 tabla.setVariable(nuevaVal)
                 
             else:
@@ -61,7 +61,7 @@ class declarar(instrucciones):
                 codigo += arbol.assigTemp1(tVar["temporal"], val["heap"])
                 codigo += arbol.assigTemp2(tStck["temporal"],"P", "+", tabla.getTamanio())
                 codigo += arbol.assigStackN(tStck["temporal"],tVar["temporal"])
-                nuevaVal = simboloc3d(self.valor.tipo, self.id,  tabla.getTamanio(), False)
+                nuevaVal = simboloc3d(self.valor.tipo, self.id,  tabla.getTamanio(), False,self.mutabilidad)
                 tabla.setVariable(nuevaVal)
             # else: guardar en heap y despues la referencia en stack
         else:
