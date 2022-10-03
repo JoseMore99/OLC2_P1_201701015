@@ -227,6 +227,7 @@ class aritmetica(expresion):
             #     salida:
             #     temp=t2
             #     '''
+        return {'temporal': temp["temporal"], 'codigo': codigo}
     # --------------------SUMAC3D--------------------------
 
     def operador1SumaC3D(self, izq, der):
