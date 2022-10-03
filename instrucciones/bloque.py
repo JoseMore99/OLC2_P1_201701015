@@ -16,6 +16,11 @@ class bloque(instrucciones):
             if ( intruccion is not None):
                 
                 return intruccion
+
     def traducir(self,arbol:Arbol, tabla):
-        pass
+        codigo = ""
+        for interar in self.instrucciones:
+            intruccion = interar.traducir(arbol,tabla)
+            codigo += intruccion["codigo"]
+        return {'codigo': codigo}
 
