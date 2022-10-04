@@ -63,6 +63,86 @@ class relaciones(expresion):
             rel = ">"
         elif self.tiporel== TipoR.MAYORIGUAL:
             rel = ">="
+        elif self.tiporel== TipoR.AND:
+            self.tipo = Tipo.BOOL
+            temp = arbol.newTemp()
+            lTrue1 = arbol.newLabel()
+            lTrue2 = arbol.newLabel()
+            lFalse2 = arbol.newLabel()
+            codigo += izq["codigo"]
+            codigo += der["codigo"]
+            codigo += arbol.getCond2(izq["temporal"], "==", "1.0", lTrue1)
+            codigo += arbol.assigTemp1(temp["temporal"], "0.0")
+            codigo += arbol.goto(lFalse2)
+            codigo += arbol.getLabel(lTrue1)
+            codigo += arbol.getCond2(der["temporal"], "==", "1.0", lTrue2)
+            codigo += arbol.assigTemp1(temp["temporal"], "0.0")
+            codigo += arbol.goto(lFalse2)
+            codigo += arbol.getLabel(lTrue2)
+            codigo += arbol.assigTemp1(temp["temporal"], "1.0")
+            codigo += arbol.getLabel(lFalse2)
+            '''
+            if(a==1){goto Lv1}
+            t=0
+            goto Lf2
+            Lv1:
+            if (c ==1){goto Lv2}
+            t=0
+            goto Lf2
+            lv2:
+            t=1
+            Lf2:
+            '''
+            return {'temporal': temp["temporal"], 'codigo': codigo}
+        elif self.tiporel== TipoR.OR:
+            temp = arbol.newTemp()
+            lTrue1 = arbol.newLabel()
+            lTrue2 = arbol.newLabel()
+            lFalse2 = arbol.newLabel()
+            codigo += izq["codigo"]
+            codigo += der["codigo"]
+            codigo += arbol.getCond2(izq["temporal"], "==", "1.0", lTrue2)
+            codigo += arbol.assigTemp1(temp["temporal"], "0.0")
+            codigo += arbol.goto(lTrue1)
+            codigo += arbol.getLabel(lTrue1)
+            codigo += arbol.getCond2(der["temporal"], "==", "1.0", lTrue2)
+            codigo += arbol.assigTemp1(temp["temporal"], "0.0")
+            codigo += arbol.goto(lFalse2)
+            codigo += arbol.getLabel(lTrue2)
+            codigo += arbol.assigTemp1(temp["temporal"], "1.0")
+            codigo += arbol.getLabel(lFalse2)
+            '''
+                if(a==1){goto Lv2}
+                t=0
+                goto Lv1
+                Lv1:
+                if (c ==1){goto Lv2}
+                t=0
+                goto Lf2
+                lv2:
+                t=1
+                Lf2:
+                '''
+            return {'temporal': temp["temporal"], 'codigo': codigo}
+        elif self.tiporel== TipoR.NOT:
+            temp = arbol.newTemp()
+            lTrue1 = arbol.newLabel()
+            lFalse2 = arbol.newLabel()
+            codigo += izq["codigo"]
+            codigo += arbol.getCond2(izq["temporal"], "==", "1.0", lFalse2)
+            codigo += arbol.assigTemp1(temp["temporal"], "1.0")
+            codigo += arbol.goto(lTrue1)
+            codigo += arbol.getLabel(lFalse2)
+            codigo += arbol.assigTemp1(temp["temporal"], "0.0")
+            codigo += arbol.getLabel(lTrue1)
+            '''
+                if(a==1){goto Lf1}
+                t=1
+                goto Lv1
+                Lv1:
+                Lf1:
+                '''
+            return {'temporal': temp["temporal"], 'codigo': codigo}
         else:
             return 'None'
         # print(izq, der)  # TODO ARREGLAR ESTO DE LOS TEMPORALES
