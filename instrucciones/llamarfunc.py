@@ -1,7 +1,10 @@
 
+from expresion.Tipo import Tipo
 from expresion.expresion import expresion
+from instrucciones.declarar import declarar
 from simbolo.ambito import ambito
 from simbolo.arbol import Arbol
+from simbolo.listasimboloc3d import listasimboloc3d
 import simbolo.listasimbolos as simbolo
 
 class llamarfunc(expresion):
@@ -63,4 +66,76 @@ class llamarfunc(expresion):
             errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Funcion no declarada")
     
     def traducir(self,arbol:Arbol, tabla):
-        return {'codigo':''}
+        codigo = ""
+        funcion = arbol.getFuncion(self.id)
+        if funcion != None:
+            if len(funcion.parametros) == len(self.parametros):
+                nuevaTabla = listasimboloc3d(tabla)
+                codigo += arbol.masStackV(tabla.tamanio)
+                iterador = 0
+                nuevaTabla.masTamanio()
+                varTemps = arbol.getTempNoUsados()
+                nuevoTemp = arbol.newTemp()
+                codigo += arbol.assigTemp1(nuevoTemp["temporal"], "P")
+                for t in varTemps:
+                    codigo += arbol.masStackV(1)
+                    codigo += "stack[int({})] = {};\n".format(
+                        nuevoTemp["temporal"], t)
+
+                    codigo += arbol.assigTemp2(
+                        nuevoTemp["temporal"], nuevoTemp["temporal"], "+", "1.0")
+
+                nuevaTabla.getAnterior().setTamanio(
+                    nuevaTabla.getAnterior().getTamanio()+len(varTemps))
+                for nuevoVal in self.parametros:
+                    val = nuevoVal.traducir(arbol, nuevaTabla)
+                    if isinstance(funcion.parametros[iterador]["tipato"], str):
+                        # Se realiza como un struct
+                        dec = declarar(Tipo.STRUCT, funcion.fila,
+                                          funcion.columna, funcion.parametros[iterador]["identificador"]+"50251", nuevoVal, funcion.parametros[iterador]["tipato"])
+
+                        nuevaDec = dec.traducir(arbol, nuevaTabla)
+                        codigo += nuevaDec["codigo"]
+
+                        var = nuevaTabla.getVariable(
+                            funcion.parametros[iterador]["identificador"]+"50251")
+                        if var != None:
+                            # if var.tipo != nuevoVal.tipo:
+                            #     return Error("Semantico", "Tipo de dato diferente", self.fila, self.columna)
+                            # else:
+                            var.setValor(val)
+                            nuevaTabla.setNombre(funcion.id)
+                        else:
+                            import simbolo.listaerrores as errores
+                            errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Error el parametros de funcion"+self.id)
+                    else:
+
+                        dec = declarar(nuevoVal.tipo, funcion.fila,
+                                          funcion.columna, funcion.parametros[iterador]["identificador"]+"50251", nuevoVal, nuevoVal.tipoStruct)
+
+                        nuevaDec = dec.traducir(arbol, nuevaTabla)
+                        codigo += nuevaDec["codigo"]
+                    iterador = iterador+1
+
+                codigo += self.id+"();\n"
+                aux2 = ""
+
+                nuevaTabla.getAnterior().setTamanio(nuevaTabla.getAnterior().getTamanio()-len(varTemps))
+                for t in reversed(varTemps):
+                    aux2 += arbol.menosStackV(1)
+                    aux2 += "{} = stack[int({})];\n".format(t, "P")
+                nuevoTemp = arbol.newTemp()
+                codigo += arbol.assigTemp1(nuevoTemp["temporal"], "P")
+
+                # TODO hacer un metodo que obtenga los temporales usados antes de que llamen una funcion
+                # print(arbol.getTempNoUsados())
+                tempRetorno = arbol.newTemp()
+                codigo += arbol.getStack(tempRetorno["temporal"],
+                                         nuevoTemp["temporal"])
+                codigo += aux2
+                codigo += arbol.menosStackV(tabla.tamanio)
+                self.tipo = funcion.tipo
+                return {'heap': tempRetorno["temporal"], 'temporal': tempRetorno["temporal"], 'codigo': codigo}
+            else:
+                import simbolo.listaerrores as errores
+                errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Error el parametros de funcion"+self.id)
