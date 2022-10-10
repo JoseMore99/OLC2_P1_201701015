@@ -1,6 +1,5 @@
 from expresion.Tipo import Tipo
 from instrucciones.instrucciones import instrucciones
-from simbolo.ambito import ambito
 from simbolo.arbol import Arbol
 from simbolo.listasimboloc3d import listasimboloc3d
 from simbolo.simbolo import simbolo
@@ -17,7 +16,7 @@ class declarar(instrucciones):
         self.mutabilidad= mutabilidad
         
     
-    def ejecutar(self,ambito:ambito):
+    def ejecutar(self,ambito):
         if ambito.existesimbolo(self.id):
             import simbolo.listaerrores as errores
             errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', 'variable declarada dos veces')
@@ -39,6 +38,19 @@ class declarar(instrucciones):
 
     def traducir(self,arbol:Arbol, tabla:listasimboloc3d):
         codigo = ""
+        if self.valor == None:  # valor Nothing
+            if tabla.getVariableEntorno(self.id) == None:
+                tVar = arbol.newTemp()
+                tStck = arbol.newTemp()
+                codigo += arbol.assigTemp1(tVar["temporal"], "-50253107246.0")
+                codigo += arbol.assigTemp2(tStck["temporal"],"P", "+", tabla.getTamanio())
+                codigo += arbol.assigStackN(tStck["temporal"],tVar["temporal"])
+                simbolo = simboloc3d(self.tipo, self.id,  tabla.getTamanio(), True,self.mutabilidad)
+                tabla.setVariable(simbolo)
+            else:
+                import simbolo.listaerrores as errores
+                errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Variable ya existente")
+            return {'codigo': codigo}
         val = self.valor.traducir(arbol, tabla)
         if self.tipo != None and self.valor.tipo != self.tipo:
             import simbolo.listaerrores as errores

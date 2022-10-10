@@ -29,7 +29,8 @@ def ejecutar():
                 i.ejecutar(global_a)
         simbolo.Simbolos.graficar()
         simbolo.Simbolos.lista=[]
-        
+   
+    Respuesta= parser.parse(str(txtFuente.get("1.0", "end"))+"\nmain();")
     astC3D = Arbol(Respuesta)  # entrada con parser
     tablaC3D = listasimboloc3d()
     astC3D.setGlobal(tablaC3D)

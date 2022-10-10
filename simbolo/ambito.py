@@ -51,7 +51,7 @@ class ambito:
         s = self.tablaFunciones.get(simbolo.id.lower())
         if s == None:
             self.tablaFunciones[simbolo.id.lower()] = simbolo
-            Simbolo.Simbolos.nuevoSimbolo({"fila":simbolo.fila,"columna":simbolo.comlumna,"id":simbolo.id,"TS":"Funcion","TD":simbolo.tipo,"ambito":"Global"})
+            Simbolo.Simbolos.nuevoSimbolo({"fila":simbolo.fila,"columna":simbolo.columna,"id":simbolo.id,"TS":"Funcion","TD":simbolo.tipo,"ambito":"Global"})
             
 
     def buscarFuncion(self, llave):

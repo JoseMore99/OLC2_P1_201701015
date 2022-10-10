@@ -41,28 +41,28 @@ class Arbol:
             if t == temp:
                 self.tempNoUsados.remove(temp)
 
-    def actualizarTabla(self, ide, valor, linea, entorno, columna):
+    def actualizarTabla(self, ide, valor, fila, entorno, columna):
         for elemento in self.listaSimbolos:
-            if str(elemento.getIdentificador()) == str(ide) and str(elemento.getEntorno()) == str(entorno):
-                elemento.setValor(valor)
-                elemento.setLinea(linea)
-                elemento.setColumna(columna)
+            if str(elemento.id) == str(ide) and str(elemento.entorno) == str(entorno):
+                elemento.valor=valor
+                elemento.fila = fila
+                elemento.columna = columna
                 return True
         return False
 
     def buscarTipo(self, identificador):
         for elemento in self.listaSimbolos:
-            if str(elemento.getIdentificador()) == identificador:
-                return str(elemento.getForma())
+            if str(elemento.id) == identificador:
+                return str(elemento.forma)
         return 'as'
 
     def getFuncion(self, identificador):
         for f in self.funciones:
             if identificador == f.id:
-                if not self.actualizarTabla(f.id, '', f.linea, 'Global', f.columna):
+                if not self.actualizarTabla(f.id, '', f.fila, 'Global', f.columna):
                     # TODO CAMBIAR TIPO DE DATO XD
                     nuevoSimbolo = ReporteTabla(f.id, '', 'FuncionCreacion', str(
-                        f.tipo), 'Global', f.linea, f.columna)
+                        f.tipo), 'Global', f.fila, f.columna)
                     self.listaSimbolos.append(nuevoSimbolo)
                 return f
         return None
@@ -121,13 +121,13 @@ class Arbol:
     def actualizaConsola(self, actualizar):
         self.consola = "{}{}".format(self.consola, str(actualizar))
 
-    def actualizarTabla(self, identificadr, valor, linea, entorno, columna):
+    def actualizarTabla(self, identificadr, valor, fila, entorno, columna):
         for item in self.listaSimbolos:
-            if item.getIdentificador() == identificadr:
-                item.setValor(valor)
-                item.setLinea(linea)
-                item.setEntorno(entorno)
-                item.setColumna(columna)
+            if item.id == identificadr:
+                item.valor=valor
+                item.fila = fila
+                item.entorno= entorno
+                item.columna=columna
                 return True
         return False
 
@@ -226,7 +226,7 @@ class Arbol:
         return 'if ('+c1+' '+op+' '+c2+') goto '+label+';\n'
 
     def imprimir(self, temp):
-        return 'Printf({});\n'.format(temp)
+        return 'printf({});\n'.format(temp)
 
     def guardarStr(self, cadena):
         codigo = ""

@@ -1,6 +1,8 @@
 '''s = {"s":54}
 print(s["s"]+2)'''
+from __future__ import barry_as_FLUFL
 from contextlib import ContextDecorator
+from xml.etree.ElementTree import TreeBuilder
 
 
 def recorrer(array):
@@ -105,7 +107,7 @@ oiu.append({"4":"2"})
 oiu.append({"5":"1"})
 dicti= {}
 print(isinstance(dicti,dict))
-'''
+
 dictadura = {"0":"01","1":"11","2":"21","3":"31"}
 retorno = dictadura.pop("0")
 print("---------------")
@@ -117,5 +119,33 @@ for i in valores:
     dictadura[str(contador)]=dictadura.pop(i)
     print(dictadura)
     contador+=1
-print(retorno)
+print(retorno)'''
 print("---------------")
+
+lista = [1,1,1,1,1,1,1,1,2,1]
+primero = True
+almacen= 0
+almacenactual= 0
+for anterior in range(len(lista)-1):
+
+    actual=anterior+1
+
+    if lista[anterior]!=lista[actual] and primero:
+        almacen = lista[anterior]
+        almacenactual = lista[actual]
+        primero= False
+
+    elif lista[anterior]!=lista[actual] and primero== False:
+        print("a."+str(lista[anterior]))
+        break
+    elif lista[anterior]==lista[actual] and primero== False and almacen !=0:
+        print("c."+str(almacen))
+        break
+    elif lista[anterior]!=lista[actual]:
+        print("b."+str(lista[anterior]))
+        break
+if almacenactual !=0:
+    print(almacenactual)
+       
+        
+        

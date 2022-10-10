@@ -77,28 +77,25 @@ class llamarfunc(expresion):
                 varTemps = arbol.getTempNoUsados()
                 nuevoTemp = arbol.newTemp()
                 codigo += arbol.assigTemp1(nuevoTemp["temporal"], "P")
+                #print(varTemps)
                 for t in varTemps:
+                    #print(t)
                     codigo += arbol.masStackV(1)
-                    codigo += "stack[int({})] = {};\n".format(
-                        nuevoTemp["temporal"], t)
+                    codigo += "stack[(int){}] = {};\n".format(nuevoTemp["temporal"], t)
 
-                    codigo += arbol.assigTemp2(
-                        nuevoTemp["temporal"], nuevoTemp["temporal"], "+", "1.0")
+                    codigo += arbol.assigTemp2(nuevoTemp["temporal"], nuevoTemp["temporal"], "+", "1.0")
 
                 nuevaTabla.getAnterior().setTamanio(
                     nuevaTabla.getAnterior().getTamanio()+len(varTemps))
                 for nuevoVal in self.parametros:
                     val = nuevoVal.traducir(arbol, nuevaTabla)
-                    if isinstance(funcion.parametros[iterador]["tipato"], str):
+                    if isinstance(funcion.parametros[iterador].tipo, str):
                         # Se realiza como un struct
-                        dec = declarar(Tipo.STRUCT, funcion.fila,
-                                          funcion.columna, funcion.parametros[iterador]["identificador"]+"50251", nuevoVal, funcion.parametros[iterador]["tipato"])
-
-                        nuevaDec = dec.traducir(arbol, nuevaTabla)
+                        nuevaDec = funcion.parametros[iterador].traducir(arbol, nuevaTabla)
                         codigo += nuevaDec["codigo"]
 
                         var = nuevaTabla.getVariable(
-                            funcion.parametros[iterador]["identificador"]+"50251")
+                            funcion.parametros[iterador].id)
                         if var != None:
                             # if var.tipo != nuevoVal.tipo:
                             #     return Error("Semantico", "Tipo de dato diferente", self.fila, self.columna)
@@ -109,11 +106,11 @@ class llamarfunc(expresion):
                             import simbolo.listaerrores as errores
                             errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Error el parametros de funcion"+self.id)
                     else:
-
-                        dec = declarar(nuevoVal.tipo, funcion.fila,
-                                          funcion.columna, funcion.parametros[iterador]["identificador"]+"50251", nuevoVal, nuevoVal.tipoStruct)
-
-                        nuevaDec = dec.traducir(arbol, nuevaTabla)
+                        funcion.parametros[iterador].tipo = nuevoVal.tipo
+                        funcion.parametros[iterador].valor = nuevoVal
+                        nuevaDec = funcion.parametros[iterador].traducir(arbol, nuevaTabla)
+                        print(funcion.parametros[iterador])
+                        print(nuevaDec["codigo"])
                         codigo += nuevaDec["codigo"]
                     iterador = iterador+1
 
@@ -123,7 +120,7 @@ class llamarfunc(expresion):
                 nuevaTabla.getAnterior().setTamanio(nuevaTabla.getAnterior().getTamanio()-len(varTemps))
                 for t in reversed(varTemps):
                     aux2 += arbol.menosStackV(1)
-                    aux2 += "{} = stack[int({})];\n".format(t, "P")
+                    aux2 += "{} = stack[(int){}];\n".format(t, "P")
                 nuevoTemp = arbol.newTemp()
                 codigo += arbol.assigTemp1(nuevoTemp["temporal"], "P")
 
@@ -139,3 +136,7 @@ class llamarfunc(expresion):
             else:
                 import simbolo.listaerrores as errores
                 errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Error el parametros de funcion"+self.id)
+        else:
+            import simbolo.listaerrores as errores
+            errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Funcion no encontrada "+self.id)
+            return{"codigo":""}

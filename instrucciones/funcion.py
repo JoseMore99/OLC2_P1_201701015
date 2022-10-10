@@ -26,22 +26,14 @@ class funcion(instrucciones):
         nRetorno = arbol.newTemp()
         codigo += arbol.assigTemp1(nRetorno["temporal"], "P")
         for nuevoVal in self.parametros:
-            if isinstance(nuevoVal["tipato"], str):
-                # Se realiza como un struct
-                tmpsNoUsados = arbol.getTempNoUsados()
-                dec = declarar( self.fila,self.columna, nuevoVal["identificador"],Tipo.STRUCT, None,True)
-                nuevaDec = dec.traducir(arbol, tabla)
-                arbol.setTempNoUsados(tmpsNoUsados)
-                # codigo += nuevaDec["codigo"]
-            else:
-                if nuevoVal["tipato"] == None:
-                    nuevoVal["tipato"] = Tipo.ENTERO
-                tmpsNoUsados = arbol.getTempNoUsados()
-                dec = declarar(self.fila,self.columna, nuevoVal["identificador"],nuevoVal["tipato"], None, True)
-                nuevaDec = dec.traducir(arbol, tabla)
-                arbol.setTempNoUsados(tmpsNoUsados)
+            if nuevoVal.tipo == None:
+                nuevoVal.tipo = Tipo.ENTERO
+            tmpsNoUsados = arbol.getTempNoUsados()
+            #print(nuevoVal.valor)
+            nuevaDec = nuevoVal.traducir(arbol, tabla)
+            arbol.setTempNoUsados(tmpsNoUsados)
         aux = self.contenido.traducir(arbol, tabla)
-        codigo += aux
+        codigo += aux["codigo"]
         codigo += arbol.goto(lSalida)
         codigo += arbol.getLabel(lSalida)
         codigo += "return;\n}\n"
