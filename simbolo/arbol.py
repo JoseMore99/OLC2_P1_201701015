@@ -239,6 +239,18 @@ class Arbol:
         codigo += self.masHeap()
         self.setImports(temp["temporal"])
         return {'heap': temp["temporal"], 'codigo': codigo}
+    
+    def guardarArreglo(self, cadena):
+        codigo = ""
+        temp = self.newTemp()
+        codigo += self.assigTemp1(temp["temporal"], 'H')
+        for i in cadena:
+            codigo += self.assigHeapH(i)
+            codigo += self.masHeap()
+        codigo += self.assigHeapH("-1")
+        codigo += self.masHeap()
+        self.setImports(temp["temporal"])
+        return {'heap': temp["temporal"], 'codigo': codigo}
 
     def potenciaCadena(self, cadena, cantidad):
         temp = self.newTemp()

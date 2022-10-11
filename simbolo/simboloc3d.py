@@ -6,6 +6,7 @@ class simboloc3d:
         self.stck = hipStack
         self.mutabilidad=mutabilidad
         self.base = []
+        self.dimensiones=[]
 
     def setBase(self, b):
         self.base.append(b)
@@ -30,3 +31,6 @@ class simboloc3d:
 
     def setTipo(self, tipo):
         self.tipo = tipo
+
+    def setDimensiones(self, dimensiones):
+        self.dimensiones = dimensiones

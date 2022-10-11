@@ -30,7 +30,7 @@ def ejecutar():
         simbolo.Simbolos.graficar()
         simbolo.Simbolos.lista=[]
    
-    Respuesta= parser.parse(str(txtFuente.get("1.0", "end"))+"\nmain();")
+    Respuesta= parser.parse(str(txtFuente.get("1.0", "end")))
     astC3D = Arbol(Respuesta)  # entrada con parser
     tablaC3D = listasimboloc3d()
     astC3D.setGlobal(tablaC3D)
@@ -49,10 +49,15 @@ def ejecutar():
     encabezado = "#include <stdio.h>\n float stack[10000]; // Stack\n float heap[10000]; // Heap\n float P; // Puntero Stack\n float H; // Puntero Heap\n"
     
     encabezado+="float {}".format(astC3D.getImports())
-    traduccionOut= encabezado+traduccionOut   
-    traduccionOut+="""int main(){
-    return 0;
-}"""
+    traduccionOut= encabezado+traduccionOut
+    bulmain=True
+    for i in astC3D.getFunciones():
+        if i.id == "main":  
+            bulmain=False
+    if bulmain: 
+        traduccionOut+="""int main(){
+        return 0;
+    }"""
     if(errores.Errores.lista!=[]):
         errores.Errores.graficar()
         errores.Errores.lista=[]

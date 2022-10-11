@@ -22,7 +22,10 @@ class funcion(instrucciones):
         aux = ""
         lSalida = arbol.newLabel()
         tabla.masTamanio()
-        codigo += "void " + self.id+"() {\n"
+        if self.id == "main":
+            codigo += "int " + self.id+"() {\n"
+        else:
+            codigo += "void " + self.id+"() {\n"
         nRetorno = arbol.newTemp()
         codigo += arbol.assigTemp1(nRetorno["temporal"], "P")
         for nuevoVal in self.parametros:
@@ -36,7 +39,10 @@ class funcion(instrucciones):
         codigo += aux["codigo"]
         codigo += arbol.goto(lSalida)
         codigo += arbol.getLabel(lSalida)
-        codigo += "return;\n}\n"
+        if self.id == "main":
+            codigo += "return 0;\n}\n"
+        else:
+            codigo += "return;\n}\n"
         arbol.tamReturn = 0
         # print(self.tipo)
         arbol.getFunciones().append(self)
