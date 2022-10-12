@@ -104,6 +104,7 @@ class declararArray(instrucciones):
                 temp.extend(t)
             else: 
                 try:
+                    self.tipo=i.tipo
                     temp.extend(i)
                 except:
                     temp.append(i.valor)

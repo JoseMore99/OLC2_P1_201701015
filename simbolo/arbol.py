@@ -247,8 +247,6 @@ class Arbol:
         for i in cadena:
             codigo += self.assigHeapH(i)
             codigo += self.masHeap()
-        codigo += self.assigHeapH("-1")
-        codigo += self.masHeap()
         self.setImports(temp["temporal"])
         return {'heap': temp["temporal"], 'codigo': codigo}
 

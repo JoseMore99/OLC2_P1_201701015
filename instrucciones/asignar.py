@@ -35,7 +35,7 @@ class asignar(instrucciones):
         var = tabla.getVariable(self.id)
         variable = None
         cont = 0
-        print(var)
+        #print(var)
         if var != None:
             variable = var["simbolo"]
             cont = var["entorno"]
