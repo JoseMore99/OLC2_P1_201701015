@@ -147,5 +147,7 @@ for anterior in range(len(lista)-1):
 if almacenactual !=0:
     print(almacenactual)
        
+for i in range(4):
+    print(i)
         
         

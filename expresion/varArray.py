@@ -39,7 +39,9 @@ class varArray(expresion):
         cont = var["entorno"]
         self.tipo = variable.tipo
         dimensiones= variable.dimensiones
-        print(dimensiones)
+        #print(dimensiones)
+        while len(dimensiones)!=len(self.pocisiones):
+            self.pocisiones.append(nativo(0,0,Tipo.ENTERO,0))
         def getpos(i):
                 aux = self.pocisiones[i].valor
                 if i==0:
@@ -54,7 +56,8 @@ class varArray(expresion):
         tempL= arbol.newTemp()
         codigo += arbol.assigTemp2(tempout["temporal"], temp["temporal"],"+",getpos(len(dimensiones)-1))
         codigo += arbol.getHeap(tempL["temporal"], tempout["temporal"])
-        return {'temporal': tempL["temporal"], 'codigo': codigo}
+        return {'temporal': tempL["temporal"], 'codigo': codigo,
+         'medida':dimensiones[-1], 'pocision':tempout["temporal"],"tipo":self.tipo}
 
     '''def ejecutar(self,ambito:ambito):
         auxSimbolo = ambito.buscarsimbolo(self.id)

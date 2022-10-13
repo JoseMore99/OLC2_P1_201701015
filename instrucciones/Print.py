@@ -89,13 +89,14 @@ class Print(instrucciones):
                 contador =0
                 for i in self.expresiones:
                     tempvar = tempvar.replace("{}","{")
+                    tempvar = tempvar.replace("{:?}","}")
                 for j in tempvar:
                     if (j =="{"):
                         temporal= self.expresiones[contador].traducir(arbol, tabla)
                         valor = self.expresiones[contador]
-                        print("-------------------")
-                        print(temporal)
-                        print(valor.tipo)
+                       # print("-------------------")
+                        #print(temporal)
+                       # print(valor.tipo)
                         if "temporal"in temporal:
                             if valor.tipo == Tipo.ENTERO:
                                 codigo += temporal["codigo"]
@@ -199,6 +200,29 @@ class Print(instrucciones):
                                 salida:
                                 '''
                         contador+=1
+                    elif (j=="}"):
+                        #equivale a que espera un Vector
+                        temporal= self.expresiones[contador].traducir(arbol, tabla)
+                        codigo+=temporal["codigo"]
+                        tempCuenta = arbol.newTemp()
+                        tempL = arbol.newTemp()
+                        codigo += arbol.assigTemp1(tempCuenta["temporal"], temporal["pocision"])
+                        codigo += arbol.imprimir('"%c", (int)91')#[
+                        tipoimp=""
+                        if temporal["tipo"]==Tipo.ENTERO:
+                            tipoimp="%d"
+                        elif temporal["tipo"]==Tipo.DECIMAL:
+                            tipoimp="%f"
+                        elif temporal["tipo"]==Tipo.CHAR:
+                            tipoimp="%c"
+                        for i in range(temporal["medida"]):
+                            codigo += arbol.getHeap(tempL["temporal"], tempCuenta["temporal"])
+                            codigo += arbol.imprimir('"{}", (int){}'.format(tipoimp,tempL["temporal"]))
+                            if i !=temporal["medida"]-1:
+                                codigo += arbol.imprimir('"%c", (int)44')#,
+                            codigo += arbol.assigTemp2(tempCuenta["temporal"],tempCuenta["temporal"], "+", "1.0")
+                        codigo += arbol.imprimir('"%c", (int)93')#]
+                        
                     else:
                         codigo += arbol.imprimir('"%c", (int)'+str(ord(j)))
         
