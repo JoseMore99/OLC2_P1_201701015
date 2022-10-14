@@ -32,12 +32,27 @@ class listasimboloc3d:
 
     def setVariable(self, simbolo):
         # SIMBOLO (self, tipo, identificador, temporal, num, esConst):
+        #print(simbolo)
         if simbolo.getIdentificador() in self.tablaActual:
             self.tablaActual[simbolo.getIdentificador()] = simbolo
         else:
             self.tablaActual[simbolo.getIdentificador()] = simbolo
             self.tamanio += 1
         return 'La variable existe'
+    
+    def updateVariable (self,simbolo):
+        aux = self
+        cont = 0
+        while aux != None:
+            if simbolo.getIdentificador()  in aux.tablaActual:
+                aux.tablaActual[simbolo.getIdentificador()] = simbolo
+                print(str(cont)+" : COOOOOOONT")
+                break
+            else:
+                if aux.tablaAnterior != None:
+                    cont += aux.tablaAnterior.getTamanio()
+                aux = aux.tablaAnterior
+        return None
 
     def graficar(self):
         textdot = open("Simbolosc3d.dot","w")
@@ -57,7 +72,9 @@ class listasimboloc3d:
         aux = self
         cont = 0
         while aux != None:
+            print(cont)
             if id in aux.tablaActual:
+                #print("aqui salio en "+ self.nombreDato)
                 return {'simbolo': aux.tablaActual[id], 'entorno': cont}
             else:
                 if aux.tablaAnterior != None:

@@ -56,8 +56,8 @@ class If(instrucciones):
         nuevaTabla = listasimboloc3d(tabla)
         arbol.tamReturn += tabla.getTamanio()
         codigo += arbol.masStackV(tabla.getTamanio())
-
-        aux = self.contenido.traducir(arbol, tabla)
+        transferencia = {"break":self.eSalida(),"continue":self.eContinua(),"return":self.eReturn(),"temporal":self.eTemporal()}
+        aux = self.contenido.traducir(arbol, nuevaTabla,condi=transferencia)
         tip = Tipo.ENTERO
         
         codigo += aux["codigo"]
@@ -67,7 +67,7 @@ class If(instrucciones):
         codigo += arbol.getLabel(lFalsa1)
 
         if(self.sino!=None):
-            aux2 = self.sino.traducir(arbol, tabla)
+            aux2 = self.sino.traducir(arbol, nuevaTabla)
             codigo += aux2["codigo"]
             codigo += arbol.goto(lSalida)
         codigo += arbol.getLabel(lSalida)

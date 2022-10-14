@@ -1,3 +1,4 @@
+from ast import Nonlocal
 from expresion.Tipo import Tipo
 from instrucciones.declarar import declarar
 from instrucciones.instrucciones import instrucciones
@@ -35,7 +36,8 @@ class funcion(instrucciones):
             #print(nuevoVal.valor)
             nuevaDec = nuevoVal.traducir(arbol, tabla)
             arbol.setTempNoUsados(tmpsNoUsados)
-        aux = self.contenido.traducir(arbol, tabla)
+        transferencia = {"break":None,"continue":None,"return":lSalida,"temporal":nRetorno["temporal"]}
+        aux = self.contenido.traducir(arbol, tabla,condi=transferencia)
         codigo += aux["codigo"]
         codigo += arbol.goto(lSalida)
         codigo += arbol.getLabel(lSalida)

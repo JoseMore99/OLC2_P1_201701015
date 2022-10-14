@@ -11,5 +11,11 @@ class Continue(instrucciones):
     
     def ejecutar(self,ambito:ambito):
         return{ "tipo":"201701015C","fila":self.fila,"columna":self.columna}
+        
     def traducir(self,arbol:Arbol, tabla):
-        pass
+        if self.eContinua() != None:
+            codigo = ""
+            codigo += arbol.menosStackV(tabla.tamanio)
+            codigo += arbol.goto(self.eContinua())
+
+            return {'temporal': "", 'codigo': codigo}

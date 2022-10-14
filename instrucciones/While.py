@@ -49,7 +49,8 @@ class While(instrucciones):
             codigo += arbol.getLabel(lVerdadero)
             aux = ""
             tip = Tipo.ENTERO
-            aux = self.contenido.traducir(arbol, tabla)
+            transferencia = {"break":lFalso,"continue":lControl,"return":self.eReturn(),"temporal":self.eTemporal()}
+            aux = self.contenido.traducir(arbol, nuevaTabla,condi=transferencia)
 
             arbol.tamReturn -= tabla.tamanio
             codigo += aux["codigo"]

@@ -95,7 +95,7 @@ class asignar(instrucciones):
                                         tVar["temporal"])
             nuevaVal = simboloc3d(
                 self.valor.tipo, self.id, variable.getUbicacion(), True,variable.mutabilidad)
-            tabla.setVariable(nuevaVal)
+            tabla.updateVariable(nuevaVal)
             return {'codigo': codigo}
         else:
             # print(variable.tipo)

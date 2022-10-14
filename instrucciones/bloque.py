@@ -19,16 +19,14 @@ class bloque(instrucciones):
                 
                 return intruccion
 
-    def traducir(self,arbol:Arbol, tabla,condicion=""):
+    def traducir(self,arbol:Arbol, tabla,condi={}):
         codigo = ""
         for interar in self.instrucciones:
-            # if isinstance(interar, Break):
-            #     codigo += arbol.masStackV(tabla.tamanio)
-            #     codigo += arbol.goto(condicion)
-            # if isinstance(interar, Continue):
-            #     pass
-            # if isinstance(interar, Return):
-            #     pass
+            if "break" in condi:
+                interar.eSetSalida(condi["break"])
+                interar.eSetContinua(condi["continue"])
+                interar.eSetReturn(condi["return"])
+                interar.eSetTemporal(condi["temporal"])
             intruccion = interar.traducir(arbol,tabla)
             codigo += intruccion["codigo"]
         return {'codigo': codigo}
