@@ -46,6 +46,7 @@ class funcion(instrucciones):
         else:
             codigo += "return;\n}\n"
         arbol.tamReturn = 0
-        # print(self.tipo)
+        if self.tipo is None:
+            self.tipo=aux["tipo"]
         arbol.getFunciones().append(self)
         return {'codigo': codigo}

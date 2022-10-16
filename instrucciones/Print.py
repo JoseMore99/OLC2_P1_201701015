@@ -94,9 +94,9 @@ class Print(instrucciones):
                     if (j =="{"):
                         temporal= self.expresiones[contador].traducir(arbol, tabla)
                         valor = self.expresiones[contador]
-                       # print("-------------------")
+                        print("-------------------")
                         #print(temporal)
-                       # print(valor.tipo)
+                        print(valor.tipo)
                         if "temporal"in temporal:
                             if valor.tipo == Tipo.ENTERO:
                                 codigo += temporal["codigo"]

@@ -26,7 +26,7 @@ class If(instrucciones):
             import simbolo.listaerrores as errores
             errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Error en condicion if")
             
-    def traducir(self,arbol:Arbol, tabla):
+    def traducir(self,arbol:Arbol, tabla,condi={}):
         codigo = ""
         lFalsa1 = arbol.newLabel()
         lSalida = arbol.newLabel()
@@ -56,7 +56,10 @@ class If(instrucciones):
         nuevaTabla = listasimboloc3d(tabla)
         arbol.tamReturn += tabla.getTamanio()
         codigo += arbol.masStackV(tabla.getTamanio())
-        transferencia = {"break":self.eSalida(),"continue":self.eContinua(),"return":self.eReturn(),"temporal":self.eTemporal()}
+        try:
+            transferencia = {"break":self.eSalida(),"continue":self.eContinua(),"return":self.eReturn(),"temporal":self.eTemporal()}
+        except:
+            transferencia=condi
         aux = self.contenido.traducir(arbol, nuevaTabla,condi=transferencia)
         tip = Tipo.ENTERO
         
@@ -67,7 +70,7 @@ class If(instrucciones):
         codigo += arbol.getLabel(lFalsa1)
 
         if(self.sino!=None):
-            aux2 = self.sino.traducir(arbol, nuevaTabla)
+            aux2 = self.sino.traducir(arbol, nuevaTabla,condi=transferencia)
             codigo += aux2["codigo"]
             codigo += arbol.goto(lSalida)
         codigo += arbol.getLabel(lSalida)

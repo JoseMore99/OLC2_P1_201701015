@@ -2,12 +2,13 @@
 from expresion.Tipo import Tipo
 from expresion.expresion import expresion
 from instrucciones.declarar import declarar
+from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
 from simbolo.arbol import Arbol
 from simbolo.listasimboloc3d import listasimboloc3d
 import simbolo.listasimbolos as simbolo
 
-class llamarfunc(expresion):
+class llamarfunc(instrucciones):
 
     def __init__(self, fila, columna, id,parametros):
         self.fila = fila
@@ -57,7 +58,10 @@ class llamarfunc(expresion):
                         errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Continue incorrecto en de funcion "+self.id)
                     if(respuesta["tipo"]=="201701015R"):
                             #print(respuesta["valor"].ejecutar(entornoAnt))
-                            return respuesta["valor"].ejecutar(entornoAnt)
+                            if  respuesta["valor"] is not None:
+                                return respuesta["valor"].ejecutar(entornoAnt)
+                            else:
+                                return
             else:
                 import simbolo.listaerrores as errores
                 errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Error el parametros de funcion"+self.id)
@@ -132,6 +136,7 @@ class llamarfunc(expresion):
                 codigo += aux2
                 codigo += arbol.menosStackV(tabla.tamanio)
                 self.tipo = funcion.tipo
+                print(self.tipo)
                 return {'heap': tempRetorno["temporal"], 'temporal': tempRetorno["temporal"], 'codigo': codigo}
             else:
                 import simbolo.listaerrores as errores

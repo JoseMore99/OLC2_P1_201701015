@@ -54,7 +54,7 @@ class asignar(instrucciones):
                                             tVar["temporal"])
                 nuevaVal = simboloc3d(
                     self.valor.tipo, self.id,  tabla.getTamanio(), True)
-                tabla.setVariable(nuevaVal)
+                tabla.updateVariable(nuevaVal)
             else:
                 tVar = arbol.newTemp()
                 tStck = arbol.newTemp()
@@ -65,7 +65,7 @@ class asignar(instrucciones):
                                             tVar["temporal"])
                 nuevaVal = simboloc3d(
                     self.valor.tipo, self.id,  tabla.getTamanio(), False,variable.mutabilidad)
-                tabla.setVariable(nuevaVal)
+                tabla.updateVariable(nuevaVal)
             self.tipo = self.valor.tipo
             return {'codigo': codigo}
 
@@ -125,7 +125,7 @@ class asignar(instrucciones):
                                         tVar["temporal"])
             nuevaVal = simboloc3d(
                 self.valor.tipo, self.id, variable.getUbicacion(), False,variable.mutabilidad)
-            tabla.setVariable(nuevaVal)
+            tabla.updateVariable(nuevaVal)
             self.tipo = variable.tipo
             return {'codigo': codigo}
             # t1=stack[variable.temporal] devuelve el apuntador del heap

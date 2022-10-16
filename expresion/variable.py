@@ -23,9 +23,10 @@ class variable(expresion):
     def traducir(self,arbol:Arbol, tabla):
         codigo = "//variable\n"
         var = tabla.getVariable(self.id)
-        print(var)
+        #print(var)
         if var == None:
             errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Variable no declarada")
+            return
 
         variable = var["simbolo"]
         cont = var["entorno"]

@@ -1,5 +1,6 @@
 from ast import Continue, Return
 from tkinter.messagebox import NO
+from expresion.Tipo import Tipo
 from instrucciones.Break import Break
 from instrucciones.instrucciones import instrucciones
 from simbolo.arbol import Arbol
@@ -21,6 +22,7 @@ class bloque(instrucciones):
 
     def traducir(self,arbol:Arbol, tabla,condi={}):
         codigo = ""
+        tipo = None
         for interar in self.instrucciones:
             if "break" in condi:
                 interar.eSetSalida(condi["break"])
@@ -29,5 +31,7 @@ class bloque(instrucciones):
                 interar.eSetTemporal(condi["temporal"])
             intruccion = interar.traducir(arbol,tabla)
             codigo += intruccion["codigo"]
-        return {'codigo': codigo}
+            if "tipo" in intruccion:
+                tipo = intruccion["tipo"]
+        return {'codigo': codigo ,'tipo':tipo}
 

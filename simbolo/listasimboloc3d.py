@@ -46,7 +46,7 @@ class listasimboloc3d:
         while aux != None:
             if simbolo.getIdentificador()  in aux.tablaActual:
                 aux.tablaActual[simbolo.getIdentificador()] = simbolo
-                print(str(cont)+" : COOOOOOONT")
+                #print(str(cont)+" : COOOOOOONT")
                 break
             else:
                 if aux.tablaAnterior != None:
@@ -72,7 +72,7 @@ class listasimboloc3d:
         aux = self
         cont = 0
         while aux != None:
-            print(cont)
+            #print(cont)
             if id in aux.tablaActual:
                 #print("aqui salio en "+ self.nombreDato)
                 return {'simbolo': aux.tablaActual[id], 'entorno': cont}
