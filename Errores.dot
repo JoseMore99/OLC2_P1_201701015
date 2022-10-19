@@ -2,9 +2,7 @@ digraph G{
 node [shape=record];
 a0 [label=<<TABLE border="1" cellspacing="5" cellpadding="5" style="rounded" bgcolor="yellow:violet">
 "<TR><TD>FILA</TD><TD>COLUMNA</TD><TD>CLASE</TD><TD>DESCRIPCION</TD></TR>
-<TR><TD>103</TD><TD>68</TD><TD>Lexico</TD><TD>Simbolo ' no reconocido</TD></TR>
-<TR><TD>103</TD><TD>72</TD><TD>Lexico</TD><TD>Simbolo ' no reconocido</TD></TR>
-<TR><TD>115</TD><TD>68</TD><TD>Lexico</TD><TD>Simbolo ' no reconocido</TD></TR>
-<TR><TD>115</TD><TD>72</TD><TD>Lexico</TD><TD>Simbolo ' no reconocido</TD></TR>
+<TR><TD>14</TD><TD>77</TD><TD>Semantico</TD><TD>Funcion no encontrada hanoi</TD></TR>
+<TR><TD>16</TD><TD>186</TD><TD>Semantico</TD><TD>Funcion no encontrada hanoi</TD></TR>
 </TABLE>>];
 }

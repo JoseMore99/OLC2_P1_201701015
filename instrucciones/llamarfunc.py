@@ -71,6 +71,7 @@ class llamarfunc(instrucciones):
     
     def traducir(self,arbol:Arbol, tabla):
         codigo = ""
+        #print(arbol.getFunciones())
         funcion = arbol.getFuncion(self.id)
         if funcion != None:
             if len(funcion.parametros) == len(self.parametros):

@@ -19,6 +19,7 @@ class funcion(instrucciones):
         ambito.nuevaFuncion(self)
     
     def traducir(self,arbol:Arbol, tabla):
+        arbol.getFunciones().append(self)
         codigo = ""
         aux = ""
         lSalida = arbol.newLabel()
@@ -48,5 +49,4 @@ class funcion(instrucciones):
         arbol.tamReturn = 0
         if self.tipo is None:
             self.tipo=aux["tipo"]
-        arbol.getFunciones().append(self)
         return {'codigo': codigo}
