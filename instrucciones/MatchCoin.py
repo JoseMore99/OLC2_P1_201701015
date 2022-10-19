@@ -16,5 +16,8 @@ class MatchCoin(instrucciones):
         aux = self.contenido.ejecutar(ambito)
         if aux is not None:
             return aux
+    
     def traducir(self,arbol:Arbol, tabla):
-        pass
+        codigo = ""
+        aux = self.contenido.traducir(arbol,tabla)
+        return {'temporal': aux["temporal"], 'codigo': codigo}

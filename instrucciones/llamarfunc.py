@@ -114,8 +114,8 @@ class llamarfunc(instrucciones):
                         funcion.parametros[iterador].tipo = nuevoVal.tipo
                         funcion.parametros[iterador].valor = nuevoVal
                         nuevaDec = funcion.parametros[iterador].traducir(arbol, nuevaTabla)
-                        print(funcion.parametros[iterador])
-                        print(nuevaDec["codigo"])
+                        #print(funcion.parametros[iterador])
+                        #print(nuevaDec["codigo"])
                         codigo += nuevaDec["codigo"]
                     iterador = iterador+1
 
@@ -137,7 +137,7 @@ class llamarfunc(instrucciones):
                 codigo += aux2
                 codigo += arbol.menosStackV(tabla.tamanio)
                 self.tipo = funcion.tipo
-                print(self.tipo)
+                #print(self.tipo)
                 return {'heap': tempRetorno["temporal"], 'temporal': tempRetorno["temporal"], 'codigo': codigo}
             else:
                 import simbolo.listaerrores as errores
