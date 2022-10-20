@@ -1,5 +1,6 @@
 from expresion.Tipo import Tipo
 from expresion.expresion import expresion
+from expresion.varArray import varArray
 from instrucciones.instrucciones import instrucciones
 from simbolo.arbol import Arbol
 
@@ -202,11 +203,23 @@ class Print(instrucciones):
                         contador+=1
                     elif (j=="}"):
                         #equivale a que espera un Vector
-                        temporal= self.expresiones[contador].traducir(arbol, tabla)
-                        codigo+=temporal["codigo"]
-                        tempCuenta = arbol.newTemp()
-                        tempL = arbol.newTemp()
-                        codigo += arbol.assigTemp1(tempCuenta["temporal"], temporal["pocision"])
+                        try:
+                            temporal= self.expresiones[contador].traducir(arbol, tabla)
+                            codigo+=temporal["codigo"]
+                            tempCuenta = arbol.newTemp()
+                            tempL = arbol.newTemp()
+                            #print(temporal)
+                            codigo += arbol.assigTemp1(tempCuenta["temporal"], temporal["pocision"])
+                        except:
+                            var = tabla.getVariable(self.expresiones[contador].id)
+                            variable = var["simbolo"]
+                            tempor = varArray(self.expresiones[contador].fila,self.expresiones[contador].columna,variable.id,variable.dimensiones)
+                            temporal =tempor.traducir(arbol, tabla)
+                            codigo+=temporal["codigo"]
+                            tempCuenta = arbol.newTemp()
+                            tempL = arbol.newTemp()
+                            #print(temporal)
+                            codigo += arbol.assigTemp1(tempCuenta["temporal"], temporal["pocision"])
                         codigo += arbol.imprimir('"%c", (int)91')#[
                         tipoimp=""
                         if temporal["tipo"]==Tipo.ENTERO:

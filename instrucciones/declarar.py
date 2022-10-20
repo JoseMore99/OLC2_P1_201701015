@@ -50,6 +50,7 @@ class declarar(instrucciones):
             else:
                 import simbolo.listaerrores as errores
                 errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Variable ya existente")
+            #print(codigo)
             return {'codigo': codigo}
         val = self.valor.traducir(arbol, tabla)
         if self.tipo != None and self.valor.tipo != self.tipo:

@@ -43,7 +43,10 @@ class varArray(expresion):
         while len(dimensiones)!=len(self.pocisiones):
             self.pocisiones.append(nativo(0,0,Tipo.ENTERO,0))
         def getpos(i):
-                aux = self.pocisiones[i].valor
+                try:
+                    aux = self.pocisiones[i].valor
+                except:
+                    aux = self.pocisiones[i]
                 if i==0:
                     return aux
                 return aux+dimensiones[i]*getpos(i-1)
@@ -54,7 +57,12 @@ class varArray(expresion):
         codigo += arbol.getStack(temp["temporal"], tempAcceso["temporal"])
         tempout= arbol.newTemp()
         tempL= arbol.newTemp()
-        codigo += arbol.assigTemp2(tempout["temporal"], temp["temporal"],"+",getpos(len(dimensiones)-1))
+        #print(dimensiones)
+        #print(self.pocisiones)
+        if len(dimensiones)==1 and isinstance(self.pocisiones[0],int) :
+            codigo += arbol.assigTemp1(tempout["temporal"], temp["temporal"])
+        else:
+            codigo += arbol.assigTemp2(tempout["temporal"], temp["temporal"],"+",getpos(len(dimensiones)-1))
         codigo += arbol.getHeap(tempL["temporal"], tempout["temporal"])
         return {'temporal': tempL["temporal"], 'codigo': codigo,
          'medida':dimensiones[-1], 'pocision':tempout["temporal"],"tipo":self.tipo}

@@ -74,10 +74,10 @@ class For(instrucciones):
         nuevaTabla.setNombre('For')
         arbol.tamReturn += tabla.tamanio
         codigo += arbol.masStackV(tabla.tamanio)
-        dec = self.variable
-        dec.tipo = self.varcambio.tipo
-        nuevaDec = dec.traducir(arbol, nuevaTabla)
         if self.varcambio2 != self.varcambio:
+            dec = self.variable
+            dec.tipo = self.varcambio.tipo
+            nuevaDec = dec.traducir(arbol, nuevaTabla)
             val1 = self.varcambio.traducir(arbol, nuevaTabla)
             val2 = self.varcambio2.traducir(arbol, nuevaTabla)
             codigo += val1["codigo"]
@@ -98,6 +98,35 @@ class For(instrucciones):
             codigo += aux["codigo"]
             codigo += arbol.assigTemp2(tempControl["temporal"], tempControl["temporal"], "+", "1.0")
             codigo += arbol.goto(lControl)
+        else:
+            dec = self.variable
+            dec.tipo = Tipo.ENTERO
+            nuevaDec = dec.traducir(arbol, nuevaTabla)
+            val1 = self.varcambio.traducir(arbol, nuevaTabla)
+            codigo += val1["codigo"]
+            tempAssig = arbol.newTemp()
+            codigo += arbol.getHeap(tempControl["temporal"], val1["pocision"])
+            codigo += arbol.assigTemp1(tempAssig["temporal"], val1["pocision"])
+            
+            codigo += arbol.getLabel(lControl)
+
+            tempFin= arbol.newTemp()
+            codigo += arbol.assigTemp2(tempFin["temporal"], val1["pocision"]," + ",val1["medida"])
+
+            codigo += arbol.getCond2(tempControl["temporal"],">=", tempFin["temporal"], lSalida)
+            codigo += arbol.assigStackN("P", tempControl["temporal"])
+            codigo += arbol.goto(lFalso)
+            codigo += arbol.getLabel(lFalso)
+            # Instrucciones
+            transferencia = {"break":lSalida,"continue":lControl,"return":self.eReturn(),"temporal":self.eTemporal()}
+            aux = self.contenido.traducir(arbol, nuevaTabla,condi=transferencia)
+
+            arbol.tamReturn -= tabla.tamanio
+            codigo += aux["codigo"]
+            codigo += arbol.assigTemp2(tempAssig["temporal"], tempAssig["temporal"], "+", "1.0")
+            codigo += arbol.getHeap(tempControl["temporal"], tempAssig["temporal"])
+            codigo += arbol.goto(lControl)
+
         codigo += arbol.getLabel(lSalida)
         arbol.tamReturn -= tabla.tamanio
         codigo += arbol.menosStackV(tabla.tamanio)
