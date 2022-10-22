@@ -14,7 +14,7 @@ class listasimboloc3d:
 
     def setTamanio(self, t):
         self.tamanio = t
-
+ 
     def masTamanio(self):
         self.tamanio += 1
 

@@ -82,7 +82,7 @@ class llamarfunc(instrucciones):
                 varTemps = arbol.getTempNoUsados()
                 nuevoTemp = arbol.newTemp()
                 codigo += arbol.assigTemp1(nuevoTemp["temporal"], "P")
-                #print(varTemps)
+                print(varTemps)
                 for t in varTemps:
                     #print(t)
                     codigo += arbol.masStackV(1)
@@ -102,9 +102,6 @@ class llamarfunc(instrucciones):
                         var = nuevaTabla.getVariable(
                             funcion.parametros[iterador].id)
                         if var != None:
-                            # if var.tipo != nuevoVal.tipo:
-                            #     return Error("Semantico", "Tipo de dato diferente", self.fila, self.columna)
-                            # else:
                             var.setValor(val)
                             nuevaTabla.setNombre(funcion.id)
                         else:

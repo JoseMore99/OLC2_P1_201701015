@@ -1,5 +1,6 @@
 from expresion.Tipo import Tipo
 from expresion.nativo import nativo
+from expresion.varArray import varArray
 from instrucciones.declarar import declarar
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
@@ -103,17 +104,27 @@ class For(instrucciones):
             dec.tipo = Tipo.ENTERO
             nuevaDec = dec.traducir(arbol, nuevaTabla)
             val1 = self.varcambio.traducir(arbol, nuevaTabla)
-            codigo += val1["codigo"]
             tempAssig = arbol.newTemp()
+            if "pocision" in val1:
+                codigo += val1["codigo"]    
+            else:
+                var = tabla.getVariable(self.varcambio.id)
+                variable = var["simbolo"]
+                tempor = varArray(self.varcambio.fila,self.varcambio.columna,self.varcambio.id,variable.dimensiones)
+                temporal =tempor.traducir(arbol, tabla)
+                codigo+=temporal["codigo"]
+                val1 = temporal
+            codigo += "//valor\n"
             codigo += arbol.getHeap(tempControl["temporal"], val1["pocision"])
+            codigo += "//pocision\n"
             codigo += arbol.assigTemp1(tempAssig["temporal"], val1["pocision"])
-            
             codigo += arbol.getLabel(lControl)
 
             tempFin= arbol.newTemp()
+            
             codigo += arbol.assigTemp2(tempFin["temporal"], val1["pocision"]," + ",val1["medida"])
 
-            codigo += arbol.getCond2(tempControl["temporal"],">=", tempFin["temporal"], lSalida)
+            codigo += arbol.getCond2(tempAssig["temporal"],">=", tempFin["temporal"], lSalida)
             codigo += arbol.assigStackN("P", tempControl["temporal"])
             codigo += arbol.goto(lFalso)
             codigo += arbol.getLabel(lFalso)

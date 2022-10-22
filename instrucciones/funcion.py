@@ -34,7 +34,7 @@ class funcion(instrucciones):
             if nuevoVal.tipo == None:
                 nuevoVal.tipo = Tipo.ENTERO
             tmpsNoUsados = arbol.getTempNoUsados()
-            #print(nuevoVal.valor)
+            print(tmpsNoUsados)
             nuevaDec = nuevoVal.traducir(arbol, tabla)
             arbol.setTempNoUsados(tmpsNoUsados)
         transferencia = {"break":None,"continue":None,"return":lSalida,"temporal":nRetorno["temporal"]}
