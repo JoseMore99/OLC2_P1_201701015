@@ -29,8 +29,14 @@ class simboloc3d:
     def getUbicacion(self):
         return self.ubicacion
 
+    def getDimensiones(self):
+        return self.dimensiones
+
     def setTipo(self, tipo):
         self.tipo = tipo
+
+    def setUbicacion(self, ubicacion):
+        self.ubicacion = ubicacion
 
     def setDimensiones(self, dimensiones):
         self.dimensiones = dimensiones

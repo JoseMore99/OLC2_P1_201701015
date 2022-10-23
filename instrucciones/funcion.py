@@ -1,6 +1,7 @@
 from ast import Nonlocal
 from expresion.Tipo import Tipo
 from instrucciones.declarar import declarar
+from instrucciones.declararArray import declararArray
 from instrucciones.instrucciones import instrucciones
 from simbolo.arbol import Arbol
 
@@ -30,13 +31,20 @@ class funcion(instrucciones):
             codigo += "void " + self.id+"() {\n"
         nRetorno = arbol.newTemp()
         codigo += arbol.assigTemp1(nRetorno["temporal"], "P")
-        for nuevoVal in self.parametros:
-            if nuevoVal.tipo == None:
-                nuevoVal.tipo = Tipo.ENTERO
-            tmpsNoUsados = arbol.getTempNoUsados()
-            print(tmpsNoUsados)
-            nuevaDec = nuevoVal.traducir(arbol, tabla)
-            arbol.setTempNoUsados(tmpsNoUsados)
+        for nuevoVal in range(len(self.parametros)):
+            if isinstance(self.parametros[nuevoVal],str):
+                t= declararArray(self.fila,self.columna,self.parametros[nuevoVal],Tipo.ENTERO,[],True,[])
+                self.parametros[nuevoVal]=t
+                tmpsNoUsados = arbol.getTempNoUsados()
+                nuevaDec = t.traducir(arbol, tabla)
+                arbol.setTempNoUsados(tmpsNoUsados)
+            else:
+                if self.parametros[nuevoVal].tipo == None:
+                    self.parametros[nuevoVal].tipo = Tipo.ENTERO
+                tmpsNoUsados = arbol.getTempNoUsados()
+                #print(tmpsNoUsados)
+                nuevaDec = self.parametros[nuevoVal].traducir(arbol, tabla)
+                arbol.setTempNoUsados(tmpsNoUsados)
         transferencia = {"break":None,"continue":None,"return":lSalida,"temporal":nRetorno["temporal"]}
         aux = self.contenido.traducir(arbol, tabla,condi=transferencia)
         codigo += aux["codigo"]

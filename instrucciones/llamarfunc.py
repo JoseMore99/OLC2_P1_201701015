@@ -93,26 +93,24 @@ class llamarfunc(instrucciones):
                 nuevaTabla.getAnterior().setTamanio(
                     nuevaTabla.getAnterior().getTamanio()+len(varTemps))
                 for nuevoVal in self.parametros:
-                    val = nuevoVal.traducir(arbol, nuevaTabla)
-                    if isinstance(funcion.parametros[iterador].tipo, str):
-                        # Se realiza como un struct
-                        nuevaDec = funcion.parametros[iterador].traducir(arbol, nuevaTabla)
-                        codigo += nuevaDec["codigo"]
-
-                        var = nuevaTabla.getVariable(
-                            funcion.parametros[iterador].id)
-                        if var != None:
-                            var.setValor(val)
-                            nuevaTabla.setNombre(funcion.id)
+                    if isinstance(nuevoVal, str):
+                        # Se realiza como un array
+                        ref = nuevaTabla.getVariable(nuevaTabla)
+                        var = nuevaTabla.getVariable(funcion.parametros[iterador].id)
+                        if ref != None and var != None:
+                            var.setUbicacion(ref.getUbicacion())
+                            var.setDimensiones(ref.getDimensiones())
                         else:
                             import simbolo.listaerrores as errores
-                            errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Error el parametros de funcion"+self.id)
+                            errores.Errores.nuevoError(self.fila,self.columna, 'Semantico', "Error en el parametros de funcion"+self.id)
                     else:
+                        val = nuevoVal.traducir(arbol, nuevaTabla)
                         funcion.parametros[iterador].tipo = nuevoVal.tipo
                         funcion.parametros[iterador].valor = nuevoVal
                         nuevaDec = funcion.parametros[iterador].traducir(arbol, nuevaTabla)
                         #print(funcion.parametros[iterador])
                         #print(nuevaDec["codigo"])
+                        #codigo += "// parametro \n"
                         codigo += nuevaDec["codigo"]
                     iterador = iterador+1
 

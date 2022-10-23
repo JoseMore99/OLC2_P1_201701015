@@ -2,6 +2,9 @@ digraph G{
 node [shape=record];
 a0 [label=<<TABLE border="1" cellspacing="5" cellpadding="5" style="rounded" bgcolor="yellow:blue">
 "<TR><TD>FILA</TD><TD>COLUMNA</TD><TD>ID</TD><TD>TIPO DE SIMBOLO</TD><TD>TIPO DE DATO</TD><TD>AMBITO</TD></TR>
-<TR><TD>1</TD><TD>1</TD><TD>main</TD><TD>Funcion</TD><TD>None</TD><TD>Global</TD></TR>
+<TR><TD>53</TD><TD>1</TD><TD>mc</TD><TD>Funcion</TD><TD>None</TD><TD>Global</TD></TR>
+<TR><TD>58</TD><TD>52</TD><TD>main</TD><TD>Funcion</TD><TD>None</TD><TD>Global</TD></TR>
+<TR><TD>53</TD><TD>7</TD><TD>i</TD><TD>Variable</TD><TD>Tipo.ENTERO</TD><TD>mc</TD></TR>
+<TR><TD>59</TD><TD>63</TD><TD>arr</TD><TD>Arreglo</TD><TD>Tipo.ARRAY</TD><TD>mc</TD></TR>
 </TABLE>>];
 }

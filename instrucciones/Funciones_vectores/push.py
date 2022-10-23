@@ -1,5 +1,6 @@
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 from simbolo.simbolo import simbolo
 
 class push(instrucciones):
@@ -28,3 +29,6 @@ class push(instrucciones):
         if len(dimensiones)==1:
             auxSimbolo.tipo["dimen"][0]+=1
             auxSimbolo.valor.append(self.valor.ejecutar(ambito))
+            
+    def traducir(self,arbol:Arbol, tabla):
+        pass

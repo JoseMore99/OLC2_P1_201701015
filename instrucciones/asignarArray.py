@@ -79,7 +79,7 @@ class asignarArray(instrucciones):
             # t1=stack[variable.temporal]
             # return {temporal:t1}
             val = self.valor.traducir(arbol, tabla)
-            print(self.tipo)
+            #print(self.tipo)
             codigo += val["codigo"]
             tVar = arbol.newTemp()
             codigo += arbol.assigTemp1(tVar["temporal"],

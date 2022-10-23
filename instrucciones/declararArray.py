@@ -1,8 +1,6 @@
-import re
-from xml.dom.minidom import DOMImplementation
+
 from expresion.Tipo import Tipo
 from instrucciones.instrucciones import instrucciones
-from simbolo.ambito import ambito
 from simbolo.arbol import Arbol
 from simbolo.simbolo import simbolo
 from simbolo.simboloc3d import simboloc3d
@@ -19,7 +17,7 @@ class declararArray(instrucciones):
         self.dimensiones=dimensiones
         
     
-    def ejecutar(self,ambito:ambito):
+    def ejecutar(self,ambito):
         #[[[i64;3],2],2]
         if self.dimensiones ==[]:
             if self.valor==[]:
