@@ -222,6 +222,7 @@ class Print(instrucciones):
                             codigo += arbol.assigTemp1(tempCuenta["temporal"], temporal["pocision"])
                         codigo += arbol.imprimir('"%c", (int)91')#[
                         tipoimp=""
+                        #print(temporal["tipo"])
                         if temporal["tipo"]==Tipo.ENTERO:
                             tipoimp="%d"
                         elif temporal["tipo"]==Tipo.DECIMAL:

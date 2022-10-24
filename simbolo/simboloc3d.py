@@ -7,6 +7,7 @@ class simboloc3d:
         self.mutabilidad=mutabilidad
         self.base = []
         self.dimensiones=[]
+        self.arreglo =[]
 
     def setBase(self, b):
         self.base.append(b)
@@ -31,6 +32,9 @@ class simboloc3d:
 
     def getDimensiones(self):
         return self.dimensiones
+    
+    def getArreglo(self):
+        return self.arreglo
 
     def setTipo(self, tipo):
         self.tipo = tipo
@@ -40,3 +44,6 @@ class simboloc3d:
 
     def setDimensiones(self, dimensiones):
         self.dimensiones = dimensiones
+
+    def setArreglo(self, arreglo):
+        self.arreglo = arreglo

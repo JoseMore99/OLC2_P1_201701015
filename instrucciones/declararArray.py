@@ -55,7 +55,6 @@ class declararArray(instrucciones):
                 temp.append(x)
             self.dimensiones=temp[::-1]
         if tabla.getVariableEntorno(self.id) == None:
-            # if not cadena, struct o arreglo:
             retorno=self.recorrerC3D(self.valor)
             val = arbol.guardarArreglo(retorno)
 
@@ -68,6 +67,7 @@ class declararArray(instrucciones):
             codigo += arbol.assigStackN(tStck["temporal"],tVar["temporal"])
             nuevaVal = simboloc3d(self.tipo, self.id,  tabla.getTamanio(), False,self.mutabilidad)
             nuevaVal.setDimensiones(self.dimensiones)
+            nuevaVal.setArreglo(retorno)
             tabla.setVariable(nuevaVal)
             # else: guardar en heap y despues la referencia en stack
         else:

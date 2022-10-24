@@ -53,7 +53,7 @@ class listasimboloc3d:
                     cont += aux.tablaAnterior.getTamanio()
                 aux = aux.tablaAnterior
         return None
-
+ 
     def graficar(self):
         textdot = open("Simbolosc3d.dot","w")
         textdot.write("digraph G{\nnode [shape=record];\n")
