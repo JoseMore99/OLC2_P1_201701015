@@ -249,7 +249,7 @@ class Arbol:
             codigo += self.masHeap()
         self.setImports(temp["temporal"])
         return {'heap': temp["temporal"], 'codigo': codigo}
-
+ 
     def potenciaCadena(self, cadena, cantidad):
         temp = self.newTemp()
         codigo = ""

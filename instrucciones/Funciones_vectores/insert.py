@@ -1,5 +1,7 @@
+from expresion.Tipo import Tipo
 from instrucciones.instrucciones import instrucciones
 from simbolo.ambito import ambito
+from simbolo.arbol import Arbol
 from simbolo.simbolo import simbolo
 
 class insert(instrucciones):
@@ -18,3 +20,47 @@ class insert(instrucciones):
         if len(dimensiones)==1:
             auxSimbolo.tipo["dimen"][0]+=1
             auxSimbolo.valor.insert(auxpos["valor"],self.valor.ejecutar(ambito))
+            
+    def traducir(self,arbol:Arbol, tabla):
+        codigo=""
+        auxiliar = tabla.getVariableEntorno(self.id) 
+        if auxiliar != None:
+            retorno = auxiliar.getArreglo()
+            if(isinstance(self.valor,list)):
+                try:
+                    auxiliar.getDimensiones()[1]=len(self.valor)
+                    auxiliar.getDimensiones()[0]+=1
+                except:
+                    auxiliar.getDimensiones().append(len(self.valor))
+                position =self.pocision.valor
+                for val in self.valor:
+                    retorno.insert(position,val.valor)
+                    position+=1
+                    if auxiliar.getTipo()==Tipo.ARRAY:
+                        auxiliar.setTipo(val.tipo)
+            if len(auxiliar.getDimensiones())==1:
+                auxiliar.getDimensiones()[0]+=1
+                retorno.insert(self.pocision.valor,self.valor.valor)
+                if auxiliar.getTipo()==Tipo.ARRAY:
+                    auxiliar.setTipo(self.valor.tipo)
+            
+
+            val = arbol.guardarArreglo(retorno)
+
+            codigo +=val["codigo"]
+            
+            tVar = arbol.newTemp()
+            tStck = arbol.newTemp()
+            codigo += arbol.assigTemp1(tVar["temporal"], val["heap"])
+            codigo += arbol.assigTemp2(tStck["temporal"],"P", "+", tabla.getTamanio())
+            codigo += arbol.assigStackN(tStck["temporal"],tVar["temporal"])
+            #Actualiza la ubicacion del vector
+            auxiliar.setUbicacion(tabla.getTamanio())
+            # else: guardar en heap y despues la referencia en stack
+        else:
+            import simbolo.listaerrores as errores
+            errores.Errores.nuevoError(self.fila,self.comlumna, 'Semantico', "Variable no encontrada")
+
+        #print("aquiiiiiii")
+        #print(tabla.getTamanio())
+        return {'codigo': codigo}

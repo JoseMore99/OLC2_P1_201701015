@@ -119,7 +119,7 @@ for i in valores:
     dictadura[str(contador)]=dictadura.pop(i)
     print(dictadura)
     contador+=1
-print(retorno)'''
+print(retorno)
 print("---------------")
 
 lista = [1,1,1,1,1,1,1,1,2,1]
@@ -149,5 +149,17 @@ if almacenactual !=0:
        
 for i in range(4):
     print(i)
+        '''
         
-        
+pocisiones=[4,5]
+dimensiones=[10,20]
+def getpos(i):
+        try:
+            aux = pocisiones[i]
+        except:
+            aux = pocisiones[i]
+        if i==0:
+            return aux
+        return aux+dimensiones[i]*getpos(i-1)
+print("pocision:")
+print(getpos(len(dimensiones)-1))

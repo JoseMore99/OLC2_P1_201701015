@@ -127,8 +127,7 @@ class llamarfunc(instrucciones):
                 # TODO hacer un metodo que obtenga los temporales usados antes de que llamen una funcion
                 # print(arbol.getTempNoUsados())
                 tempRetorno = arbol.newTemp()
-                codigo += arbol.getStack(tempRetorno["temporal"],
-                                         nuevoTemp["temporal"])
+                codigo += arbol.getStack(tempRetorno["temporal"],nuevoTemp["temporal"])
                 codigo += aux2
                 codigo += arbol.menosStackV(tabla.tamanio)
                 self.tipo = funcion.tipo
